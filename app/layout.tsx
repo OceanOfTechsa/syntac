@@ -23,7 +23,7 @@ export default function RootLayout({ children }: LayoutProps<"/">): JSX.Element 
       suppressHydrationWarning={true}
       className={cn("h-full", "antialiased", fonts.geistSans.variable, fonts.kalam.variable, fonts.brand.variable, "font-sans", fonts.geist.variable)}
     >
-      <body className="style-vega flex min-h-full w-full flex-auto flex-col">
+      <body className="style-vega flex min-h-full w-full flex-auto flex-col  bg-[#fff] dark:bg-[#0a0a0a] dark:text-white">
         <ThemeProvider
             attribute="class"
             defaultTheme="sytem"
