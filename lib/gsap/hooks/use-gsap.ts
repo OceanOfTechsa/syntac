@@ -7,12 +7,13 @@ import {
 } from "react";
 
 import { gsap } from "@/lib/gsap";
+import Context = gsap.Context;
 
 export function useGsap( scope: RefObject<HTMLElement | null>, callback: () => void, dependencies: DependencyList = []): void {
     useLayoutEffect(() => {
         if (!scope.current) return;
 
-        const ctx = gsap.context(callback, scope);
+        const ctx: Context = gsap.context(callback, scope);
 
         return (): void => {
             ctx.revert();

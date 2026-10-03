@@ -5,7 +5,7 @@ import gsap from "gsap";
 import Link from "next/link";
 import Image from "next/image";
 
-import AppSettings from "@/utils/AppSettings/AppSettings";
+import AppSettings from "@/utils/AppSettings";
 
 interface AnimatedLogoProps {
     scrolled: boolean;

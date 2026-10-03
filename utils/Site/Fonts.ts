@@ -1,4 +1,4 @@
-import {Outfit, Geist, Kalam, Space_Mono} from "next/font/google";
+import { Geist, Kalam, Sacramento} from "next/font/google";
 
 const geistSans = Geist({
     variable: "--font-geist-sans",
@@ -21,4 +21,12 @@ const brand = Geist({
     weight: ["400", "700"], // optional: pick what you need
     variable: "--font-brand",
 })
-export const fonts = { geistSans, kalam, geist, brand}
+
+const signature = Sacramento({
+    subsets: ["latin"],
+    weight: ["400"],
+    variable: "--font-signature",
+})
+
+
+export const fonts = { geistSans, kalam, geist, brand, signature}

@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import AppSettings from "../AppSettings/AppSettings";
+import AppSettings from "@/utils/AppSettings";
 
 const SiteMetadata: Metadata = {
     title: {

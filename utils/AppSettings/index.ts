@@ -5,13 +5,13 @@
  * social links, reviews, navigation, and contact details.
  *
  * @remarks
- * All properties are static and should be accessed directly via `AppSettings.<property>`.
+ * All properties are static and should be accessed directly via `Index.<property>`.
  * Sensitive values such as ports and URLs are sourced from environment variables.
  *
  * @example
  * ```ts
- * const companyName = AppSettings.COMPANY_NAME;
- * const email = AppSettings.CompanyContacts.Email;
+ * const companyName = Index.COMPANY_NAME;
+ * const email = Index.CompanyContacts.Email;
  * ```
  */
 export default class AppSettings {
@@ -31,6 +31,25 @@ export default class AppSettings {
         PREVIEW: "review",
         DEVELOPMENT: "development",
     };
+
+    public static LOAD_LOGO(
+        folder: string,
+        type: string,
+        name: string,
+        extension: string
+    ): string {
+        return `/brand/syntac-brand-kit/logos/${folder}/${type}/${name}.${extension}`;
+    }
+
+    public static LOAD_ASSET_IMAGE(
+        folder: string,
+        type: string,
+        name: string,
+        extension: string
+    ): string {
+        return `/brand/syntac-brand-kit/logos/${folder}/${type}/${name}.${extension}`;
+    }
+
     public static CompanyContacts = {
         Email: `info@syntac.co.za`,
         Phone: "+27 72 627 2521",

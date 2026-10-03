@@ -4,7 +4,7 @@ import { JSX, useEffect, useState } from "react"
 import { ThemeSwitch } from "@/components/site/theme-switch"
 import { Moon, Sun } from "lucide-react"
 import { cn } from "@/lib/utils"
-import {useTheme} from "next-themes";
+import { useTheme } from "next-themes"
 
 interface IThemeSwitcherProps {
     showSwitcherOnMobile?: boolean
@@ -18,7 +18,7 @@ const ThemeSwitcher = ({
                            className,
                            height = "h-3",
                            width = "w-3",
-                       }: IThemeSwitcherProps): JSX.Element | null => {
+                       }: IThemeSwitcherProps): JSX.Element => {
     const { setTheme, resolvedTheme } = useTheme()
     const [mounted, setMounted] = useState(false)
 
@@ -26,13 +26,25 @@ const ThemeSwitcher = ({
         setMounted(true)
     }, [])
 
-    // Prevent hydration mismatch
-    if (!mounted) return null
-
-    const isDark: boolean = resolvedTheme === "dark"
+    const isDark = resolvedTheme === "dark"
 
     const toggleTheme = (checked: boolean) => {
         setTheme(checked ? "dark" : "light")
+    }
+
+    // Skeleton while waiting for mount (prevents layout shift)
+    if (!mounted) {
+        return (
+            <div
+                className={cn(
+                    "inline-flex h-5 w-8 items-center justify-center rounded-full",
+                    "bg-neutral-200/60 dark:bg-neutral-800/60 animate-pulse",
+                    !showSwitcherOnMobile && "hidden sm:inline-flex",
+                    className
+                )}
+                aria-hidden="true"
+            />
+        )
     }
 
     return (
@@ -41,7 +53,8 @@ const ThemeSwitcher = ({
             onCheckedChange={toggleTheme}
             aria-label="Toggle theme"
             data-cursor-hide
-            className={cn("transition-all duration-600",
+            className={cn(
+                "transition-all duration-600",
                 !showSwitcherOnMobile && "hidden sm:inline-flex",
                 className
             )}

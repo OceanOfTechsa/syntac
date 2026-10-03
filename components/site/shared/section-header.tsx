@@ -1,11 +1,16 @@
-import { cn } from "@/lib/utils"
+'use client'
+
+import {useFadeUp} from "@/lib/gsap/hooks/use-fade-up";
 
 interface ISectionHeaderProps {
     preTitle: string
-    title: string
-    desc: string
+    title?: string
+    desc?: string
     markedWord?: string // exact substring within `title` to underline
     className?: string
+
+    showTitle?: boolean
+    showDescription?: boolean
 }
 
 function MarkedWord({ word }: { word: string }) {
@@ -36,26 +41,32 @@ function MarkedWord({ word }: { word: string }) {
     )
 }
 
-const SectionHeader = ({ preTitle, title, desc, markedWord }: ISectionHeaderProps) => {
+const SectionHeader = ({ preTitle, title, desc, markedWord, showTitle = true, showDescription = true }: ISectionHeaderProps) => {
     // Split the title around markedWord, if provided and actually present
-    const parts = markedWord ? title.split(markedWord) : [title]
-    const hasMark = markedWord && parts.length > 1
-
+    const parts = markedWord ? title?.split(markedWord) : [title]
+    const hasMark = markedWord && parts!.length > 1
+    const ref1 = useFadeUp({ delay: 0 });
+    const ref2 = useFadeUp({ delay: 0.1 });
+    const ref3 = useFadeUp({ delay: 0.2 });
     return (
         <div className={"flex flex-col items-center gap-4 text-center mx-auto max-w-7xl px-4 sm:px-6 lg:px-8"}>
-            <span className={"font-kalam font-medium underline underline-offset-6"}>{preTitle}</span>
-            <h2 className={"text-2xl font-semibold sm:text-3xl lg:text-4xl"}>
-                {hasMark ? (
-                    <>
-                        {parts[0]}
-                        <MarkedWord word={markedWord} />
-                        {parts.slice(1).join(markedWord)}
-                    </>
-                ) : (
-                    title
-                )}
-            </h2>
-            <p className="text-muted-foreground text-lg max-w-208">{desc}</p>
+            <span className={"font-kalam font-medium underline underline-offset-6"} ref={ref1}>{preTitle}</span>
+            {showTitle &&
+                <h2 className={"text-2xl font-semibold sm:text-3xl lg:text-4xl"} ref={ref2}>
+                    {hasMark ? (
+                        <>
+                            {parts![0]}
+                            <MarkedWord word={markedWord} />
+                            {parts?.slice(1).join(markedWord)}
+                        </>
+                    ) : (
+                        title
+                    )}
+                </h2>
+            }
+            {showDescription &&
+                <p className="text-muted-foreground text-lg max-w-208" ref={ref3}>{desc}</p>
+            }
         </div>
     )
 }

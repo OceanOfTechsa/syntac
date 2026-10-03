@@ -4,22 +4,22 @@ import { useEffect, useState } from "react";
 import { Headset, MoveRight } from "lucide-react";
 import Link from "next/link";
 
-import { Reviews, type IReview } from "@/data/reviews";
+import AppSettings from "@/utils/AppSettings";
 import AvatarGroup from "@/components/site/shared/avatar-group"
-import AppSettings from "@/utils/AppSettings/AppSettings";
 import FlipWords from "@/components/gsap/animations/shared/flip-words";
 import TrustedByLogos from "@/components/gsap/animations/shared/trusted-by-logos";
+import {TESTIMONIALS, ITestimonial} from "@/data/reviews";
 
-interface IHeroAvatar extends IReview {
+interface IHeroAvatar extends ITestimonial {
     src: string;
     name: string;
     fallback: string;
 }
 
 function buildAvatars(): IHeroAvatar[] {
-    const shuffledReviews = [...Reviews].sort(() => Math.random() - 0.5);
+    const shuffledReviews = [...TESTIMONIALS].sort(() => Math.random() - 0.5);
 
-    return shuffledReviews.map((review: IReview) => {
+    return shuffledReviews.map((review: ITestimonial) => {
         const avatarNumber = Math.floor(Math.random() * 10) + 1;
 
         return {
@@ -82,7 +82,7 @@ const HeroSection = () => {
     ]
 
     return (
-        <section className="relative mx-auto flex w-full flex-col items-center justify-center space-y-8 px-5 py-16 sm:space-y-16 sm:px-10 sm:py-16 lg:px-16 lg:py-24">
+        <section className="relative space-y-8 py-8 sm:space-y-16 sm:py-16 lg:py-24 bg-dotted-background" id={'hero'}>
             <div className="mx-auto flex max-w-7xl flex-col items-center gap-7 px-4 text-center sm:px-6 lg:px-8">
                 <div className="z-10 flex items-center gap-3">
                     <AvatarGroup className="size-9.5" avatars={avatars} limit={5}/>
@@ -92,13 +92,15 @@ const HeroSection = () => {
                         Companies &amp; Teams
                     </p>
                 </div>
-                <h1 className="z-10 max-w-5xl text-3xl font-bold sm:text-4xl lg:text-5xl lg:leading-[1.29167] transition-all duration-600">
-                    Custom Software Development Solutions Tailored to Your{" "}
-                    <FlipWords
-                        words={["Business", "Vision", "Growth", "Goals", "Future"]}
-                        duration={3000}
-                        className="text-5xl font-bold"
-                    />
+                <h1 className="z-10 max-w-5xl text-3xl font-bold sm:text-4xl lg:text-5xl lg:leading-[1.29167]">
+                    Custom Software Development Solutions Tailored to Your{" "}    <br className="block sm:hidden" />
+                    <span className={'relative inline-block font-extrabold'}>
+                        <FlipWords
+                            words={["Business", "Vision", "Growth", "Goals", "Future"]}
+                            duration={3000}
+                            className="text-5xl font-bold"
+                        />
+                    </span>
                 </h1>
                 <p className="text-muted-foreground z-10 max-w-212 text-lg">
                     At {AppSettings.COMPANY_NAME}, we turn ideas and business
@@ -106,10 +108,11 @@ const HeroSection = () => {
                     confidence.
                 </p>
 
-                <div className="z-10 flex items-center gap-2 w-full max-w-200 mx-auto">
-                    <div className="text-muted-foreground font-medium w-44">
+                <div className="z-10 flex items-center gap-6">
+                    <span className="text-muted-foreground font-medium w-44">
                         Trusted by
-                    </div>
+                    </span>
+
                     <TrustedByLogos
                         logos={logos}
                         limit={4}
@@ -121,30 +124,35 @@ const HeroSection = () => {
                     <Link
                         href="/contact"
                         className="
-                            inline-flex
-                            items-center
-                            gap-2
-                            rounded-full
-                            bg-neutral-900
-                            px-4
-                            py-1
-                            text-[13.5px]
-                            font-medium
-                            text-white
-                            transition-colors
-                            duration-500
-                            hover:bg-[#0B9944]
-                            dark:bg-white
-                            dark:text-neutral-900
-                            dark:hover:bg-[#0B9944]
-                            dark:hover:text-white
+                              hover:bg-[#0B9944] dark:hover:bg-[#0B9944]
+                              focus-visible:border-ring focus-visible:ring-ring/50
+                              aria-invalid:border-destructive aria-invalid:ring-destructive/20
+                              dark:aria-invalid:ring-destructive/40
+
+                              inline-flex shrink-0 items-center justify-center
+                              font-medium whitespace-nowrap
+                              transition-all outline-none
+                              focus-visible:ring-[3px]
+                              disabled:pointer-events-none disabled:opacity-50
+
+                              [&_svg]:pointer-events-none
+                              [&_svg]:shrink-0
+                              [&_svg:not([class*='size-'])]:size-4
+
+                              bg-primary text-primary-foreground
+                              hover:text-white
+
+                             h-10 w-auto px-6 gap-2
+
+                              text-base rounded-md
+                              sm:max-[400px]:flex-1
                        "
                     >
                         Estimate project
-                        <Headset size={16} className={"hidden sm:inline-flex"} />
+                        <Headset size={16}  />
                     </Link>
 
-                    <Link href={'#'} className={"hover:bg-muted rounded-full hover:text-foreground aria-expanded:bg-muted aria-expanded:text-foreground dark:hover:bg-muted/50 inline-flex items-center gap-2  px-4 py-1 text-[13.5px]"}>
+                    <Link href={'#show-case'} className={"focus-visible:border-ring focus-visible:ring-ring/50 aria-invalid:border-destructive aria-invalid:ring-destructive/20 dark:aria-invalid:ring-destructive/40 inline-flex shrink-0 items-center justify-center gap-2 font-medium whitespace-nowrap transition-all outline-none focus-visible:ring-[3px] disabled:pointer-events-none disabled:opacity-50 [&_svg]:pointer-events-none [&_svg]:shrink-0 [&_svg:not([class*='size-'])]:size-4 bg-secondary text-secondary-foreground hover:bg-secondary/80 h-10 px-6 has-[>svg]:px-4 rounded-lg px-6! text-base shadow-sm max-[400px]:flex-1"}>
                         Learn more
                         <MoveRight  size={16} />
                     </Link>

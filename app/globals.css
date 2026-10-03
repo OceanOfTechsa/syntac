@@ -70,6 +70,7 @@
   --font-mono: var(--font-mono);
   --font-serif: var(--font-serif);
   --font-kalam: var(--font-kalam);
+  --font-Signature: var(--font-signature);
   --font-brand: var(--font-brand);
 
   --radius-sm: calc(var(--radius) - 4px);
@@ -99,7 +100,7 @@
   --radius-4xl: calc(var(--radius) * 2.6);
 
   --header-z-index: 30;
-  --header-height: 45px;
+  --header-height: 55px;
 }
 
 html {
@@ -247,6 +248,10 @@ html {
     font-family: var(--font-brand), cursive;
   }
 
+  .font-signature {
+    font-family: var(--font-Signature), cursive;
+  }
+
   @keyframes slide-logos {
     to {
       transform: translateX(calc(-50% - 2rem));
@@ -314,4 +319,15 @@ html {
 
 ::-webkit-scrollbar-thumb:hover {
   background: var(--color-brand-light);
+}
+
+/* app/globals.css  (or your main stylesheet) */
+
+/* Hide vanilla-cookieconsent default UI – we use a custom React UI */
+#cc-main {
+  display: none !important;
+  visibility: hidden !important;
+  pointer-events: none !important;
+  height: 0 !important;
+  overflow: hidden !important;
 }

@@ -1,4 +1,4 @@
-export interface IReview {
+export interface ITestimonial {
     name: string,
     surname: string,
     details: string,
@@ -7,9 +7,10 @@ export interface IReview {
     date: string,
     title?: string,
     categories: string[];
+    index: number;
 }
 
-export const Reviews: IReview[] = [
+export const TESTIMONIALS: ITestimonial[] = [
     {
         name: "Phindile",
         surname: "Mkhize",
@@ -21,6 +22,7 @@ export const Reviews: IReview[] = [
         date: "16 Aug 2024",
         title: "Ms",
         categories: ["web-development", "web-design", "hosting"],
+        index: 1
     },
     {
         name: "Nompumelelo",
@@ -38,6 +40,7 @@ export const Reviews: IReview[] = [
             "web-design",
             "ui-ux-design",
         ],
+        index: 2
     },
     {
         "name": "Sithembiso",
@@ -47,7 +50,8 @@ export const Reviews: IReview[] = [
         "avatar": "https://lh3.googleusercontent.com/a-/ALV-UjVUjZnOR1Or66ariGnNLMrIpjsmk-eBcfz5u0-2rGU5DSIuSSR3Nw=s50-c-mo",
         "date": "18 Aug 2024",
         "title": "Mr",
-        "categories": ["web-development", "automation", "mentorship"]
+        "categories": ["web-development", "automation", "mentorship"],
+        index: 3
     },
     {
         name: "Thamsanqa",
@@ -65,6 +69,7 @@ export const Reviews: IReview[] = [
             "ui-ux-design",
             "maintenance-support",
         ],
+        index: 4
     },
     // {
     //     name: "Sanele",
@@ -82,6 +87,7 @@ export const Reviews: IReview[] = [
     //         "web-design",
     //         "hosting",
     //     ],
+    //    index: 5
     // },
     {
         name: "Sithembelenkosini",
@@ -94,6 +100,7 @@ export const Reviews: IReview[] = [
         date: "14 Nov 2024",
         title: "Ms",
         categories: ["seo-optimization", "web-development", "maintenance-support"],
+        index: 6
     },
     {
         name: "Nonjabulo",
@@ -111,6 +118,7 @@ export const Reviews: IReview[] = [
             "web-design",
             "ui-ux-design",
         ],
+        index: 7
     },
     {
         name: "Kamala",
@@ -128,6 +136,7 @@ export const Reviews: IReview[] = [
             "maintenance-support",
             "hosting",
         ],
+        index: 8
     },
     {
         name: "Nokujabula",
@@ -146,5 +155,6 @@ export const Reviews: IReview[] = [
             "web-design",
             "ui-ux-design",
         ],
+        index: 9
     },
 ];
