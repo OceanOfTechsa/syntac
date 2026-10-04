@@ -269,60 +269,104 @@ const Header = ({
                                     <DropdownMenu key={link.label}>
                                         <DropdownMenuTrigger
                                             className={cn(
-                                                "relative text-sm transition-colors flex gap-2 items-center cursor-pointer",
-
-                                                "after:absolute",
-                                                "after:left-0",
-                                                "after:-bottom-0.5",
-                                                "after:h-[2px]",
-                                                "after:w-0",
-                                                "after:bg-[#0B9944]",
-                                                "after:transition-all",
-                                                "after:duration-300",
+                                                "group relative flex cursor-pointer items-center gap-1.5 text-sm font-medium outline-none transition-colors",
+                                                "after:absolute after:-bottom-1 after:left-0 after:h-[2px] after:w-0",
+                                                "after:bg-[#0B9944] after:transition-all after:duration-300",
                                                 "hover:after:w-full",
-                                                "hover:text-neutral-900",
-                                                "dark:hover:text-white",
+                                                "focus-visible:ring-0",
                                                 isActive(link.href!)
                                                     ? "text-neutral-900 dark:text-white"
-                                                    : "text-neutral-500 dark:text-white/60"
+                                                    : "text-neutral-500 dark:text-white/60",
+                                                "hover:text-neutral-900 dark:hover:text-white"
                                             )}
                                         >
-                                            {link.label}
+                                            <span>{link.label}</span>
+
                                             <svg
                                                 xmlns="http://www.w3.org/2000/svg"
-                                                width="16"
-                                                height="16"
+                                                width="24"
+                                                height="24"
                                                 viewBox="0 0 24 24"
                                                 fill="none"
                                                 stroke="currentColor"
                                                 strokeWidth="2"
                                                 strokeLinecap="round"
                                                 strokeLinejoin="round"
-                                                className="size-3.5 opacity-60"
+                                                className="size-3.5 opacity-50 transition-transform duration-200 group-data-[state=open]:rotate-180"
                                             >
                                                 <path d="m6 9 6 6 6-6" />
                                             </svg>
                                         </DropdownMenuTrigger>
 
-                                        <DropdownMenuContent align="start" sideOffset={8} className="min-w-66 rounded-md gap-1">
-                                            {link.children.map((child) => (
-                                                <DropdownMenuItem key={child.href} >
-                                                    <Link
-                                                        href={child.href}
-                                                        className={cn(
-                                                            "flex flex-col items-start gap-0.5 cursor-pointer w-full p-1",
-                                                            isActive(child.href) && "bg-accent"
-                                                        )}
+                                        <DropdownMenuContent
+                                            align="start"
+                                            sideOffset={10}
+                                            className={cn(
+                                                "w-72 rounded-md p-1.5",
+                                            )}
+                                        >
+                                            {link.children.map((child) => {
+                                                const active = isActive(child.href);
+
+                                                return (
+                                                    <DropdownMenuItem
+                                                        key={child.href}
+
+                                                        className="p-0 focus:bg-transparent"
                                                     >
-                                                        <span className="font-medium">{child.label}</span>
-                                                        {child.description && (
-                                                            <span className="text-xs text-muted-foreground font-normal">
-                                                                {child.description}
-                                                            </span>
-                                                        )}
-                                                    </Link>
-                                                </DropdownMenuItem>
-                                            ))}
+                                                        <Link
+                                                            href={child.href}
+                                                            className={cn(
+                                                                "group relative flex w-full items-start gap-3 rounded-r-md px-3 py-3",
+                                                                "transition-colors duration-200",
+                                                                "hover:bg-muted/70",
+                                                                active && "bg-muted/60"
+                                                            )}
+                                                        >
+                                                            <span
+                                                                className={cn(
+                                                                    "absolute left-0 top-1/2 h-11 w-0.5 -translate-y-1/2 rounded-full",
+                                                                    "bg-[#0B9944] transition-opacity duration-200",
+                                                                    active
+                                                                        ? "opacity-100"
+                                                                        : "opacity-0 group-hover:opacity-100"
+                                                                )}
+                                                            />
+
+                                                            <div className="min-w-0 flex-1">
+                                                                <div className="flex items-center gap-2">
+                                                                    <span
+                                                                        className={cn(
+                                                                            "text-sm font-medium transition-colors",
+                                                                            active
+                                                                                ? "text-[#0B9944]"
+                                                                                : "text-foreground"
+                                                                        )}
+                                                                    >
+                                                                        {child.label}
+                                                                    </span>
+
+                                                                    {/*<span*/}
+                                                                    {/*    className={cn(*/}
+                                                                    {/*        "size-1 rounded-full bg-[#0B9944]",*/}
+                                                                    {/*        "opacity-0 transition-opacity duration-200",*/}
+                                                                    {/*        active*/}
+                                                                    {/*            ? "opacity-100"*/}
+                                                                    {/*            : "group-hover:opacity-100"*/}
+                                                                    {/*    )}*/}
+                                                                    {/*/>*/}
+                                                                </div>
+
+                                                                {/*{child.description && (*/}
+                                                                {/*    <span className="mt-1 block text-xs leading-5 text-muted-foreground">*/}
+                                                                {/*        {child.description}*/}
+                                                                {/*    </span>*/}
+                                                                {/*)}*/}
+                                                            </div>
+                                                        </Link>
+                                                    </DropdownMenuItem>
+                                                );
+                                            })}
                                         </DropdownMenuContent>
                                     </DropdownMenu>
                                 );

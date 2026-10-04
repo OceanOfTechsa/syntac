@@ -29,7 +29,27 @@ const PageLinks: LinkType[] =  [
 ]
 
 const HeaderLinks: LinkType[] = [
-    { label: "About Us", href: "/about" },
+    { label: "Home", href: "/" },
+    {
+        label: "About Us",
+        children: [
+            {
+                label: "About Us",
+                href: "/about",
+                description: "Learn about SYNTAC, our story, values, and approach.",
+            },
+            {
+                label: "Our Story",
+                href: "/about/story",
+                description: "Follow our journey from Ocean of Tech to SYNTAC.",
+            },
+            {
+                label: "Our Team",
+                href: "/about/team",
+                description: "Meet the people behind SYNTAC.",
+            },
+        ],
+    },
     { label: "Services", href: "/services" },
     { label: "Cases", href: "/case-studies" },
     // { label: "Testimonials", href: "/testimonials" },

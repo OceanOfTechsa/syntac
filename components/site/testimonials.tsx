@@ -58,7 +58,7 @@ const Testimonials = () => {
     const [index, setIndex] = useState(0)
     const [previousIndex, setPreviousIndex] = useState(0)
     const [direction, setDirection] = useState(1)
-    // Drives which quote/name is actually rendered. Only updated mid-timeline
+    // Drives which quote/name is actually rendered. Only updated mid-story
     // (via tl.call), so the old quote stays visible through its exit and the
     // new one only appears once the enter animation begins — the GSAP
     // equivalent of Framer's <AnimatePresence mode="wait">.

@@ -2,7 +2,7 @@ import SectionHeader from "@/components/site/shared/section-header";
 
 const HeroSection = () => {
     return (
-        <section className={'my-16 flex w-full flex-col items-center gap-4'}>
+        <section className={'my-16 flex w-full flex-col items-center gap-4'} id={'hero'}>
             <SectionHeader
                 preTitle="Privacy Policy"
                 title="How We Handle Your Information"

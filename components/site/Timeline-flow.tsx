@@ -121,7 +121,7 @@ export function TimelineFlow({
         const progress = { t: 0 };
 
         // Flashes a single stop's connector + badge, then fades them back down
-        // shortly after — independent of the main timeline, so it never lingers.
+        // shortly after — independent of the main story, so it never lingers.
         const flashStop = (i: number) => {
             const connector = stopConnectorRefs.current[i];
             const badge = stopBadgeRefs.current[i];

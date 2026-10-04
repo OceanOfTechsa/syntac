@@ -6,6 +6,7 @@ const PrivacyDetailsSection = () => {
             className={
                 "mx-auto max-w-235 space-y-8 px-4 py-8 sm:px-6 sm:py-16 lg:border-x lg:border-dashed lg:px-12 lg:py-24"
             }
+            id={'details'}
         >
             {/* Introduction */}
             <div className="space-y-4">

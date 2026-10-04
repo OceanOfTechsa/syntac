@@ -55,7 +55,7 @@ export default function TrustedByLogos({
     }
     if (sets.length === 0) sets.push([])
 
-    // GSAP timeline – much more reliable collection of elements
+    // GSAP story – much more reliable collection of elements
     useEffect(() => {
         const container = containerRef.current
         if (!container) return

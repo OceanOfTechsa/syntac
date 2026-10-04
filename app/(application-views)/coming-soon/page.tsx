@@ -1,5 +1,9 @@
 import ErrorPage from "@/components/site/error-page";
+import {Metadata} from "next";
 
+export const metadata: Metadata = {
+    title: "Coming Soon",
+};
 export default function ComingSoonPage() {
     return (
         <ErrorPage

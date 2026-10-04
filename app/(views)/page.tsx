@@ -11,6 +11,7 @@ import Faq from "@/components/site/sections/home/faq";
 import SectionDivider from "@/components/site/section-devider";
 import TestimonialsSection from "@/components/site/sections/home/testimonials";
 import WhyWeStarted from "@/components/site/sections/home/why-we-started";
+import {faqs} from "@/data/faqs"
 
 export const metadata: Metadata = {
     title: "Syntac Software",
@@ -28,7 +29,7 @@ const HomePage = (): JSX.Element => {
                 <ProjectEstimator data-divider/>
                 <TestimonialsSection data-divider/>
                 <WhyWeStarted data-divider/>
-                <Faq data-divider/>
+                <Faq faqs={faqs} data-divider/>
             </SectionDivider>
         </div>
     );

@@ -1,0 +1,186 @@
+import React, {JSX} from 'react'
+import Image from "next/image";
+import AppSettings from "@/utils/AppSettings";
+import Link from "next/link";
+import SectionHeader from "@/components/site/shared/section-header";
+
+interface TeamMember {
+    name: string;
+    surname: string;
+    role: string;
+    img: string;
+}
+
+const Members = () => {
+    const teamMembers: TeamMember[] = [
+        {
+            name: "Sithuliso",
+            surname: "Zulu",
+            role: "Co-founder & Developer",
+            img: "/assets/site/team/Mondli.jpg",
+        },
+        {
+            name: "Sanele",
+            surname: "Jeza",
+            role: "Co-founder & Developer",
+            img: "/assets/site/team/sanele.jpeg",
+        },
+        {
+            name: "Malibongwe",
+            surname: "Sibisi",
+            role: "Designer",
+            img: "/assets/site/team/malibongwe.webp",
+        },
+        {
+            name: "Asiphe",
+            surname: "Khuboni",
+            role: "Technical Support",
+            img: "/assets/site/team/asiphekh.jpeg",
+        },
+        {
+            name: "Ntokozo",
+            surname: "Juqu",
+            role: "Designer",
+            img: "/assets/site/team/juqu.webp",
+        },
+        {
+            name: "Sithembiso",
+            surname: "Ncwane",
+            role: " Software Developer",
+            img: "/assets/site/team/sthembiso.jpeg",
+        },
+    ];
+
+    return (
+        <section className="py-16">
+            <SectionHeader
+                preTitle={`The Syntac team`}
+                showTitle={false}
+                showDescription={false}
+            />
+            <div className="max-w-7xl mx-auto px-4 md:px-0 mt-20">
+                <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 xl:grid-cols-4 gap-6 w-full">
+                    {teamMembers.map(
+                        (member: TeamMember, index: number): JSX.Element => (
+                            <div
+                                key={index}
+                                className="relative bg-transparent rounded-sm overflow-hidden transition-shadow group mx-auto w-full max-w-[475px] sm:max-w-none"
+                            >
+                                {/* Image */}
+                                <div className="relative overflow-hidden rounded-sm">
+                                    {member.img !== "" ? (
+                                        <div className="relative h-[340px] w-full sm:h-[405px] sm:w-[275px] overflow-hidden rounded-sm">
+                                            <Image
+                                                src={member.img}
+                                                alt={`${member.name} ${member.surname}`}
+                                                fill
+                                                sizes="(max-width: 639px) 100vw, (max-width: 767px) 275px, (max-width: 1279px) 275px, 275px"
+                                                quality={100}
+                                                priority={true}
+                                                className="h-full w-full transform object-cover transition-transform duration-800 ease-in-out group-hover:scale-104"
+                                            />
+                                        </div>
+                                    ) : (
+                                        <div className="h-[340px] sm:h-[405px] flex items-center justify-center bg-gradient-to-br from-gray-300 via-gray-100 to-gray-300 dark:from-[#202124] dark:via-[#2a2b2f] dark:to-[#1a1b1e]">
+                                            {/* Avatar Circle */}
+                                            <div className="flex items-center justify-center w-24 h-24 rounded-full bg-white/60 dark:bg-white/10 backdrop-blur-md shadow-sm">
+                                                {/* Letter */}
+                                                <span className="text-4xl font-bold text-gray-700 dark:text-white transition-transform duration-800 ease-out group-hover:scale-125">
+                                        {member.name.charAt(0)} {member.surname.charAt(0)}
+                                    </span>
+                                            </div>
+                                        </div>
+                                    )}
+                                </div>
+
+                                {/* Body */}
+                                <div className="text-start mt-4">
+                                    <h6 className="text-[1.2rem] font-semibold group-hover:text-[#0B9944] dark:hover:text-green-500 transition-colors duration-500 ease-in-out">
+                                        {member.name} {member.surname}
+                                    </h6>
+
+                                    <div className="font-normal text-[#c4c5c7] text-[0.875em] -mt-2">
+                                        {member.role}
+                                    </div>
+                                </div>
+                            </div>
+                        ),
+                    )}
+
+                    {AppSettings.HIRING && (
+                        <Link
+                            href="/careers"
+                            className="border rounded-sm p-2 flex items-center justify-center group h-[405px] group hover:bg-white dark:hover:bg-[#202124] transition-all duration-500 ease-in-out"
+                        >
+                            <div className="container mx-auto px-2">
+                                <div className="mx-auto text-center">
+                                    <figure className="mb-4 flex justify-center">
+                                        <svg
+                                            width="223.6"
+                                            height="87.2"
+                                            viewBox="0 0 223.6 87.2"
+                                            xmlns="http://www.w3.org/2000/svg"
+                                            className="fill-current text-primary"
+                                        >
+                                            <path
+                                                className="fill-black dark:fill-white"
+                                                d="M222.9,53.8c-13.2-3-28-3-41,0.9c-5.5,1.7-11,4.3-14.9,8.7c-1.3-0.1-2.6-0.2-3.8-0.1 c-5.8,0.1-11.6,1.5-16.9,3.7c-2.9,1.2-5.7,2.9-8.5,4.4c-3.7,1.9-7.4,3.8-11.3,5.3c-7.3,2.9-16,5-23.5,1.7c-1.5-0.6-2.9-1.5-4.1-2.6 c6.5-2.6,12.2-7.9,13.2-15c0.8-6.6-5.1-12.1-11.6-11.4c-5,0.6-7.5,5.6-8.3,10.1c-0.9,4.9-0.3,10.8,2.7,14.9 c0.2,0.2,0.4,0.5,0.5,0.7c-0.4,0.1-0.8,0.2-1.3,0.3c-6.6,1.5-14.3,0.3-20.3-2.9c-6.1-3.3-10.3-9.1-12.3-15.6 c-0.2-0.7-1.2-0.4-1,0.3c2.1,7.3,6.7,13.4,13.4,17.1c6.8,3.7,15.4,4.5,22.7,2.4c0,0,0.1,0,0.1,0c4.5,4.4,11.2,5.9,17.3,5.4 c8-0.6,15.6-4.1,22.7-7.7c5.6-2.9,10.8-6,17-7.6c3.8-0.9,7.8-1.5,11.8-1.3c-3.3,4.8-4.6,11.1-2.3,16.5c2.8,6.4,11.3,6.7,16.3,2.8 c5.1-4,2.8-12.4-1-16.4c-2.4-2.5-5.7-3.9-9.1-4.5c0.2-0.2,0.3-0.3,0.5-0.4c4.3-4,10.2-6.2,15.9-7.5c11.8-2.8,24.9-2.7,36.7,0 C223.6,56,224.1,54,222.9,53.8z M95.5,71.6c-1.2-2.4-1.7-5.1-1.8-7.8c-0.1-4.5,1.1-11.2,6.1-12.6c2.4-0.7,5.2,0.4,7.2,1.7 c2.9,1.9,3.5,5.5,2.9,8.7c-1.2,6.2-6.8,10.5-12.6,12.6C96.7,73.4,96,72.5,95.5,71.6z M171.5,66.3c5.7,1.8,10.3,7.8,8.5,14 c-1.1,3.9-6.1,5.2-9.6,4.8c-3.5-0.4-5.5-3.4-6.2-6.5c-1.1-4.7,0.6-9.5,3.5-13.1C169,65.7,170.2,65.9,171.5,66.3z"
+                                            ></path>
+                                            <polygon
+                                                className="fill-[#0B9944]"
+                                                points="65.3,39 61,56.8 0.7,0.7"
+                                            ></polygon>
+                                            <path
+                                                className="fill-black dark:fill-white"
+                                                d="M60.6,57.3L0.2,1.1C0,0.9-0.1,0.5,0.1,0.3C0.3,0,0.7-0.1,1,0.1l64.7,38.3c0.2,0.1,0.4,0.4,0.3,0.7l-4.3,17.8 c-0.1,0.2-0.2,0.4-0.4,0.5c-0.1,0-0.1,0-0.2,0C60.9,57.4,60.7,57.4,60.6,57.3z M5.6,4.3l55.1,51.2l3.9-16.3L5.6,4.3z"
+                                            ></path>
+                                            <polygon
+                                                className="fill-[#0B9944]"
+                                                points="56.5,42.4 61,56.8 0.7,0.8"
+                                            ></polygon>
+                                            <path
+                                                className="fill-black dark:fill-white"
+                                                d="M60.6,57.3L0.2,1.3C0,1.1-0.1,0.7,0.2,0.4c0.2-0.3,0.6-0.3,0.9-0.1l55.8,41.5c0.1,0.1,0.2,0.2,0.2,0.3 l4.6,14.4c0.1,0.3,0,0.6-0.3,0.8c-0.1,0.1-0.2,0.1-0.4,0.1C60.9,57.4,60.7,57.4,60.6,57.3z M10.1,8.7l49.6,45.9l-3.8-11.8 L10.1,8.7z"
+                                            ></path>
+                                            <polygon
+                                                className="fill-[#0B9944]"
+                                                points="0.7,0.7 91.5,28.5 65.2,38.8"
+                                            ></polygon>
+                                            <path
+                                                className="fill-black dark:fill-white"
+                                                d="M64.9,39.4L0.3,1.2C0,1.1-0.1,0.7,0.1,0.4C0.2,0.1,0.5-0.1,0.9,0l90.9,27.8c0.3,0.1,0.5,0.3,0.5,0.6 c0,0.3-0.2,0.5-0.4,0.6L65.4,39.4c-0.1,0-0.2,0-0.2,0C65.1,39.4,65,39.4,64.9,39.4z M5.8,2.9l59.5,35.2l24.3-9.5L5.8,2.9z"
+                                            ></path>
+                                            <polygon
+                                                className="fill-[#0B9944]"
+                                                points="56.3,42.4 26.5,57.6 0.7,0.7"
+                                            ></polygon>
+                                            <path
+                                                className="fill-black dark:fill-white"
+                                                d="M26.3,58.3c-0.2-0.1-0.3-0.2-0.4-0.3L0.1,0.9c-0.1-0.3,0-0.6,0.2-0.8C0.5,0,0.8,0,1.1,0.1l55.7,41.8 c0.2,0.1,0.3,0.4,0.3,0.6c0,0.2-0.2,0.4-0.4,0.5L26.8,58.2c-0.1,0-0.2,0.1-0.3,0.1C26.5,58.3,26.4,58.3,26.3,58.3z M2.3,2.7 l24.5,54l28.2-14.4L2.3,2.7z"
+                                            ></path>
+                                        </svg>
+                                    </figure>
+
+                                    <h2 className="text-3xl md:text-4xl font-bold mb-3">
+                                        We&apos;re hiring!
+                                    </h2>
+                                    <p className=" text-gray-600 dark:text-[#c4c5c7] mb-5">
+                                        Our team is growing faster and we&apos;re always looking
+                                        for smart people
+                                    </p>
+
+                                    <div className="grid gap-2 sm:flex sm:justify-center sm:gap-4">
+                                        <div className="bg-[#202124] group-hover:bg-[#3c3e41] text-white px-[1rem] py-[0.5rem] rounded-sm inline-block transition-all duration-500 ease-in-out">
+                                            View open roles
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </Link>
+                    )}
+                </div>
+            </div>
+        </section>
+    )
+}
+export default Members
