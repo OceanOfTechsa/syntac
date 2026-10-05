@@ -1,4 +1,5 @@
 import { Metadata } from "next";
+
 import AppSettings from "@/utils/AppSettings";
 
 const CompanyName: string = AppSettings.COMPANY_NAME;
@@ -137,6 +138,24 @@ export const PublicOfferAgreementPageMetadata: Metadata = {
     "digital services agreement",
     "software services agreement",
     "website services agreement",
+    CompanyName,
+  ],
+};
+
+export const CookiePolicyPageMetadata: Metadata = {
+  title: "Cookie Policy",
+  description: `Learn how ${CompanyName} uses cookies and similar technologies to provide essential functionality, understand website usage, and improve your experience.`,
+  keywords: [
+    "cookie policy",
+    "cookies",
+    "website cookies",
+    "cookie consent",
+    "cookie preferences",
+    "cookie management",
+    "analytics cookies",
+    "essential cookies",
+    "privacy and cookies",
+    "website privacy",
     CompanyName,
   ],
 };

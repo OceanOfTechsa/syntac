@@ -6,6 +6,7 @@ import V1_5_0 from "@/components/site/sections/about/our-story/v1_5_0";
 import V1_6_0 from "@/components/site/sections/about/our-story/v1_6_0";
 import V1_7_0 from "@/components/site/sections/about/our-story/v1_7_0";
 import V1_8_0 from "@/components/site/sections/about/our-story/v1_8_0";
+import Last from "@/components/site/sections/about/our-story/last";
 
 const TimelineSection = () => {
     return (
@@ -20,6 +21,7 @@ const TimelineSection = () => {
                     <V1_6_0 />
                     <V1_7_0 />
                     <V1_8_0 />
+                    <Last />
                 </div>
             </div>
         </section>

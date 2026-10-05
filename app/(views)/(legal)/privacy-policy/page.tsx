@@ -1,11 +1,11 @@
-import SectionDivider from "@/components/site/section-devider";
-import HeroSection from "@/components/site/sections/privacy-policy/hero-section";
-import PrivacyDetailsSection from "@/components/site/sections/privacy-policy/details";
 import {Metadata} from "next";
 
-export const metadata: Metadata = {
-    title: "Privacy Policy",
-};
+import SectionDivider from "@/components/site/section-devider";
+import {PrivacyPolicyPageMetadata} from "@/utils/Site/sitePageMetadata";
+import HeroSection from "@/components/site/sections/privacy-policy/hero-section";
+import PrivacyDetailsSection from "@/components/site/sections/privacy-policy/details";
+
+export const metadata: Metadata = PrivacyPolicyPageMetadata;
 
 const PrivacyPolicyPage = () => {
     return (
@@ -17,4 +17,4 @@ const PrivacyPolicyPage = () => {
         </div>
     )
 }
-export default PrivacyPolicyPage
+export default PrivacyPolicyPage;

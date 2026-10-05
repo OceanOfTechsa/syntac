@@ -1,4 +1,5 @@
 import React from "react";
+import Link from "next/link";
 
 const PrivacyDetailsSection = () => {
     return (
@@ -136,7 +137,13 @@ const PrivacyDetailsSection = () => {
                 <p className="text-lg">
                     You can manage or disable cookies through your browser
                     settings. Disabling certain cookies may affect the
-                    functionality of some parts of the website.
+                    functionality of some parts of the website. You can read more here: {" "}
+                    <Link
+                      href="/cookie-policy"
+                      className="underline underline-offset-4"
+                    >
+                      Cookie Policy
+                    </Link>
                 </p>
             </div>
 

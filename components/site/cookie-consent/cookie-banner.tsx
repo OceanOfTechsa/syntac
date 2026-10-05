@@ -20,11 +20,8 @@ const CookieBanner = ({ open, onAcceptAll, onRejectOptional, onOpenSettings }: C
             aria-labelledby="cookie-banner-title"
             aria-describedby="cookie-banner-desc"
             className={cn(
-                "fixed inset-x-0 bottom-0 z-[100]",
-                // solid background – no transparency
-                "border-t border-zinc-200 bg-white",
-                "dark:border-zinc-800 dark:bg-zinc-950",
-                "shadow-[0_-4px_24px_rgba(0,0,0,0.08)] dark:shadow-[0_-4px_24px_rgba(0,0,0,0.4)]",
+                "fixed inset-x-0 bottom-0 z-[100] backdrop-blur-md",
+                "border-t border-dashed  bg-white dark:bg-[#0d0d0d]",
                 "animate-in slide-in-from-bottom-4 fade-in duration-300"
             )}
         >
@@ -34,22 +31,13 @@ const CookieBanner = ({ open, onAcceptAll, onRejectOptional, onOpenSettings }: C
                     <img src={'/assets/cookies-dark.svg'} alt="cookis" className={'object-cover rounded-full h-8 w-8 hidden dark:block'}/>
                     {/* Text */}
                     <div className="min-w-0 flex-1">
-                        <h2
-                            id="cookie-banner-title"
-                            className="font-semibold tracking-tight text-zinc-900 dark:text-zinc-100"
-                        >
+                        <h2 id="cookie-banner-title" className="font-semibold tracking-tight">
                             We use cookies
                         </h2>
-                        <p
-                            id="cookie-banner-desc"
-                            className="text-sm leading-relaxed text-zinc-600 dark:text-zinc-400"
-                        >
+                        <p id="cookie-banner-desc" className="text-sm leading-relaxed text-neutral-500 dark:text-white/40">
                             We use cookies to improve your experience, understand how our
                             website is used, and support essential functionality.{" "}
-                            <Link
-                                href="/cookie-policy"
-                                className="underline underline-offset-4 transition-colors hover:text-zinc-900 dark:hover:text-white"
-                            >
+                            <Link href="/cookie-policy" className="underline underline-offset-4 transition-colors hover:text-zinc-900 dark:hover:text-white">
                                 Cookie Policy
                             </Link>
                         </p>

@@ -1,49 +1,98 @@
-import Link from "next/link";
+import { accordionDataV1_8_0} from "@/data/changelog-data";
 import TimelineItem from "@/components/site/shared/time-line-item";
-import {ButtonLikeLink} from "@/components/site/shared-classes";
+import BadgeAccordion from "@/components/site/shared/badge-accordion";
+import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 
 function V1_8_0() {
+    const teamMembers = [
+        {
+            name: "Malibongwe Sibisi",
+            role: "Designer",
+            initials: "MS",
+            image: "/assets/site/team/malibongwe.webp",
+        },
+        {
+            name: "Ntokozo Juqu",
+            role: "Designer",
+            initials: "NJ",
+            image: "/assets/site/team/juqu.wepb",
+        },
+        {
+            name: "Sthembiso Ncwane",
+            role: "Software Developer",
+            initials: "SN",
+            image: "/assets/site/team/sthembiso.jpeg",
+        },
+        {
+            name: "Asiphe Khuboni",
+            role: "Technical Support",
+            initials: "AK",
+            image: "/assets/site/team/asiphek.jpeg",
+        },
+    ];
+
     return (
         <div>
-            <TimelineItem date="Today" version="Where we are">
+            <TimelineItem
+                date="February, 2026 - November, 2026"
+                version="Growing the Team"
+            >
                 <div className="space-y-4">
                     <div className="space-y-3">
                         <h3 className="text-xl font-semibold">
-                            Building What Comes Next
+                            Growing the Team
                         </h3>
 
                         <p className="text-muted-foreground text-sm">
-                            Today, SYNTAC brings together everything we have
-                            learned along the way — from websites and digital
-                            experiences to custom software and business systems.
+                            As the company continued to grow, new team members
+                            joined with different skills and perspectives,
+                            strengthening the foundation we were building
+                            together.
                         </p>
                     </div>
 
-                    {/*<img*/}
-                    {/*    src="/assets/site/about/our-story/today.webp"*/}
-                    {/*    alt="SYNTAC today"*/}
-                    {/*    className="w-full rounded-lg border object-cover"*/}
-                    {/*/>*/}
+                    <div className="flex flex-wrap gap-6">
+                        {teamMembers.map((member) => (
+                            <div
+                                key={member.name}
+                                className="flex min-w-20 flex-col gap-2"
+                            >
+                                <Avatar size="lg">
+                                    <AvatarImage
+                                        src={member.image}
+                                        alt={member.name}
+                                    />
+                                    <AvatarFallback>
+                                        {member.initials}
+                                    </AvatarFallback>
+                                </Avatar>
+
+                                <div className="space-y-0.5">
+                                    <p className="text-xs font-semibold">
+                                        {member.name}
+                                    </p>
+
+                                    <p className="text-muted-foreground text-xs">
+                                        {member.role}
+                                    </p>
+                                </div>
+                            </div>
+                        ))}
+                    </div>
 
                     <p className="text-muted-foreground">
-                        We continue to build technology around the goals,
-                        challenges, and opportunities of the businesses we work
-                        with.
+                        With design, development, and technical support
+                        capabilities growing alongside the team, we became
+                        better equipped to take on a wider range of projects
+                        and build more complete digital solutions.
                     </p>
 
                     <p className="text-muted-foreground">
-                        The name has changed. The technology has evolved.
-                        But the idea that started it all remains the same:
-                        building technology that solves meaningful problems.
+                        Each new addition brought valuable expertise while
+                        helping shape the team behind SYNTAC.
                     </p>
 
-
-                    <Link href="/contact"
-                        className={ButtonLikeLink}
-                    >
-                        Start a conversation
-                    </Link>
-
+                    <BadgeAccordion data={accordionDataV1_8_0} />
                 </div>
             </TimelineItem>
         </div>
