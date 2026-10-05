@@ -1,6 +1,6 @@
 import { OrbitRing } from "@/components/site/shared/orbiting-logos";
 
-const technologyPath = (name: string) =>
+export const technologyPath = (name: string) =>
     `/assets/shared/technologies/${name}.svg`;
 
 export const technologies: OrbitRing[] = [

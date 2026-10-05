@@ -22,7 +22,7 @@ const MapSection = () => {
 
                     <div className="flex gap-8 text-left justify-center mt-10">
                         {/* South Africa Card */}
-                        <div className="bg-white dark:bg-neutral-900 border rounded-sm p-6">
+                        <div className="bg-white dark:bg-neutral-900 border border-dashed rounded-sm p-6">
                             <div className="mb-6">
                                 <div className="relative w-16 h-16 rounded-full overflow-hidden">
                                     <img
