@@ -1,0 +1,9 @@
+User-agent: *
+Allow: /
+
+# Sitemap
+Sitemap: https://syntac.co.za/sitemap.xml
+
+# Private areas
+Disallow: /admin/
+Disallow: /private/

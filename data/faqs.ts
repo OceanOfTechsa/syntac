@@ -109,3 +109,66 @@ export const AboutFaqs: IFaq[] = [
             "SYNTAC is based in South Africa and works with clients locally and internationally. Whether we're working with a growing local business or a larger organisation, our approach remains focused on building technology around their goals.",
     },
 ];
+
+export const HowWeWorkFaqs: IFaq[] = [
+  {
+    key: "1",
+    question: "What is the first step when starting a project with SYNTAC?",
+    answer:
+      "Every project starts with a discovery conversation. We learn about your business, goals, challenges, requirements, and what you want the solution to achieve before recommending the right approach.",
+  },
+  {
+    key: "2",
+    question: "How does SYNTAC plan a project?",
+    answer:
+      "After understanding your needs, we define the scope, requirements, features, priorities, technology, and project milestones. This gives everyone a clear understanding of what will be built and how the project will progress.",
+  },
+  {
+    key: "3",
+    question: "Will I know what is happening throughout the project?",
+    answer:
+      "Yes. We keep clients informed throughout the project with clear milestones, progress updates, reviews, and communication. You will have opportunities to provide feedback and make informed decisions as the solution takes shape.",
+  },
+  {
+    key: "4",
+    question: "How long does a project take?",
+    answer:
+      "Project timelines depend on the scope, complexity, features, and level of design and development required. During planning, we break the project into milestones and provide a realistic timeline based on the work involved.",
+  },
+  {
+    key: "5",
+    question: "Can I make changes during development?",
+    answer:
+      "Yes. Feedback is an important part of the process. We encourage reviewing progress at appropriate stages so adjustments can be made while keeping the project scope, priorities, and timeline clear.",
+  },
+  {
+    key: "6",
+    question: "What happens during the design and development stage?",
+    answer:
+      "Once the direction is approved, we turn the requirements into the actual solution. This can include interface design, frontend development, backend development, database work, integrations, and other functionality required by the project.",
+  },
+  {
+    key: "7",
+    question: "Does SYNTAC test projects before delivery?",
+    answer:
+      "Yes. Before a solution is delivered, we test the functionality, interfaces, integrations, responsiveness, and other important areas to identify and resolve issues before launch.",
+  },
+  {
+    key: "8",
+    question: "What happens when the project is completed?",
+    answer:
+      "Once the agreed solution has been completed and reviewed, we prepare it for delivery or launch. Depending on the project, this can include deployment, configuration, handover, documentation, and guidance on using the solution.",
+  },
+  {
+    key: "9",
+    question: "Can SYNTAC help with hosting and deployment?",
+    answer:
+      "Yes. Where required, we can assist with deployment and technical configuration. Hosting, domains, business email, and other third-party services can be arranged according to the project's requirements and responsibilities.",
+  },
+  {
+    key: "10",
+    question: "What happens after my project launches?",
+    answer:
+      "Launch is not necessarily the end of the relationship. We can continue supporting your solution through maintenance, fixes, improvements, updates, and further development as your needs change.",
+  },
+];

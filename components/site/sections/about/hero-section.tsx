@@ -7,8 +7,6 @@ import {useTextReveal} from "@/lib/gsap/hooks/use-text-reveal";
 import {useRef} from "react";
 import Link from "next/link";
 import {Headset} from "lucide-react";
-import {technologies} from "@/data/technologies";
-import OrbitingLogos from "@/components/site/shared/orbiting-logos";
 
 const HeroSection = () => {
     const textRef = useRef<HTMLDivElement | null>(null);
@@ -77,8 +75,6 @@ const HeroSection = () => {
                        </Link>
                    </div>
                </div>
-
-               {/*<OrbitingLogos rings={technologies} className="mt-5" />*/}
            </div>
         </section>
     )

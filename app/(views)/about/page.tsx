@@ -1,19 +1,19 @@
 import React from 'react'
-import SectionDivider from "@/components/site/section-devider";
-import HeroSection from "@/components/site/sections/about/hero-section";
 import {Metadata} from "next";
-import WhatIsSyntac from "@/components/site/sections/about/what-is-syntac";
-import WorkWithSyntac from "@/components/site/sections/about/Work-with-syntac";
-import WhoWeWorkWith from "@/components/site/sections/about/who-we-work-with";
-import OurStory from "@/components/site/sections/about/our-story";
-import TestimonialsSection from "@/components/site/sections/home/testimonials";
+
 import {AboutFaqs} from "@/data/faqs";
 import Faq from "@/components/site/sections/home/faq";
 import MapSection from "@/components/site/sections/about/map";
+import SectionDivider from "@/components/site/section-devider";
+import {AboutUsPageMetadata} from "@/utils/Site/sitePageMetadata";
+import OurStory from "@/components/site/sections/about/our-story";
+import HeroSection from "@/components/site/sections/about/hero-section";
+import WhatIsSyntac from "@/components/site/sections/about/what-is-syntac";
+import WorkWithSyntac from "@/components/site/sections/about/Work-with-syntac";
+import WhoWeWorkWith from "@/components/site/sections/about/who-we-work-with";
+import TestimonialsSection from "@/components/site/sections/home/testimonials";
 
-export const metadata: Metadata = {
-    title: "About us",
-};
+export const metadata: Metadata = AboutUsPageMetadata;
 
 const AboutPage = () => {
     return (
@@ -30,5 +30,6 @@ const AboutPage = () => {
             </SectionDivider>
         </div>
     )
-}
-export default AboutPage
+};
+
+export default AboutPage;

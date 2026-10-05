@@ -6,11 +6,10 @@ import HeroSection from "@/components/site/sections/team/hero";
 import Members from "@/components/site/sections/team/members";
 import Faq from "@/components/site/sections/home/faq";
 import {AboutFaqs} from "@/data/faqs";
+import {OurTeamPageMetadata} from "@/utils/Site/sitePageMetadata";
 
 
-export const metadata: Metadata = {
-    title: "Our Team",
-};
+export const metadata: Metadata = OurTeamPageMetadata;
 
 const TeamPage = () => {
     return (
@@ -23,4 +22,4 @@ const TeamPage = () => {
         </div>
     )
 }
-export default TeamPage
+export default TeamPage;
