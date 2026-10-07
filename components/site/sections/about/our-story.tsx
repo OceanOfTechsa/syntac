@@ -118,20 +118,20 @@ const OurStory = () => {
 
 
                 <div className="flex flex-wrap justify-center gap-4 max-sm:flex-col sm:items-center">
-                    <UserBanner
-                        image={'https://res.cloudinary.com/lbge76mf/image/upload/v1790977929/sithu.jpg'}
-                        fullName={'Sithuliso Zulu'}
-                        linkedInUrl={'https://www.linkedin.com/in/sithuliso-zulu'}
-                        role={'Co-founder & Developer'}
-                    />
+                  <UserBanner
+                    image={'https://ik.imagekit.io/syntac/Syntac%20team/tr:w-390,h-390,fo-face:r-max/me.jpeg'}
+                    fullName={'Sithuliso Zulu'}
+                    linkedInUrl={'https://www.linkedin.com/in/sithuliso-zulu'}
+                    role={'Co-founder & Developer'}
+                  />
 
-                    <UserBanner
-                        image={'https://res.cloudinary.com/lbge76mf/image/upload/v1790977929/sithu.jpg'}
-                        fullName={'Sanele Jeza'}
-                        linkedInUrl={'https://www.linkedin.com/in/sithuliso-zulu'}
-                        role={'Co-founder & Developer'}
-                        className={'flex grow items-center justify-end gap-3 max-sm:flex-row-reverse'}
-                    />
+                  <UserBanner
+                    image={'https://ik.imagekit.io/syntac/Syntac%20team/tr:w-410,h-410,fo-face:r-max/sanele.jpeg'}
+                    fullName={'Sanele Jeza'}
+                    linkedInUrl={'https://www.linkedin.com/in/sithuliso-zulu'}
+                    role={'Co-founder & Developer'}
+                    className={'flex grow items-center justify-end gap-3 max-sm:flex-row-reverse'}
+                  />
                 </div>
             </div>
         </section>

@@ -1,6 +1,6 @@
 import React from 'react'
 import SectionHeader from "@/components/site/shared/section-header";
-import { StartYourProject } from "@/components/site/forms/project-estimator-wizard";
+import {EstimateProjectButton} from "@/components/providers/project-estimator-provider"
 
 const ProjectEstimator = () => {
     return (
@@ -12,7 +12,7 @@ const ProjectEstimator = () => {
                 desc="Have a project in mind? Tell us what you’re looking to achieve, and we’ll help shape your requirements into a practical technology solution."
             />
 
-            <StartYourProject />
+          <EstimateProjectButton />
         </section>
     )
 }

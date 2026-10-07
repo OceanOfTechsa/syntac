@@ -1,56 +1,14 @@
+
 import React, {JSX} from 'react'
 import Image from "next/image";
 import AppSettings from "@/utils/AppSettings";
 import Link from "next/link";
 import SectionHeader from "@/components/site/shared/section-header";
+import {type TeamMember, teamMembers} from "@/data/team";
+import TeamMemberImage from "@/components/site/sections/about/team/team-member-image";
 
-interface TeamMember {
-    name: string;
-    surname: string;
-    role: string;
-    img: string;
-}
 
 const Members = () => {
-    const teamMembers: TeamMember[] = [
-        {
-            name: "Sithuliso",
-            surname: "Zulu",
-            role: "Co-founder & Developer",
-            img: "/assets/site/team/Mondli.jpg",
-        },
-        {
-            name: "Sanele",
-            surname: "Jeza",
-            role: "Co-founder & Developer",
-            img: "/assets/site/team/sanele.jpeg",
-        },
-        {
-            name: "Malibongwe",
-            surname: "Sibisi",
-            role: "Designer",
-            img: "/assets/site/team/malibongwe.webp",
-        },
-        {
-            name: "Asiphe",
-            surname: "Khuboni",
-            role: "Technical Support",
-            img: "/assets/site/team/asiphekh.jpeg",
-        },
-        {
-            name: "Ntokozo",
-            surname: "Juqu",
-            role: "Designer",
-            img: "/assets/site/team/juqu.webp",
-        },
-        {
-            name: "Sithembiso",
-            surname: "Ncwane",
-            role: " Software Developer",
-            img: "/assets/site/team/sthembiso.jpeg",
-        },
-    ];
-
     return (
         <section className="py-16">
             <SectionHeader
@@ -62,48 +20,45 @@ const Members = () => {
                 <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 xl:grid-cols-4 gap-6 w-full">
                     {teamMembers.map(
                         (member: TeamMember, index: number): JSX.Element => (
-                            <div
-                                key={index}
-                                className="relative bg-transparent rounded-sm overflow-hidden transition-shadow group mx-auto w-full max-w-[475px] sm:max-w-none"
-                            >
-                                {/* Image */}
-                                <div className="relative overflow-hidden rounded-sm">
-                                    {member.img !== "" ? (
-                                        <div className="relative h-[340px] w-full sm:h-[405px] sm:w-[275px] overflow-hidden rounded-sm">
-                                            <Image
-                                                src={member.img}
-                                                alt={`${member.name} ${member.surname}`}
-                                                fill
-                                                sizes="(max-width: 639px) 100vw, (max-width: 767px) 275px, (max-width: 1279px) 275px, 275px"
-                                                quality={100}
-                                                priority={true}
-                                                className="h-full w-full transform object-cover transition-transform duration-800 ease-in-out group-hover:scale-104"
-                                            />
-                                        </div>
-                                    ) : (
-                                        <div className="h-[340px] sm:h-[405px] flex items-center justify-center bg-gradient-to-br from-gray-300 via-gray-100 to-gray-300 dark:from-[#202124] dark:via-[#2a2b2f] dark:to-[#1a1b1e]">
-                                            {/* Avatar Circle */}
-                                            <div className="flex items-center justify-center w-24 h-24 rounded-full bg-white/60 dark:bg-white/10 backdrop-blur-md shadow-sm">
-                                                {/* Letter */}
-                                                <span className="text-4xl font-bold text-gray-700 dark:text-white transition-transform duration-800 ease-out group-hover:scale-125">
-                                        {member.name.charAt(0)} {member.surname.charAt(0)}
-                                    </span>
-                                            </div>
-                                        </div>
-                                    )}
+                          <div
+                            key={index}
+                            className="group relative mx-auto w-full max-w-[475px] overflow-hidden rounded-sm bg-transparent sm:max-w-none"
+                          >
+                            {/* Image Card */}
+                            <div className="relative h-[340px] w-full overflow-hidden rounded-sm sm:h-[405px] sm:w-[275px]">
+                              {member.img !== "" ? (
+                                <TeamMemberImage
+                                  src={member.img}
+                                  fallbackSrc={member.fallbackImg}
+                                  alt={`${member.name} ${member.surname}`}
+                                  priority={index < 4}
+                                />
+                              ) : (
+                                <div className="flex h-full items-center justify-center bg-gradient-to-br from-gray-300 via-gray-100 to-gray-300 dark:from-[#202124] dark:via-[#2a2b2f] dark:to-[#1a1b1e]">
+                                  {/* Avatar Circle */}
+                                  <div className="flex size-24 items-center justify-center rounded-full bg-white/60 shadow-sm backdrop-blur-md dark:bg-white/10">
+                                      <span className="text-4xl font-bold text-gray-700 transition-transform duration-800 ease-out group-hover:scale-125 dark:text-white">
+                                          {member.name.charAt(0)} {member.surname.charAt(0)}
+                                      </span>
+                                  </div>
                                 </div>
+                              )}
 
-                                {/* Body */}
-                                <div className="text-start mt-4">
-                                    <h6 className="text-[1.2rem] font-semibold group-hover:text-[#0B9944] dark:hover:text-green-500 transition-colors duration-500 ease-in-out">
-                                        {member.name} {member.surname}
-                                    </h6>
+                              {/* Bottom Shade */}
+                              <div className="pointer-events-none absolute inset-x-0 bottom-0 h-1/2 bg-gradient-to-t from-black/80 via-black/35 to-transparent dark:from-black/90 dark:via-black/45 dark:to-transparent" />
 
-                                    <div className="font-normal text-[#c4c5c7] text-[0.875em] -mt-2">
-                                        {member.role}
-                                    </div>
+                              {/* Member Details */}
+                              <div className="absolute inset-x-0 bottom-0 z-10 p-5">
+                                <h6 className="text-[1.2rem] font-semibold leading-tight text-white transition-colors duration-500 ease-in-out">
+                                  {member.name} {member.surname}
+                                </h6>
+
+                                <div className=" text-sm font-normal text-white/75">
+                                  {member.role}
                                 </div>
+                              </div>
                             </div>
+                          </div>
                         ),
                     )}
 

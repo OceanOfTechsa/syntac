@@ -1,12 +1,13 @@
 'use client'
 
-import FlipWords from "@/components/gsap/animations/shared/flip-words";
-import AppSettings from "@/utils/AppSettings";
-import GoogleReviewsBanner from "@/components/site/shared/Google-reviews-banner";
-import {useTextReveal} from "@/lib/gsap/hooks/use-text-reveal";
 import {useRef} from "react";
 import Link from "next/link";
 import {Headset} from "lucide-react";
+
+import AppSettings from "@/utils/AppSettings";
+import {useTextReveal} from "@/lib/gsap/hooks/use-text-reveal";
+import FlipWords from "@/components/gsap/animations/shared/flip-words";
+import GoogleReviewsBanner from "@/components/site/shared/Google-reviews-banner";
 
 const HeroSection = () => {
     const textRef = useRef<HTMLDivElement | null>(null);

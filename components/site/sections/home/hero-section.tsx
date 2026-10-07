@@ -9,6 +9,7 @@ import AvatarGroup from "@/components/site/shared/avatar-group"
 import FlipWords from "@/components/gsap/animations/shared/flip-words";
 import TrustedByLogos from "@/components/gsap/animations/shared/trusted-by-logos";
 import {TESTIMONIALS, ITestimonial} from "@/data/reviews";
+import {cn} from "@/lib/utils";
 
 interface IHeroAvatar extends ITestimonial {
     src: string;
@@ -82,7 +83,10 @@ const HeroSection = () => {
     ]
 
     return (
-        <section className="relative space-y-8 py-8 sm:space-y-16 sm:py-16 lg:py-24 bg-dotted-background" id={'hero'}>
+      <section
+        className={cn("relative space-y-8 py-8 sm:space-y-16 sm:py-16 lg:py-24", " bg-dot-grid " +
+          "[mask-image:radial-gradient(ellipse_at_center,black_40%,transparent_85%)] " +
+          "[-webkit-mask-image:radial-gradient(ellipse_at_center,black_40%,transparent_85%)]")} id="hero">
             <div className="mx-auto flex max-w-7xl flex-col items-center gap-7 px-4 text-center sm:px-6 lg:px-8">
                 <div className="z-10 flex items-center gap-3">
                     <AvatarGroup className="size-9.5" avatars={avatars} limit={5}/>
@@ -123,36 +127,13 @@ const HeroSection = () => {
                 <div className={'w-full flex justify-center items-center gap-2 mt-4'}>
                     <Link
                         href="/contact"
-                        className="
-                              hover:bg-[#0B9944] dark:hover:bg-[#0B9944]
-                              focus-visible:border-ring focus-visible:ring-ring/50
-                              aria-invalid:border-destructive aria-invalid:ring-destructive/20
-                              dark:aria-invalid:ring-destructive/40
-
-                              inline-flex shrink-0 items-center justify-center
-                              font-medium whitespace-nowrap
-                              transition-all outline-none
-                              focus-visible:ring-[3px]
-                              disabled:pointer-events-none disabled:opacity-50
-
-                              [&_svg]:pointer-events-none
-                              [&_svg]:shrink-0
-                              [&_svg:not([class*='size-'])]:size-4
-
-                              bg-primary text-primary-foreground
-                              hover:text-white
-
-                             h-10 w-auto px-6 gap-2
-
-                              text-base rounded-md
-                              sm:max-[400px]:flex-1
-                       "
+                        className="cursor-pointer focus-visible:border-ring focus-visible:ring-ring/50 aria-invalid:border-destructive aria-invalid:ring-destructive/20 dark:aria-invalid:ring-destructive/40 inline-flex shrink-0 items-center justify-center font-medium whitespace-nowrap transition-all outline-none focus-visible:ring-[3px] disabled:pointer-events-none disabled:opacity-50 [&_svg]:pointer-events-none [&_svg]:shrink-0 [&_svg:not([class*='size-'])]:size-4 bg-primary text-primary-foreground hover:bg-primary/90 h-10 px-6 has-[>svg]:px-4 gap-2 rounded-lg px-6! text-base max-[400px]:flex-1"
                     >
-                        Estimate project
+                        Start a conversation
                         <Headset size={16}  />
                     </Link>
 
-                    <Link href={'#show-case'} className={"focus-visible:border-ring focus-visible:ring-ring/50 aria-invalid:border-destructive aria-invalid:ring-destructive/20 dark:aria-invalid:ring-destructive/40 inline-flex shrink-0 items-center justify-center gap-2 font-medium whitespace-nowrap transition-all outline-none focus-visible:ring-[3px] disabled:pointer-events-none disabled:opacity-50 [&_svg]:pointer-events-none [&_svg]:shrink-0 [&_svg:not([class*='size-'])]:size-4 bg-secondary text-secondary-foreground hover:bg-secondary/80 h-10 px-6 has-[>svg]:px-4 rounded-lg px-6! text-base shadow-sm max-[400px]:flex-1"}>
+                    <Link href={'#show-case'} className={"focus-visible:border-ring focus-visible:ring-ring/50 aria-invalid:border-destructive aria-invalid:ring-destructive/20 dark:aria-invalid:ring-destructive/40 inline-flex shrink-0 items-center justify-center gap-2 font-medium whitespace-nowrap transition-all outline-none focus-visible:ring-[3px] disabled:pointer-events-none disabled:opacity-50 [&_svg]:pointer-events-none [&_svg]:shrink-0 [&_svg:not([class*='size-'])]:size-4  text-secondary-foreground hover:bg-secondary/80 h-10 px-6 has-[>svg]:px-4 rounded-lg px-6! text-base max-[400px]:flex-1"}>
                         Learn more
                         <MoveRight  size={16} />
                     </Link>

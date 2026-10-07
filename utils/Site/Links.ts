@@ -16,15 +16,14 @@ const CompanyLinks: LinkType[] = [
     { label: "Projects", href: "/projects"},
     { label: "About Us", href: "/about"},
     { label: "How we work", href: "/how-we-work"},
+    { label: "Careers", href: "/careers"},
     { label: "Contact Us", href: "/contact"},
 ]
 
 const PageLinks: LinkType[] =  [
     { label: "Blog", href: "/blog"},
-    { label: "Careers", href: "/careers"},
-    { label: "Team", href: "/team"},
-    { label: "Guides", href: "/guides"},
     { label: "Partners", href: "/partners"},
+    { label: "Industries", href: "/industries"},
     { label: "Technologies", href: "/technologies" },
 ]
 

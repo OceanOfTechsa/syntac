@@ -20,7 +20,7 @@ function V1_1_0() {
                     <img
                         src="/assets/site/about/work-with-us/image-4.webp"
                         alt="The beginning of the idea behind SYNTAC"
-                        className="dark:hidden w-50 rounded-lg border object-cover"
+                        className="dark:hidden w-68 rounded-lg border object-cover"
                     />
                     <img
                         src="/assets/site/about/work-with-us/image-4-dark.webp"

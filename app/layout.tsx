@@ -17,7 +17,7 @@ import {ConsentGuard} from "@/components/site/cookie-consent/consent-guard";
 
 export const metadata: Metadata = SiteMetadata;
 
-export default function RootLayout({children, }: LayoutProps<"/">): JSX.Element {
+const RootLayout =  ({children, }: LayoutProps<"/">): JSX.Element => {
   return (
       <html
           lang="en"
@@ -40,24 +40,26 @@ export default function RootLayout({children, }: LayoutProps<"/">): JSX.Element 
                   enableSystem
                   disableTransitionOnChange
               >
-                <TooltipProvider>
-                    <CookieConsentProvider>
-                        {children}
-                        <ConsentGuard
-                            gaId={process.env.NEXT_PUBLIC_GA_ID}
-                            gtmId={process.env.NEXT_PUBLIC_GTM_ID}
-                            sentryDsn={process.env.NEXT_PUBLIC_SENTRY_DSN}
-                            sentryEnvironment={process.env.NEXT_PUBLIC_SENTRY_ENV}
-                        />
-                    </CookieConsentProvider>
-                </TooltipProvider>
+                  <TooltipProvider>
+                      <CookieConsentProvider>
+                          {children}
+                          <ConsentGuard
+                              gaId={process.env.NEXT_PUBLIC_GA_ID}
+                              gtmId={process.env.NEXT_PUBLIC_GTM_ID}
+                              sentryDsn={process.env.NEXT_PUBLIC_SENTRY_DSN}
+                              sentryEnvironment={process.env.NEXT_PUBLIC_SENTRY_ENV}
+                          />
+                      </CookieConsentProvider>
+                  </TooltipProvider>
 
-                <CursorTrailer />
-                <SmoothScroll />
-                <ScrollToTop />
-                <CleanHash />
+                  <CursorTrailer />
+                  <SmoothScroll />
+                  <ScrollToTop />
+                  <CleanHash />
               </ThemeProvider>
           </body>
       </html>
   );
 }
+
+export default RootLayout;

@@ -9,25 +9,25 @@ function V1_8_0() {
             name: "Malibongwe Sibisi",
             role: "Designer",
             initials: "MS",
-            image: "/assets/site/team/malibongwe.webp",
+            image: "https://ik.imagekit.io/syntac/Syntac%20team/tr:w-300,h-300,fo-face:r-max/malibongwe.webp",
         },
         {
             name: "Ntokozo Juqu",
             role: "Designer",
             initials: "NJ",
-            image: "/assets/site/team/juqu.wepb",
+            image: "https://ik.imagekit.io/syntac/Syntac%20team/tr:w-250,h-250,fo-face:r-max/juqu.webp",
         },
         {
             name: "Sthembiso Ncwane",
             role: "Software Developer",
             initials: "SN",
-            image: "/assets/site/team/sthembiso.jpeg",
+            image: "https://ik.imagekit.io/syntac/Syntac%20team/tr:w-400,h-400,fo-face:r-max/sthembiso.jpeg",
         },
         {
             name: "Asiphe Khuboni",
             role: "Technical Support",
             initials: "AK",
-            image: "/assets/site/team/asiphek.jpeg",
+            image: "https://ik.imagekit.io/syntac/Syntac%20team/tr:w-1000,h-1000,fo-face:r-max/asiphek.jpeg",
         },
     ];
 

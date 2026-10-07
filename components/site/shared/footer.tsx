@@ -177,6 +177,9 @@ const Footer = (): JSX.Element => {
                                             hover:text-neutral-900 dark:hover:text-white"
                                             >
                                                 {link.label}
+                                                {link.label == 'Careers' && AppSettings.HIRING &&
+                                                  <span className={'px-1 py-0.5 ms-2 no-underline text-[10.5px] leading border text-indigo-800 bg-indigo-100 rounded-full'}>We are hiring</span>
+                                                }
                                             </Link>
                                         </li>
                                     ))}
@@ -202,9 +205,6 @@ const Footer = (): JSX.Element => {
                                             hover:text-neutral-900 dark:hover:text-white"
                                             >
                                                 {link.label}
-                                                {link.label == 'Careers' && AppSettings.HIRING &&
-                                                        <span className={'px-1 py-0.5 ms-2 no-underline text-[10.5px] leading border text-indigo-800 bg-indigo-100 rounded-full'}>We are hiring</span>
-                                                }
                                             </Link>
                                         </li>
                                     ))}

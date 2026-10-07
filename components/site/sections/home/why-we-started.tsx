@@ -60,14 +60,14 @@ const WhyWeStarted = () => {
                 </p>
                 <div className="flex flex-wrap justify-center gap-4 max-sm:flex-col sm:items-center">
                     <UserBanner
-                        image={'https://res.cloudinary.com/lbge76mf/image/upload/v1790977929/sithu.jpg'}
+                        image={'https://ik.imagekit.io/syntac/Syntac%20team/tr:w-400,h-400,fo-face:r-max/me.jpeg'}
                         fullName={'Sithuliso Zulu'}
                         linkedInUrl={'https://www.linkedin.com/in/sithuliso-zulu'}
                         role={'Co-founder & Developer'}
                     />
 
                     <UserBanner
-                        image={'https://res.cloudinary.com/lbge76mf/image/upload/v1790977929/sithu.jpg'}
+                        image={'https://ik.imagekit.io/syntac/Syntac%20team/tr:w-410,h-410,fo-face:r-max/sanele.jpeg'}
                         fullName={'Sanele Jeza'}
                         linkedInUrl={'https://www.linkedin.com/in/sithuliso-zulu'}
                         role={'Co-founder & Developer'}

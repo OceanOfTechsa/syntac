@@ -3,7 +3,7 @@
 import Link from "next/link";
 import { cn } from "@/lib/utils";
 import { Headset } from "lucide-react";
-import { useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import { usePathname } from "next/navigation";
 
 import AppSettings from "@/utils/AppSettings";
@@ -14,6 +14,7 @@ import AnimatedMobileMenu from "@/components/gsap/animations/header/animated-mob
 
 import { HeaderLinks, LinkType } from "@/utils/Site/Links";
 import {DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger} from "@/components/ui/dropdown-menu";
+import {EstimateProjectButton} from "@/components/providers/project-estimator-provider";
 
 
 interface HeaderProps {
@@ -269,13 +270,13 @@ const Header = ({
                                     <DropdownMenu key={link.label}>
                                         <DropdownMenuTrigger
                                             className={cn(
-                                                "group relative flex cursor-pointer items-center gap-1.5 text-sm font-medium outline-none transition-colors",
+                                                "group relative flex cursor-pointer items-center gap-1.5 text-sm  outline-none transition-colors",
                                                 "after:absolute after:-bottom-1 after:left-0 after:h-[2px] after:w-0",
                                                 "after:bg-[#0B9944] after:transition-all after:duration-300",
                                                 "hover:after:w-full",
                                                 "focus-visible:ring-0",
                                                 isActive(link.href!)
-                                                    ? "text-neutral-900 dark:text-white"
+                                                    ? "text-neutral-900 dark:text-white font-medium"
                                                     : "text-neutral-500 dark:text-white/60",
                                                 "hover:text-neutral-900 dark:hover:text-white"
                                             )}
@@ -377,13 +378,14 @@ const Header = ({
                         <div className="col-start-3 flex items-center justify-end gap-2">
                             <ThemeSwitcher />
 
-                            <Link
-                                href="/contact"
-                                className="hover:bg-[#0B9944] dark:hover:bg-[#0B9944] focus-visible:border-ring focus-visible:ring-ring/50 aria-invalid:border-destructive aria-invalid:ring-destructive/20 dark:aria-invalid:ring-destructive/40 inline-flex shrink-0 items-center justify-center font-medium whitespace-nowrap transition-all outline-none focus-visible:ring-[3px] disabled:pointer-events-none disabled:opacity-50 [&_svg]:pointer-events-none [&_svg]:shrink-0 [&_svg:not([class*='size-'])]:size-4 bg-primary text-primary-foreground hover:text-white h-7 w-7 p-0 gap-0 sm:h-9 sm:w-auto sm:px-6 sm:gap-2 text-base rounded-full sm:rounded-md sm:max-[400px]:flex-1"
-                            >
-                                <span className="hidden sm:inline-flex">Estimate project</span>
-                                <Headset size={16} />
-                            </Link>
+                            {/*<Link*/}
+                            {/*    href="/contact"*/}
+                            {/*    className="hover:bg-[#0B9944] dark:hover:bg-[#0B9944] focus-visible:border-ring focus-visible:ring-ring/50 aria-invalid:border-destructive aria-invalid:ring-destructive/20 dark:aria-invalid:ring-destructive/40 inline-flex shrink-0 items-center justify-center font-medium whitespace-nowrap transition-all outline-none focus-visible:ring-[3px] disabled:pointer-events-none disabled:opacity-50 [&_svg]:pointer-events-none [&_svg]:shrink-0 [&_svg:not([class*='size-'])]:size-4 bg-primary text-primary-foreground hover:text-white h-7 w-7 p-0 gap-0 sm:h-9 sm:w-auto sm:px-6 sm:gap-2 text-base rounded-full sm:rounded-md sm:max-[400px]:flex-1"*/}
+                            {/*>*/}
+                            {/*    <span className="hidden sm:inline-flex">Estimate project</span>*/}
+                            {/*    <Headset size={16} />*/}
+                            {/*</Link>*/}
+                          <EstimateProjectButton />
 
                             <AnimatedMenuToggle
                                 open={open}

@@ -20,12 +20,26 @@ function V1_3_0() {
                         </p>
                     </div>
 
-                    <div className={'flex flex-col gap-2'}>
+                    <div className="flex min-w-20 flex-col gap-2">
                       <Avatar size="lg">
-                        <AvatarImage src="/assets/site/team/sanele.jpeg" />
-                        <AvatarFallback>SJ</AvatarFallback>
+                        <AvatarImage
+                          src={'https://ik.imagekit.io/syntac/Syntac%20team/tr:w-410,h-410,fo-face:r-max/sanele.jpeg'}
+                          alt={'Sanele Jeza'}
+                        />
+                        <AvatarFallback>
+                          {'SJ'}
+                        </AvatarFallback>
                       </Avatar>
-                      <p className={'text-xs font-semibold'}>Sanele Jeza</p>
+
+                      <div className="space-y-0.5">
+                        <p className="text-xs font-semibold">
+                          Sanele Jeza
+                        </p>
+
+                        <p className="text-muted-foreground text-xs">
+                          Co-founder & Developer
+                        </p>
+                      </div>
                     </div>
 
                     <p className="text-muted-foreground">

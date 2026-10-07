@@ -1,673 +1,978 @@
 "use client";
 
-import { useEffect, useMemo, useRef, useState } from "react";
-import {Check, MoveLeft, MoveRight, X } from "lucide-react";
+import React, { memo, useCallback, useEffect, useId, useMemo, useRef, useState } from "react";
+import {
+  useForm,
+  useWatch,
+  type DefaultValues,
+  type Resolver,
+} from "react-hook-form";
+import { zodResolver } from "@hookform/resolvers/zod";
+import {Check, Info, Loader2, MoveLeft, MoveRight, X} from "lucide-react";
 import { cn } from "@/lib/utils";
 import { gsap } from "@/lib/gsap";
 import AppSettings from "@/utils/AppSettings";
+import {
+  CHOICE_KEYS,
+  EstimatorSchema,
+  PersistedProgressSchema,
+  SERVICES,
+  STEP_LABELS,
+  describeAnswers,
+  estimateDays,
+  getService,
+  isChoiceStepComplete,
+  sanitizeValues,
+  suggestEmailFix,
+  type AnswerSummary,
+  type ChoiceKey,
+  type ChoiceOption,
+  type Estimate,
+  type EstimatorAnswers,
+  type EstimatorFormValues,
+  type ServiceDefinition,
+} from "@/components/site/forms/shemas/estimate-schema";
+
+
 
 /* -------------------------------------------------------------------------
- * Data + estimation logic
+ * Step configuration (steps 1-4 depend on the service chosen in step 0)
  * ---------------------------------------------------------------------- */
 
-interface Option {
-    id: string;
-    label: string;
-    /** Development-day weight this option contributes to the estimate */
-    weight: number;
+interface ChoiceStepView {
+  field: ChoiceKey;
+  title: string;
+  hint?: string;
+  options: readonly ChoiceOption[];
+  multiple: boolean;
+  /** Optional free-text box shown under the options. */
+  other?: { field: "involvesOther" | "featuresOther"; placeholder: string };
 }
 
-const PROJECT_TYPES: Option[] = [
-    { id: "website", label: "Website", weight: 20 },
-    { id: "web-app", label: "Web Application", weight: 45 },
-    { id: "business-system", label: "Custom Business System", weight: 70 },
-    { id: "automation", label: "Business Automation", weight: 55 },
-    { id: "other", label: "Something Else", weight: 40 },
-];
+const MULTI_HINT = "Select everything that applies, or describe it in your own words below.";
 
-const PROJECT_INVOLVES: Option[] = [
-    { id: "accounts", label: "User accounts & authentication", weight: 12 },
-    // { id: "payments", label: "Payments & billing", weight: 18 },
-    { id: "content", label: "Content management", weight: 10 },
-    { id: "search", label: "Search & filtering", weight: 8 },
-    { id: "integrations", label: "Third-party integrations", weight: 15 },
-    { id: "workflows", label: "Custom workflows / automation", weight: 20 },
-    { id: "reporting", label: "Reporting & analytics", weight: 14 },
-    { id: "audit-logs", label: "Audit Logs", weight: 14 },
-    // { id: "i18n", label: "Multi-language support", weight: 10 },
-];
-
-const STAGES: (Option & { multiplier: number })[] = [
-    { id: "idea", label: "Just an idea", weight: 0, multiplier: 1.25 },
-    { id: "requirements", label: "Requirements defined", weight: 0, multiplier: 1.1 },
-    { id: "designs", label: "Designs ready", weight: 0, multiplier: 1.0 },
-    { id: "existing", label: "Existing system", weight: 0, multiplier: 0.85 },
-    { id: "replacing", label: "Replacing / improving an existing system", weight: 0, multiplier: 0.9 },
-];
-
-const ENGAGEMENT_TYPES: (Option & { multiplier: number })[] = [
-    { id: "prototype", label: "Prototype", weight: 0, multiplier: 0.35 },
-    { id: "development", label: "Development Only", weight: 0, multiplier: 0.75 },
-    { id: "mvp", label: "MVP", weight: 0, multiplier: 0.6 },
-    { id: "design-dev", label: "Full-cycle Design and Development", weight: 0, multiplier: 0.9 },
-    { id: "improvements", label: "Existing System Improvements", weight: 0, multiplier: 0.5 },
-];
-
-const FEATURE_AREAS: Option[] = [
-    { id: "users", label: "Users & Accounts", weight: 15 },
-    { id: "database-apis", label: "Database, 3rd-party APIs & data", weight: 18 },
-    { id: "notifications", label: "Notifications", weight: 12 },
-    { id: "operations", label: "Business Operations", weight: 20 },
-    { id: "data", label: "Data & Reporting", weight: 18 },
-    { id: "integrations", label: "Integrations", weight: 16 },
-    { id: "admin", label: "Administration", weight: 12 },
-];
-
-interface Answers {
-    projectType: string | null;
-    involves: string[];
-    stage: string | null;
-    engagement: string | null;
-    features: string[];
+function getChoiceStep(step: number, service: ServiceDefinition | undefined): ChoiceStepView | undefined {
+  switch (CHOICE_KEYS[step]) {
+    case "service":
+      return {
+        field: "service",
+        title: "What can we help you with?",
+        options: SERVICES,
+        multiple: false,
+      };
+    case "involves":
+      return (
+        service && {
+          field: "involves",
+          title: service.involves.title,
+          hint: MULTI_HINT,
+          options: service.involves.options,
+          multiple: true,
+          other: { field: "involvesOther", placeholder: service.involves.otherPlaceholder },
+        }
+      );
+    case "stage":
+      return (
+        service && {
+          field: "stage",
+          title: "What stage are you at?",
+          options: service.stages,
+          multiple: false,
+        }
+      );
+    case "engagement":
+      return (
+        service && {
+          field: "engagement",
+          title: "What do you need from SYNTAC?",
+          hint: "Choose the option that best fits how you'd like to work with us.",
+          options: service.engagement,
+          multiple: false,
+        }
+      );
+    case "features":
+      return (
+        service && {
+          field: "features",
+          title: service.features.title,
+          hint: MULTI_HINT,
+          options: service.features.options,
+          multiple: true,
+          other: { field: "featuresOther", placeholder: service.features.otherPlaceholder },
+        }
+      );
+    default:
+      return undefined;
+  }
 }
 
-const EMPTY_ANSWERS: Answers = {
-    projectType: null,
-    involves: [],
-    stage: null,
-    engagement: null,
-    features: [],
+const STEP_ESTIMATE = CHOICE_KEYS.length; // 5
+const STEP_CONTACT = STEP_ESTIMATE + 1; // 6
+
+const DEFAULT_VALUES: DefaultValues<EstimatorFormValues> = {
+  involves: [],
+  involvesOther: "",
+  features: [],
+  featuresOther: "",
+  name: "",
+  email: "",
+  details: "",
 };
 
-function estimateDays(answers: Answers): { low: number; high: number } {
-    const typeWeight = PROJECT_TYPES.find((o) => o.id === answers.projectType)?.weight ?? 0;
-    const involvesWeight = answers.involves.reduce(
-        (sum, id) => sum + (PROJECT_INVOLVES.find((o) => o.id === id)?.weight ?? 0),
-        0
-    );
-    const featuresWeight = answers.features.reduce(
-        (sum, id) => sum + (FEATURE_AREAS.find((o) => o.id === id)?.weight ?? 0),
-        0
-    );
-    const stageMultiplier = STAGES.find((o) => o.id === answers.stage)?.multiplier ?? 1;
-    const engagementMultiplier = ENGAGEMENT_TYPES.find((o) => o.id === answers.engagement)?.multiplier ?? 1;
-
-    const base = (typeWeight + involvesWeight + featuresWeight) * stageMultiplier * engagementMultiplier;
-    const floorBase = Math.max(base, 15);
-
-    const low = Math.max(10, Math.round((floorBase * 0.85) / 5) * 5);
-    const high = Math.max(low + 15, Math.round((floorBase * 1.15) / 5) * 5);
-
-    return { low, high };
-}
+/** Index of the first unanswered choice step, or Infinity when all are done. */
+const firstIncompleteStep = (values: Partial<EstimatorAnswers>) => {
+  const index = CHOICE_KEYS.findIndex((key) => !isChoiceStepComplete(key, values));
+  return index === -1 ? Number.POSITIVE_INFINITY : index;
+};
 
 /* -------------------------------------------------------------------------
- * localStorage persistence
+ * Saved progress (only with "preferences" cookie consent)
  * ---------------------------------------------------------------------- */
 
 const STORAGE_KEY = "syntac-project-estimator";
+const STORAGE_VERSION = 3;
+const SAVE_DEBOUNCE_MS = 400;
 
-interface PersistedState {
-    step: number;
-    answers: Answers;
-    name: string;
-    email: string;
-    details: string;
-}
+const getCookie = (name: string): string | null => {
+  if (typeof document === "undefined") return null;
 
-function loadPersisted(): PersistedState | null {
-    if (typeof window === "undefined") return null;
-    try {
-        const raw = window.localStorage.getItem(STORAGE_KEY);
-        if (!raw) return null;
-        return JSON.parse(raw) as PersistedState;
-    } catch {
-        return null;
+  const cookie = document.cookie.split("; ").find((item) => item.startsWith(`${name}=`));
+  return cookie ? cookie.slice(name.length + 1) : null;
+};
+
+const hasPreferencesConsent = (): boolean => {
+  const rawCookie = getCookie("cc_cookie");
+  if (!rawCookie) return false;
+
+  try {
+    const cookie = JSON.parse(decodeURIComponent(rawCookie));
+    return Array.isArray(cookie?.categories) && cookie.categories.includes("preferences");
+  } catch {
+    return false;
+  }
+};
+
+const clearProgress = () => {
+  try {
+    window.localStorage.removeItem(STORAGE_KEY);
+  } catch {
+    // storage unavailable, nothing to clear
+  }
+};
+
+const writeProgress = (step: number, values: EstimatorFormValues) => {
+  try {
+    window.localStorage.setItem(
+      STORAGE_KEY,
+      JSON.stringify({ version: STORAGE_VERSION, step, values })
+    );
+  } catch {
+    // storage full or unavailable, progress just won't persist
+  }
+};
+
+const readProgress = (): { step: number; values: Partial<EstimatorFormValues> } | null => {
+  if (typeof window === "undefined" || !hasPreferencesConsent()) return null;
+
+  try {
+    const raw = window.localStorage.getItem(STORAGE_KEY);
+    if (!raw) return null;
+
+    const parsed = PersistedProgressSchema.safeParse(JSON.parse(raw));
+    if (!parsed.success || parsed.data.version !== STORAGE_VERSION) {
+      clearProgress();
+      return null;
     }
-}
 
-function savePersisted(state: PersistedState) {
-    if (typeof window === "undefined") return;
-    try {
-        window.localStorage.setItem(STORAGE_KEY, JSON.stringify(state));
-    } catch {
-        // storage full or unavailable — safe to ignore, progress just won't persist
-    }
-}
+    return { step: parsed.data.step, values: sanitizeValues(parsed.data.values) };
+  } catch {
+    clearProgress();
+    return null;
+  }
+};
 
-function clearPersisted() {
-    if (typeof window === "undefined") return;
-    try {
-        window.localStorage.removeItem(STORAGE_KEY);
-    } catch {
-        // ignore
-    }
-}
+const hasProgress = (step: number, v: EstimatorFormValues) =>
+  step > 0 ||
+  Boolean(v.service) ||
+  v.involves.length > 0 ||
+  Boolean(v.involvesOther) ||
+  Boolean(v.stage) ||
+  Boolean(v.engagement) ||
+  v.features.length > 0 ||
+  Boolean(v.featuresOther) ||
+  Boolean(v.name) ||
+  Boolean(v.email) ||
+  Boolean(v.details);
 
 /* -------------------------------------------------------------------------
  * Left identity panel — big step number + vertical rail, inverted colors
  * ---------------------------------------------------------------------- */
 
-const STEP_LABELS = ["Type", "Scope", "Stage", "Engagement", "Features", "Estimate", "Contact"];
+const IdentityPanel = memo(function IdentityPanel({ step }: { step: number }) {
+  const current = Math.min(step, STEP_LABELS.length - 1);
+  return (
+    <div className="bg-foreground text-background hidden h-full flex-col justify-between p-10 lg:flex">
+      <div>
+        <p className="text-background/50 text-sm font-medium">Project Estimator</p>
+        <p className="mt-4 text-7xl font-semibold tabular-nums tracking-tight">
+          {String(current + 1).padStart(2, "0")}
+          <span className="text-background/35 text-2xl font-normal"> / {String(STEP_LABELS.length).padStart(2, "0")}</span>
+        </p>
+      </div>
 
-function IdentityPanel({ step }: { step: number }) {
-    const current = Math.min(step, STEP_LABELS.length - 1);
-    return (
-        <div className="bg-foreground text-background hidden h-full flex-col justify-between p-10 lg:flex">
-            <div>
-                <p className="text-background/50 text-sm font-medium">Project Estimator</p>
-                <p className="mt-4 text-7xl font-semibold tabular-nums tracking-tight">
-                    {String(current + 1).padStart(2, "0")}
-                    <span className="text-background/35 text-2xl font-normal"> / {String(STEP_LABELS.length).padStart(2, "0")}</span>
-                </p>
-            </div>
-
-            <ol className="flex flex-col gap-1">
-                {STEP_LABELS.map((label, i) => {
-                    const state = i < current ? "done" : i === current ? "active" : "upcoming";
-                    return (
-                        <li key={label} className="flex items-center gap-3 py-2">
-                              <span
-                                  className={cn(
-                                      "flex size-6 shrink-0 items-center justify-center rounded-full border text-xs font-medium transition-colors",
-                                      state === "done" && "border-background bg-background text-foreground",
-                                      state === "active" && "border-background text-background",
-                                      state === "upcoming" && "border-background/25 text-background/40"
-                                  )}
-                              >
-                                {state === "done" ? <Check className="size-3.5" /> : i + 1}
-                              </span>
+      <ol className="flex flex-col gap-1">
+        {STEP_LABELS.map((label, i) => {
+          const state = i < current ? "done" : i === current ? "active" : "upcoming";
+          return (
+            <li key={label} className="flex items-center gap-3 py-2">
                             <span
-                                className={cn(
-                                    "text-sm transition-colors",
-                                    state === "active" ? "text-background font-medium" : "text-background/45"
-                                )}
+                              className={cn(
+                                "flex size-6 shrink-0 items-center justify-center rounded-full border text-xs font-medium transition-colors",
+                                state === "done" && "border-background bg-background text-foreground",
+                                state === "active" && "border-background text-background",
+                                state === "upcoming" && "border-background/25 text-background/40"
+                              )}
                             >
+                                {state === "done" ? <Check className="size-3.5" /> : i + 1}
+                            </span>
+              <span
+                className={cn(
+                  "text-sm transition-colors",
+                  state === "active" ? "text-background font-medium" : "text-background/45"
+                )}
+              >
                                 {label}
-                              </span>
-                        </li>
-                    );
-                })}
-            </ol>
+                            </span>
+            </li>
+          );
+        })}
+      </ol>
 
-            <p className="text-background/40 text-xs">{AppSettings.COMPANY_NAME.toUpperCase()} · Built to evolve</p>
-        </div>
-    );
-}
+      <p className="text-background/40 text-xs">{AppSettings.COMPANY_NAME.toUpperCase()} · Built to evolve</p>
+    </div>
+  );
+});
 
-function MobileProgress({ step }: { step: number }) {
-    const pct = (Math.min(step, STEP_LABELS.length - 1) / (STEP_LABELS.length - 1)) * 100;
-    return (
-        <div className="mb-8 lg:hidden">
-            <div className="bg-muted h-1.5 w-full overflow-hidden rounded-full">
-                <div className="bg-primary h-full rounded-full transition-all duration-500 ease-out" style={{ width: `${pct}%` }} />
-            </div>
-            <p className="text-muted-foreground mt-2 text-xs">
-                Step {Math.min(step, STEP_LABELS.length - 1) + 1} of {STEP_LABELS.length}
-            </p>
-        </div>
-    );
-}
+const MobileProgress = memo(function MobileProgress({ step }: { step: number }) {
+  const pct = (Math.min(step, STEP_LABELS.length - 1) / (STEP_LABELS.length - 1)) * 100;
+  return (
+    <div className="mb-8 lg:hidden">
+      <div className="bg-muted h-1.5 w-full overflow-hidden rounded-full">
+        <div className="bg-primary h-full rounded-full transition-all duration-500 ease-out" style={{ width: `${pct}%` }} />
+      </div>
+      <p className="text-muted-foreground mt-2 text-xs">
+        Step {Math.min(step, STEP_LABELS.length - 1) + 1} of {STEP_LABELS.length}
+      </p>
+    </div>
+  );
+});
 
 /* -------------------------------------------------------------------------
  * Shared step primitives
  * ---------------------------------------------------------------------- */
 
 function SelectCard({
-                        label,
-                        selected,
-                        onClick,
+                      label,
+                      description,
+                      selected,
+                      onClick,
                     }: {
-    label: string;
-    selected: boolean;
-    onClick: () => void;
+  label: string;
+  description?: string;
+  selected: boolean;
+  onClick: () => void;
 }) {
-    return (
-        <button
-            type="button"
-            onClick={onClick}
-            className={cn(
-                "group cursor-pointer flex w-full items-center justify-between rounded-md border px-4 py-3.5 text-left text-sm font-medium transition-all duration-200",
-                selected
-                    ? "border-primary bg-primary/[0.06]"
-                    : "border-border bg-background hover:border-foreground/20 hover:bg-muted/40"
-            )}
-        >
-            <span className={selected ? "text-foreground" : "text-foreground/90"}>{label}</span>
-            <span
-                className={cn(
-                    "flex size-5 shrink-0 items-center justify-center rounded-full border transition-all duration-200",
-                    selected
-                        ? "border-primary bg-primary text-primary-foreground scale-100"
-                        : "border-border scale-90 opacity-0 group-hover:opacity-40"
-                )}
-            >
+  const labelClasses = selected ? "text-foreground" : "text-foreground/90";
+
+  return (
+    <button
+      type="button"
+      onClick={onClick}
+      aria-pressed={selected}
+      className={cn(
+        "group cursor-pointer flex w-full items-center justify-between rounded-md border px-4 py-3.5 text-left text-sm font-medium transition-all duration-200",
+        selected
+          ? "border-primary bg-primary/[0.06]"
+          : "border-border bg-background hover:border-foreground/20 hover:bg-muted/40"
+      )}
+    >
+      {description ? (
+        <span className="pr-4">
+                    <span className={cn("block", labelClasses)}>{label}</span>
+                    <span className="text-muted-foreground mt-1 block text-xs font-normal leading-5">{description}</span>
+                </span>
+      ) : (
+        <span className={labelClasses}>{label}</span>
+      )}
+      <span
+        aria-hidden="true"
+        className={cn(
+          "flex size-5 shrink-0 items-center justify-center rounded-full border transition-all duration-200",
+          selected
+            ? "border-primary bg-primary text-primary-foreground scale-100"
+            : "border-border scale-90 opacity-0 group-hover:opacity-40"
+        )}
+      >
                 <Check className="size-3" />
-              </span>
-        </button>
-    );
+            </span>
+    </button>
+  );
 }
 
 function StepFooter({
-                        onBack,
-                        onNext,
-                        nextLabel = "Continue",
-                        nextDisabled,
-                        showBack,
+                      onBack,
+                      onNext,
+                      nextLabel = "Continue",
+                      nextDisabled,
+                      showBack,
                     }: {
-    onBack?: () => void;
-    onNext: () => void;
-    nextLabel?: string;
-    nextDisabled?: boolean;
-    showBack: boolean;
+  onBack?: () => void;
+  onNext: () => void;
+  nextLabel?: string;
+  nextDisabled?: boolean;
+  showBack: boolean;
 }) {
-    return (
-        <div className="mt-10 flex items-center justify-between">
-            {showBack ? (
-                <button
-                    type="button"
-                    onClick={onBack}
-                    className="cursor-pointer text-muted-foreground hover:text-foreground text-sm font-medium transition-colors flex gap-2 items-center"
-                >
-                    <MoveLeft />
-                    Back
-                </button>
-            ) : (
-                <span />
-            )}
-            <button
-                type="button"
-                onClick={onNext}
-                disabled={nextDisabled}
-                className={cn(
-                    "rounded-md cursor-pointer px-6 py-2.5 text-sm font-medium transition-all duration-200 flex gap-2 items-center",
-                    nextDisabled
-                        ? "bg-muted text-muted-foreground cursor-not-allowed"
-                        : "bg-primary text-primary-foreground hover:opacity-90 hover:shadow-md"
-                )}
-            >
-                {nextLabel}
-                <MoveRight />
-            </button>
-        </div>
-    );
+  return (
+    <div className="mt-10 flex items-center justify-between">
+      {showBack ? (
+        <button
+          type="button"
+          onClick={onBack}
+          className="cursor-pointer text-muted-foreground hover:text-foreground text-sm font-medium transition-colors flex gap-2 items-center"
+        >
+          <MoveLeft />
+          Back
+        </button>
+      ) : (
+        <span />
+      )}
+      <button
+        type="button"
+        onClick={onNext}
+        disabled={nextDisabled}
+        className={cn(
+          "rounded-md cursor-pointer px-6 py-2.5 text-sm font-medium transition-all duration-200 flex gap-2 items-center",
+          nextDisabled
+            ? "bg-muted text-muted-foreground cursor-not-allowed"
+            : "bg-primary text-primary-foreground hover:opacity-90 hover:shadow-md"
+        )}
+      >
+        {nextLabel}
+        <MoveRight />
+      </button>
+    </div>
+  );
 }
 
+/* -------------------------------------------------------------------------
+ * "How is this calculated?" dialog
+ *
+ * Uses the native <dialog> element: it renders in the browser's top layer
+ * (so the panel's fade/translate can't clip it), traps focus, and makes the
+ * rest of the page inert while open. Key events are stopped from bubbling so
+ * Escape closes only this dialog, not the whole estimator behind it.
+ * ---------------------------------------------------------------------- */
+
+function EstimateInfoDialog({ service, onClose }: { service: ServiceDefinition; onClose: () => void }) {
+  const dialogRef = useRef<HTMLDialogElement>(null);
+  const titleId = useId();
+
+  useEffect(() => {
+    const dialog = dialogRef.current;
+    if (!dialog) return;
+
+    const previouslyFocused = document.activeElement as HTMLElement | null;
+    if (!dialog.open) dialog.showModal();
+
+    return () => previouslyFocused?.focus?.();
+  }, []);
+
+  const { copy } = service;
+
+  return (
+    <dialog
+      ref={dialogRef}
+      aria-labelledby={titleId}
+      onClose={onClose}
+      onKeyDown={(event) => event.stopPropagation()}
+      onClick={(event) => {
+        // Only close when clicking the backdrop
+        if (event.target === event.currentTarget) onClose();
+      }}
+      className="
+        bg-background text-foreground
+        m-auto w-[calc(100%-2rem)] max-w-2xl
+        rounded-md p-0 dark:shadow-md dark:border dark:border-dashed
+        backdrop:bg-black/10 backdrop:backdrop-blur-sm duration-100 data-open:animate-in data-open:fade-in-0 data-closed:animate-out data-closed:fade-out-0
+      "
+    >
+      <div className="flex max-h-[85vh] flex-col overflow-y-auto">
+        {/* Header */}
+        <div className="border-border flex items-start justify-between gap-4 border-b border-dashed px-6 py-3">
+          <h2 id={titleId} className="text-xl font-semibold tracking-tight">
+            How your estimate is calculated
+          </h2>
+          <button
+            type="button"
+            onClick={onClose}
+            aria-label="Close"
+            className="text-muted-foreground hover:text-foreground hover:bg-muted -mt-1 -mr-2 cursor-pointer rounded-full p-2 transition-colors"
+          >
+            <X className="size-4" />
+          </button>
+        </div>
+
+        {/* Content */}
+        <div className="space-y-6 overflow-y-auto px-6 py-5 text-sm leading-relaxed">
+          <p className="text-muted-foreground">
+            This range is a quick, indicative guide based only on your answers. It isn&apos;t a quote.
+          </p>
+
+          <section>
+            <h3 className="font-medium">What the numbers mean</h3>
+            <p className="text-muted-foreground mt-1">{copy.meaning}</p>
+          </section>
+
+          <section>
+            <h3 className="font-medium">How we work it out</h3>
+            <ol className="text-muted-foreground mt-1 list-decimal space-y-2 pl-5">
+              <li>We start with a base amount of effort for the service you chose.</li>
+              <li>
+                Everything you select under scope and features adds effort. Bigger items, such as
+                payments or approval workflows, add more than smaller ones.
+              </li>
+              <li>{copy.stageNote}</li>
+              <li>{copy.engagementNote}</li>
+              <li>
+                Finally, we show a range of roughly 15% either side of the result, rounded to{" "}
+                {copy.rounding}.
+              </li>
+            </ol>
+          </section>
+
+          <section>
+            <h3 className="font-medium">What isn&apos;t included</h3>
+            <ul className="text-muted-foreground mt-1 list-disc space-y-2 pl-5">
+              <li>
+                Anything you typed in your own words. We don&apos;t price that automatically, so
+                we&apos;ll review it with you and it may move the range.
+              </li>
+              <li>{copy.excludes}</li>
+            </ul>
+          </section>
+
+          <section>
+            <h3 className="font-medium">What happens next</h3>
+            <p className="text-muted-foreground mt-1">
+              Share your details and we&apos;ll follow up with a proper assessment, based on what
+              you&apos;ve told us and a conversation about your requirements.
+            </p>
+          </section>
+        </div>
+
+        {/* Footer */}
+        <div className="border-border flex border-t border-dashed px-6 py-2">
+          <button
+            type="button"
+            onClick={onClose}
+            className="bg-primary text-primary-foreground ml-auto cursor-pointer rounded-md px-6 py-2.5 text-sm font-medium transition-all duration-200 hover:opacity-90 hover:shadow-md"
+          >
+            Got it
+          </button>
+        </div>
+      </div>
+    </dialog>
+  );
+}
 /* -------------------------------------------------------------------------
  * The wizard
  * ---------------------------------------------------------------------- */
 
-type LeadStatus = "idle" | "submitting" | "submitted";
+type LeadStatus = "idle" | "submitting" | "submitted" | "error";
 
-interface ProjectEstimatorWizardProps {
-    className?: string;
-    onSubmitLead?: (lead: {
-        name: string;
-        email: string;
-        details: string;
-        answers: Answers;
-        estimate: { low: number; high: number };
-    }) => void | Promise<void>;
+export interface EstimateLead {
+  name: string;
+  email: string;
+  details: string;
+  /** Option ids, as stored in the form. */
+  answers: EstimatorAnswers;
+  /** The same answers as readable labels, handy for notification emails. */
+  summary: AnswerSummary;
+  estimate: Estimate;
 }
+
+export interface ProjectEstimatorWizardProps {
+  className?: string;
+  onSubmitLead?: (lead: EstimateLead) => void | Promise<void>;
+}
+
+const prefersReducedMotion = () =>
+  typeof window !== "undefined" && window.matchMedia("(prefers-reduced-motion: reduce)").matches;
 
 export function ProjectEstimatorWizard({ className, onSubmitLead }: ProjectEstimatorWizardProps) {
-    const persisted = useRef<PersistedState | null>(null);
-    if (persisted.current === null) persisted.current = loadPersisted() ?? null;
+  // The wizard only mounts client-side (after the dialog opens), so reading
+  // localStorage in a lazy initialiser is safe and happens once per open.
+  const [saved] = useState(readProgress);
+  const [step, setStep] = useState(() =>
+    saved ? Math.min(saved.step, firstIncompleteStep(saved.values)) : 0
+  );
+  const [leadStatus, setLeadStatus] = useState<LeadStatus>("idle");
+  const [submitted, setSubmitted] = useState<{
+    name: string;
+    email: string;
+    estimate: Estimate;
+    unit: string;
+  } | null>(null);
+  const [infoOpen, setInfoOpen] = useState(false);
+  const [canSave, setCanSave] = useState(hasPreferencesConsent);
 
-    const [step, setStep] = useState(persisted.current?.step ?? 0);
-    const [answers, setAnswers] = useState<Answers>(persisted.current?.answers ?? EMPTY_ANSWERS);
-    const [name, setName] = useState(persisted.current?.name ?? "");
-    const [email, setEmail] = useState(persisted.current?.email ?? "");
-    const [details, setDetails] = useState(persisted.current?.details ?? "");
-    const [leadStatus, setLeadStatus] = useState<LeadStatus>("idle");
+  const {
+    register,
+    control,
+    getValues,
+    setValue,
+    clearErrors,
+    watch,
+    handleSubmit,
+    formState: { errors },
+  } = useForm<EstimatorFormValues>({
+    // The schema output type is strict, while the form starts out partially filled.
+    resolver: zodResolver(EstimatorSchema) as unknown as Resolver<EstimatorFormValues>,
+    mode: "onTouched",
+    defaultValues: { ...DEFAULT_VALUES, ...saved?.values },
+  });
 
-    const estimate = useMemo(() => estimateDays(answers), [answers]);
+  // Targeted subscriptions: typing in the contact fields doesn't re-render
+  // the choice steps, and vice versa.
+  const [serviceId, involves, involvesOther, stage, engagement, features, featuresOther] = useWatch({
+    control,
+    name: ["service", "involves", "involvesOther", "stage", "engagement", "features", "featuresOther"],
+  });
+  const [name, email] = useWatch({ control, name: ["name", "email"] });
 
-    // Persist progress on every change, except once a lead has been submitted.
-    useEffect(() => {
-        if (leadStatus === "submitted") return;
-        savePersisted({ step, answers, name, email, details });
-    }, [step, answers, name, email, details, leadStatus]);
+  const answers = useMemo<Partial<EstimatorAnswers>>(
+    () => ({ service: serviceId, involves, involvesOther, stage, engagement, features, featuresOther }),
+    [serviceId, involves, involvesOther, stage, engagement, features, featuresOther]
+  );
 
-    // Smooth, premium step transitions — a quiet fade + rise, not a slide gimmick.
-    const panelRef = useRef<HTMLDivElement>(null);
-    const isFirstRender = useRef(true);
-    useEffect(() => {
-        if (isFirstRender.current) {
-            isFirstRender.current = false;
-            return;
-        }
-        const el = panelRef.current;
-        if (!el) return;
-        gsap.fromTo(el, { opacity: 0, y: 10 }, { opacity: 1, y: 0, duration: 0.45, ease: "power2.out" });
-    }, [step]);
+  const service = getService(answers.service);
+  const estimate = useMemo(() => estimateDays(answers), [answers]);
+  const emailSuggestion = useMemo(() => suggestEmailFix(email ?? ""), [email]);
 
-    const toggleMulti = (key: "involves" | "features", id: string) => {
-        setAnswers((prev) => {
-            const list = prev[key];
-            const next = list.includes(id) ? list.filter((v) => v !== id) : [...list, id];
-            return { ...prev, [key]: next };
-        });
+  const choice = useMemo(() => getChoiceStep(step, service), [step, service]);
+  const choiceComplete = choice ? isChoiceStepComplete(choice.field, answers) : true;
+
+  /* ----------------------------- Persistence ---------------------------- */
+
+  const stepRef = useRef(step);
+  const canPersistRef = useRef(false);
+  const persistTimer = useRef<number | undefined>(undefined);
+  const persistPending = useRef(false);
+
+  useEffect(() => {
+    stepRef.current = step;
+    canPersistRef.current = canSave && leadStatus !== "submitted";
+  });
+
+  const cancelPendingSave = useCallback(() => {
+    window.clearTimeout(persistTimer.current);
+    persistPending.current = false;
+  }, []);
+
+  const flushProgress = useCallback(() => {
+    window.clearTimeout(persistTimer.current);
+    if (!persistPending.current) return;
+    persistPending.current = false;
+
+    if (!canPersistRef.current) return;
+
+    // Re-check in case consent was withdrawn while the user was typing.
+    if (!hasPreferencesConsent()) {
+      clearProgress();
+      return;
+    }
+
+    const values = getValues();
+    if (!hasProgress(stepRef.current, values)) {
+      clearProgress();
+      return;
+    }
+
+    writeProgress(stepRef.current, values);
+  }, [getValues]);
+
+  const scheduleSave = useCallback(() => {
+    persistPending.current = true;
+    window.clearTimeout(persistTimer.current);
+    persistTimer.current = window.setTimeout(flushProgress, SAVE_DEBOUNCE_MS);
+  }, [flushProgress]);
+
+  // Any field change (typing or setValue) schedules a debounced save.
+  useEffect(() => {
+    const subscription = watch(scheduleSave);
+    return () => subscription.unsubscribe();
+  }, [watch, scheduleSave]);
+
+  useEffect(() => {
+    scheduleSave();
+  }, [step, scheduleSave]);
+
+  // Closing the dialog unmounts the wizard: write anything still pending.
+  useEffect(() => flushProgress, [flushProgress]);
+
+  // Apply consent changes straight away.
+  useEffect(() => {
+    const refreshConsent = () => {
+      const allowed = hasPreferencesConsent();
+      setCanSave(allowed);
+      if (!allowed) clearProgress();
     };
 
-    const canAdvance = () => {
-        if (step === 0) return !!answers.projectType;
-        if (step === 1) return answers.involves.length > 0;
-        if (step === 2) return !!answers.stage;
-        if (step === 3) return !!answers.engagement;
-        if (step === 4) return answers.features.length > 0;
-        return true;
+    window.addEventListener("focus", refreshConsent);
+    window.addEventListener("cc:onConsent", refreshConsent);
+    window.addEventListener("cc:onChange", refreshConsent);
+
+    return () => {
+      window.removeEventListener("focus", refreshConsent);
+      window.removeEventListener("cc:onConsent", refreshConsent);
+      window.removeEventListener("cc:onChange", refreshConsent);
     };
+  }, []);
 
-    const handleLeadSubmit = async () => {
-        if (!name || !email) return;
-        setLeadStatus("submitting");
-        try {
-            await onSubmitLead?.({ name, email, details, answers, estimate });
-        } finally {
-            setLeadStatus("submitted");
-            clearPersisted();
-        }
+  /* ------------------------- Step transitions --------------------------- */
+
+  const scrollRef = useRef<HTMLDivElement>(null);
+  const panelRef = useRef<HTMLDivElement>(null);
+  const isFirstRender = useRef(true);
+
+  useEffect(() => {
+    if (isFirstRender.current) {
+      isFirstRender.current = false;
+      return;
+    }
+
+    // A shorter step would otherwise leave the user scrolled past its content.
+    scrollRef.current?.scrollTo({ top: 0 });
+
+    const el = panelRef.current;
+    if (!el || prefersReducedMotion()) return;
+
+    // Quiet fade + rise, not a slide gimmick.
+    const tween = gsap.fromTo(el, { opacity: 0, y: 10 }, { opacity: 1, y: 0, duration: 0.45, ease: "power2.out" });
+    return () => {
+      tween.kill();
     };
+  }, [step]);
 
-    return (
-        <div className={cn("grid h-full w-full lg:grid-cols-[360px_1fr]", className)}>
-            <IdentityPanel step={step} />
+  /* ------------------------------ Handlers ------------------------------ */
 
-            <div className="flex h-full flex-col overflow-y-auto px-6 py-12 sm:px-12 lg:px-20 lg:py-16">
-                <MobileProgress step={step} />
+  const handleSelect = (view: ChoiceStepView, id: string) => {
+    const options = { shouldDirty: true, shouldValidate: true } as const;
 
-                <div className="flex flex-1 items-center justify-center">
-                    <div ref={panelRef} className="w-full max-w-xl">
-                        {step === 0 && (
-                            <fieldset>
-                                <legend className="mb-6 text-3xl font-semibold tracking-tight">
-                                    What are you looking to build?
-                                </legend>
-                                <div className="grid gap-2.5">
-                                    {PROJECT_TYPES.map((opt) => (
-                                        <SelectCard
-                                            key={opt.id}
-                                            label={opt.label}
-                                            selected={answers.projectType === opt.id}
-                                            onClick={() => setAnswers((a) => ({ ...a, projectType: opt.id }))}
-                                        />
-                                    ))}
-                                </div>
-                                <StepFooter showBack={false} onNext={() => setStep(1)} nextDisabled={!canAdvance()} />
-                            </fieldset>
-                        )}
+    if (view.field === "service") {
+      if (id === answers.service) return;
 
-                        {step === 1 && (
-                            <fieldset>
-                                <legend className="mb-1 text-3xl font-semibold tracking-tight">
-                                    What does your project involve?
-                                </legend>
-                                <p className="text-muted-foreground mb-6 text-sm">Select everything that applies.</p>
-                                <div className="grid gap-2.5">
-                                    {PROJECT_INVOLVES.map((opt) => (
-                                        <SelectCard
-                                            key={opt.id}
-                                            label={opt.label}
-                                            selected={answers.involves.includes(opt.id)}
-                                            onClick={() => toggleMulti("involves", opt.id)}
-                                        />
-                                    ))}
-                                </div>
-                                <StepFooter showBack onBack={() => setStep(0)} onNext={() => setStep(2)} nextDisabled={!canAdvance()} />
-                            </fieldset>
-                        )}
+      const next = getService(id);
+      const keepStage = next?.stages.some((o) => o.id === answers.stage);
+      const keepEngagement = next?.engagement.some((o) => o.id === answers.engagement);
 
-                        {step === 2 && (
-                            <fieldset>
-                                <legend className="mb-6 text-3xl font-semibold tracking-tight">What stage are you at?</legend>
-                                <div className="grid gap-2.5">
-                                    {STAGES.map((opt) => (
-                                        <SelectCard
-                                            key={opt.id}
-                                            label={opt.label}
-                                            selected={answers.stage === opt.id}
-                                            onClick={() => setAnswers((a) => ({ ...a, stage: opt.id }))}
-                                        />
-                                    ))}
-                                </div>
-                                <StepFooter showBack onBack={() => setStep(1)} onNext={() => setStep(3)} nextDisabled={!canAdvance()} />
-                            </fieldset>
-                        )}
+      // `as never`: field/value pairing is driven by the step config, which TS can't correlate.
+      setValue("service", id as never, { shouldDirty: true });
 
-                        {step === 3 && (
-                            <fieldset>
-                                <legend className="mb-6 text-3xl font-semibold tracking-tight">
-                                    What do you need from SYNTAC?
-                                </legend>
-                                <div className="grid gap-2.5">
-                                    {ENGAGEMENT_TYPES.map((opt) => (
-                                        <SelectCard
-                                            key={opt.id}
-                                            label={opt.label}
-                                            selected={answers.engagement === opt.id}
-                                            onClick={() => setAnswers((a) => ({ ...a, engagement: opt.id }))}
-                                        />
-                                    ))}
-                                </div>
-                                <StepFooter showBack onBack={() => setStep(2)} onNext={() => setStep(4)} nextDisabled={!canAdvance()} />
-                            </fieldset>
-                        )}
+      // Everything below depends on the service: drop what no longer applies.
+      setValue("involves", [], { shouldDirty: true });
+      setValue("involvesOther", "", { shouldDirty: true });
+      setValue("features", [], { shouldDirty: true });
+      setValue("featuresOther", "", { shouldDirty: true });
+      if (!keepStage) setValue("stage", undefined as never, { shouldDirty: true });
+      if (!keepEngagement) setValue("engagement", undefined as never, { shouldDirty: true });
 
-                        {step === 4 && (
-                            <fieldset>
-                                <legend className="mb-1 text-3xl font-semibold tracking-tight">
-                                    What features do you need?
-                                </legend>
-                                <p className="text-muted-foreground mb-6 text-sm">Select everything that applies.</p>
-                                <div className="grid gap-2.5">
-                                    {FEATURE_AREAS.map((opt) => (
-                                        <SelectCard
-                                            key={opt.id}
-                                            label={opt.label}
-                                            selected={answers.features.includes(opt.id)}
-                                            onClick={() => toggleMulti("features", opt.id)}
-                                        />
-                                    ))}
-                                </div>
-                                <StepFooter
-                                    showBack
-                                    onBack={() => setStep(3)}
-                                    onNext={() => setStep(5)}
-                                    nextDisabled={!canAdvance()}
-                                    nextLabel="See my estimate"
-                                />
-                            </fieldset>
-                        )}
+      clearErrors();
+      return;
+    }
 
-                        {step === 5 && (
-                            <div>
-                                <p className="text-muted-foreground text-sm">Estimated development time</p>
-                                <p className="mt-2 text-6xl font-semibold tracking-tight">
-                                    ~{estimate.low}–{estimate.high}
-                                </p>
-                                <p className="text-muted-foreground mt-1 text-xl">development days</p>
-                                <p className="text-muted-foreground mt-6 max-w-lg text-sm leading-relaxed">
-                                    <strong>Kindly Note:</strong> This is an indicative range based on what you've told us so far, the final scope
-                                    depends on detailed requirements, integrations, design decisions, feedback rounds, and
-                                    any changes along the way. Share a few details below and we'll follow up with a proper
-                                    assessment.
-                                </p>
-                                <div className="mt-10 flex items-center justify-between">
-                                    <button
-                                        type="button"
-                                        onClick={() => setStep(4)}
-                                        className="cursor-pointer flex items-center gap-2 text-muted-foreground hover:text-foreground text-sm font-medium transition-colors"
-                                    >
-                                        <MoveLeft />
-                                        Back
-                                    </button>
-                                    <button
-                                        type="button"
-                                        onClick={() => setStep(6)}
-                                        className="cursor-pointer bg-primary text-primary-foreground rounded-md px-6 py-2.5 text-sm font-medium transition-all duration-200 hover:opacity-90 hover:shadow-md"
-                                    >
-                                        Get in touch
-                                    </button>
-                                </div>
-                            </div>
-                        )}
+    if (view.multiple) {
+      const current = (getValues(view.field) as unknown as readonly string[] | undefined) ?? [];
+      const next = current.includes(id) ? current.filter((v) => v !== id) : [...current, id];
+      setValue(view.field, next as never, options);
+    } else {
+      setValue(view.field, id as never, options);
+    }
+  };
 
-                        {step === 6 && leadStatus !== "submitted" && (
-                            <div>
-                                <h3 className="text-3xl font-semibold tracking-tight">Tell us how to reach you</h3>
-                                <p className="text-muted-foreground mt-2 text-sm">
-                                    We'll follow up with a proper assessment based on what you've shared.
-                                </p>
-                                <div className="mt-7 grid gap-3">
-                                    <input
-                                        type="text"
-                                        placeholder="Your name"
-                                        value={name}
-                                        onChange={(e) => setName(e.target.value)}
-                                        className="border-border bg-background focus:border-primary w-full rounded-md border px-4 py-3 text-sm outline-none transition-colors"
-                                    />
-                                    <input
-                                        type="email"
-                                        placeholder="Email address"
-                                        value={email}
-                                        onChange={(e) => setEmail(e.target.value)}
-                                        className="border-border bg-background focus:border-primary w-full rounded-md border px-4 py-3 text-sm outline-none transition-colors"
-                                    />
-                                    <textarea
-                                        placeholder="Anything else about your project we should know? (optional)"
-                                        value={details}
-                                        onChange={(e) => setDetails(e.target.value)}
-                                        rows={6}
-                                        className="border-border bg-background focus:border-primary w-full resize-none rounded-md border px-4 py-3 text-sm outline-none transition-colors"
-                                    />
-                                </div>
-                                <div className="mt-8 flex items-center justify-between">
-                                    <button
-                                        type="button"
-                                        onClick={() => setStep(5)}
-                                        className="text-muted-foreground cursor-pointer hover:text-foreground text-sm font-medium transition-colors flex items-center gap-2"
-                                    >
-                                        <MoveLeft />
-                                        Back
-                                    </button>
-                                    <button
-                                        type="button"
-                                        onClick={handleLeadSubmit}
-                                        disabled={!name || !email || leadStatus === "submitting"}
-                                        className={cn(
-                                            "rounded-md cursor-pointer px-6 py-2.5 text-sm font-medium transition-all duration-200 flex items-center gap-1",
-                                            !name || !email || leadStatus === "submitting"
-                                                ? "bg-muted text-muted-foreground cursor-not-allowed"
-                                                : "bg-primary text-primary-foreground hover:opacity-90 hover:shadow-md"
-                                        )}
-                                    >
-                                        {leadStatus === "submitting" ? "Sending…" : "Send my details"}
-                                        {/*{leadStatus !== "submitting" ? <LoaderCircle className={'animate-spin'} /> : <Send /> }*/}
-                                    </button>
-                                </div>
-                            </div>
-                        )}
+  const isSelected = (view: ChoiceStepView, id: string) => {
+    const value = answers[view.field];
+    return Array.isArray(value) ? (value as readonly string[]).includes(id) : value === id;
+  };
 
-                        {step === 6 && leadStatus === "submitted" && (
-                            <div className="py-8">
-                                <span className="border-primary text-primary mb-5 flex size-11 items-center justify-center rounded-full border">
-                                  <Check className="size-5" />
-                                </span>
-                                <h3 className="text-3xl font-semibold tracking-tight">Thanks, {name.split(" ")[0]}.</h3>
-                                <p className="text-muted-foreground mt-2 max-w-md text-sm leading-relaxed">
-                                    We've got your project details and your indicative estimate of <strong>~{estimate.low}–
-                                    {estimate.high}</strong> development days. We'll be in touch at {email} shortly.
-                                    <br />      <br />
-                                    You may now close this window and continue browsing.
-                                </p>
-                            </div>
-                        )}
-                    </div>
-                </div>
-            </div>
-        </div>
-    );
-}
+  const nextStep = () => setStep((s) => Math.min(s + 1, STEP_CONTACT));
+  const previousStep = () => setStep((s) => Math.max(s - 1, 0));
 
-/* -------------------------------------------------------------------------
- * Trigger + full-screen dialog
- * ---------------------------------------------------------------------- */
+  const onSubmit = async (data: EstimatorFormValues) => {
+    setLeadStatus("submitting");
 
-interface StartYourProjectProps {
-    className?: string;
-    onSubmitLead?: ProjectEstimatorWizardProps["onSubmitLead"];
-}
-
-export function StartYourProject({ className, onSubmitLead }: StartYourProjectProps) {
-    const [open, setOpen] = useState(false);
-    // Bumped every time the overlay opens, forcing ProjectEstimatorWizard to
-    // fully remount — which guarantees its localStorage read (and therefore
-    // pre-population of saved progress) happens fresh on every open.
-    const [instanceKey, setInstanceKey] = useState(0);
-    const overlayRef = useRef<HTMLDivElement>(null);
-
-    // Lock page scroll while the overlay is open.
-    useEffect(() => {
-        if (!open) return;
-        const original = document.body.style.overflow;
-        document.body.style.overflow = "hidden";
-        return () => {
-            document.body.style.overflow = original;
-        };
-    }, [open]);
-
-    // Close on Escape.
-    useEffect(() => {
-        if (!open) return;
-        const onKeyDown = (e: KeyboardEvent) => {
-            if (e.key === "Escape") setOpen(false);
-        };
-        window.addEventListener("keydown", onKeyDown);
-        return () => window.removeEventListener("keydown", onKeyDown);
-    }, [open]);
-
-    // Quiet fade-in on open, rather than an abrupt appearance.
-    useEffect(() => {
-        if (open && overlayRef.current) {
-            gsap.fromTo(overlayRef.current, { opacity: 0 }, { opacity: 1, duration: 0.3, ease: "power2.out" });
-        }
-    }, [open]);
-
-    const handleOpen = () => {
-        setInstanceKey((k) => k + 1);
-        setOpen(true);
+    const leadAnswers: EstimatorAnswers = {
+      service: data.service,
+      involves: data.involves,
+      involvesOther: data.involvesOther ?? "",
+      stage: data.stage,
+      engagement: data.engagement,
+      features: data.features,
+      featuresOther: data.featuresOther ?? "",
     };
+    const leadEstimate = estimateDays(leadAnswers);
 
-    return (
-        <div className={className}>
-            <button
-                type="button"
-                onClick={handleOpen}
-                className="cursor-pointer focus-visible:border-ring mx-auto focus-visible:ring-ring/50 aria-invalid:border-destructive aria-invalid:ring-destructive/20 dark:aria-invalid:ring-destructive/40 inline-flex shrink-0 items-center justify-center font-medium whitespace-nowrap transition-all outline-none focus-visible:ring-[3px] disabled:pointer-events-none disabled:opacity-50 [&amp;_svg]:pointer-events-none [&amp;_svg]:shrink-0 [&amp;_svg:not([class*='size-'])]:size-4 bg-primary text-primary-foreground hover:bg-primary/90 h-10 px-6 has-[&gt;svg]:px-4 gap-2 rounded-lg px-6! text-base shadow-sm max-[400px]:flex-1"
-            >
-                Estimate my project
-            </button>
+    try {
+      await onSubmitLead?.({
+        name: data.name,
+        email: data.email,
+        details: data.details ?? "",
+        answers: leadAnswers,
+        summary: describeAnswers(leadAnswers),
+        estimate: leadEstimate,
+      });
+    } catch (error) {
+      console.error("Estimator lead submission failed:", error);
+      setLeadStatus("error");
+      return;
+    }
 
-            {open && (
-                <div
-                    ref={overlayRef}
-                    role="dialog"
-                    aria-modal="true"
-                    aria-label="Project Estimator"
-                    className="bg-background fixed inset-0 z-50"
+    // Stop any in-flight save from re-creating the entry we're about to remove.
+    canPersistRef.current = false;
+    cancelPendingSave();
+    clearProgress();
+
+    setSubmitted({
+      name: data.name,
+      email: data.email,
+      estimate: leadEstimate,
+      unit: getService(data.service)?.copy.unit ?? "Development days",
+    });
+    setLeadStatus("submitted");
+  };
+
+  const inputClasses =
+    "border-border bg-background focus:border-primary w-full rounded-md border px-4 py-3 text-sm outline-none transition-colors";
+
+  return (
+    <div className={cn("grid h-full w-full lg:grid-cols-[360px_1fr]", className)}>
+      <IdentityPanel step={step} />
+
+      <div ref={scrollRef} className="flex h-full flex-col overflow-y-auto px-6 py-12 sm:px-12 lg:px-20 lg:py-16">
+        <MobileProgress step={step} />
+
+        <div className="flex flex-1 items-center justify-center">
+          <div ref={panelRef} className="w-full max-w-xl">
+            {choice && (
+              <fieldset key={choice.field}>
+                <legend
+                  className={cn(
+                    "text-3xl font-semibold tracking-tight",
+                    choice.hint ? "mb-1" : "mb-6"
+                  )}
                 >
-                    <button
-                        type="button"
-                        onClick={() => setOpen(false)}
-                        aria-label="Close"
-                        className="text-muted-foreground cursor-pointer hover:text-foreground hover:bg-muted absolute top-6 right-6 z-10 rounded-full p-2.5 transition-colors"
-                    >
-                        <X className="size-5" />
-                    </button>
-                    <ProjectEstimatorWizard key={instanceKey} className="h-screen" onSubmitLead={onSubmitLead} />
+                  {choice.title}
+                </legend>
+                {choice.hint && <p className="text-muted-foreground mb-6 text-sm">{choice.hint}</p>}
+                <div className="grid gap-2.5">
+                  {choice.options.map((opt) => (
+                    <SelectCard
+                      key={opt.id}
+                      label={opt.label}
+                      description={opt.description}
+                      selected={isSelected(choice, opt.id)}
+                      onClick={() => handleSelect(choice, opt.id)}
+                    />
+                  ))}
                 </div>
+
+                {choice.other && (
+                  <div className="mt-2.5">
+                    <input
+                      key={choice.other.field}
+                      type="text"
+                      maxLength={300}
+                      placeholder={choice.other.placeholder}
+                      aria-label={choice.other.placeholder}
+                      className={inputClasses}
+                      {...register(choice.other.field)}
+                    />
+                  </div>
+                )}
+
+                <StepFooter
+                  showBack={step > 0}
+                  onBack={previousStep}
+                  onNext={nextStep}
+                  nextDisabled={!choiceComplete}
+                  nextLabel={choice.field === "features" ? "See my estimate" : undefined}
+                />
+              </fieldset>
             )}
+
+            {step === STEP_ESTIMATE && service && (
+              <div>
+                <p className="text-muted-foreground text-sm">{service.copy.estimateLabel}</p>
+                <p className="mt-2 text-6xl font-semibold tracking-tight">
+                  ~{estimate.low}–{estimate.high}
+                </p>
+                <p className="text-muted-foreground mt-1 text-xl">{service.copy.unit}</p>
+                <p className="text-muted-foreground mt-6 max-w-lg text-sm leading-relaxed">
+                  <strong>Kindly Note:</strong> This is an indicative range based on what you&apos;ve told us so far, the final scope
+                  depends on detailed requirements, integrations, design decisions, feedback rounds, and
+                  any changes along the way. Share a few details below and we&apos;ll follow up with a proper
+                  assessment.
+                </p>
+                <button
+                  type="button"
+                  onClick={() => setInfoOpen(true)}
+                  className="text-muted-foreground hover:text-foreground mt-4 inline-flex cursor-pointer items-center gap-2 text-sm font-medium underline-offset-4 transition-colors hover:underline"
+                >
+                  <Info className="size-4" />
+                  How is this calculated?
+                </button>
+                <div className="mt-10 flex items-center justify-between">
+                  <button
+                    type="button"
+                    onClick={previousStep}
+                    className="cursor-pointer flex items-center gap-2 text-muted-foreground hover:text-foreground text-sm font-medium transition-colors"
+                  >
+                    <MoveLeft />
+                    Back
+                  </button>
+                  <button
+                    type="button"
+                    onClick={nextStep}
+                    className="cursor-pointer bg-primary text-primary-foreground rounded-md px-6 py-2.5 text-sm font-medium transition-all duration-200 hover:opacity-90 hover:shadow-md"
+                  >
+                    Get in touch
+                  </button>
+                </div>
+
+                {infoOpen && <EstimateInfoDialog service={service} onClose={() => setInfoOpen(false)} />}
+              </div>
+            )}
+
+            {step === STEP_CONTACT && leadStatus !== "submitted" && (
+              <form noValidate onSubmit={handleSubmit(onSubmit)}>
+                <h3 className="text-3xl font-semibold tracking-tight">Tell us how to reach you</h3>
+                <p className="text-muted-foreground mt-2 text-sm">
+                  We&apos;ll follow up with a proper assessment based on what you&apos;ve shared.
+                </p>
+                <div className="mt-7 grid gap-3">
+                  <div>
+                    <input
+                      type="text"
+                      placeholder="Your name"
+                      aria-label="Your name"
+                      autoComplete="name"
+                      aria-invalid={errors.name ? "true" : "false"}
+                      className={cn(inputClasses, errors.name && "border-destructive focus:border-destructive")}
+                      {...register("name")}
+                    />
+                    {errors.name?.message && (
+                      <p role="alert" className="text-destructive mt-2 text-sm">
+                        {errors.name.message}
+                      </p>
+                    )}
+                  </div>
+                  <div>
+                    <input
+                      type="email"
+                      inputMode="email"
+                      autoCapitalize="none"
+                      spellCheck={false}
+                      placeholder="Email address"
+                      aria-label="Email address"
+                      autoComplete="email"
+                      aria-invalid={errors.email ? "true" : "false"}
+                      className={cn(inputClasses, errors.email && "border-destructive focus:border-destructive")}
+                      {...register("email")}
+                    />
+                    {errors.email?.message && (
+                      <p role="alert" className="text-destructive mt-2 text-sm">
+                        {errors.email.message}
+                      </p>
+                    )}
+                    {emailSuggestion && !errors.email && (
+                      <p className="text-muted-foreground mt-2 text-sm">
+                        Did you mean{" "}
+                        <button
+                          type="button"
+                          onClick={() =>
+                            setValue("email", emailSuggestion, {
+                              shouldDirty: true,
+                              shouldValidate: true,
+                            })
+                          }
+                          className="text-foreground cursor-pointer font-medium underline underline-offset-4"
+                        >
+                          {emailSuggestion}
+                        </button>
+                        ?
+                      </p>
+                    )}
+                  </div>
+                  <textarea
+                    placeholder="Anything else about your project we should know? (optional)"
+                    aria-label="Project details (optional)"
+                    rows={6}
+                    className={cn(inputClasses, "resize-none")}
+                    {...register("details")}
+                  />
+                </div>
+
+                {leadStatus === "error" && (
+                  <p role="alert" className="text-destructive mt-6 text-sm">
+                    We couldn&apos;t send your details. Please try again.
+                  </p>
+                )}
+
+                <div className="mt-8 flex items-center justify-between">
+                  <button
+                    type="button"
+                    onClick={previousStep}
+                    className="text-muted-foreground cursor-pointer hover:text-foreground text-sm font-medium transition-colors flex items-center gap-2"
+                  >
+                    <MoveLeft />
+                    Back
+                  </button>
+                  <button
+                    type="submit"
+                    disabled={!name || !email || leadStatus === "submitting"}
+                    className={cn(
+                      "rounded-md cursor-pointer px-6 py-2.5 text-sm font-medium transition-all duration-200 flex items-center gap-1",
+                      !name || !email || leadStatus === "submitting"
+                        ? "bg-muted text-muted-foreground cursor-not-allowed"
+                        : "bg-primary text-primary-foreground hover:opacity-90 hover:shadow-md"
+                    )}
+                  >
+                    {leadStatus === "submitting" ? <> Sending...  <Loader2 className="size-4 animate-spin" /></> : "Send my details"}
+                  </button>
+                </div>
+              </form>
+            )}
+
+            {step === STEP_CONTACT && leadStatus === "submitted" && submitted && (
+              <div className="py-8">
+                                <span className="border-primary text-primary mb-5 flex size-11 items-center justify-center rounded-full border">
+                                    <Check className="size-5" />
+                                </span>
+                <h3 className="text-3xl font-semibold tracking-tight">Thanks, {submitted.name.split(" ")[0]}.</h3>
+                <p className="text-muted-foreground mt-2 max-w-md text-sm leading-relaxed">
+                  We&apos;ve got your project details and your indicative estimate of{" "}
+                  <strong>
+                    ~{submitted.estimate.low}–{submitted.estimate.high}
+                  </strong>{" "}
+                  {submitted.unit}. We&apos;ll be in touch at {submitted.email} shortly.
+                  <br /> <br />
+                  You may now close this window and continue browsing.
+                </p>
+              </div>
+            )}
+          </div>
         </div>
-    );
+      </div>
+    </div>
+  );
 }

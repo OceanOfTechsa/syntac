@@ -1,8 +1,7 @@
 @import "tailwindcss";
 @import "tw-animate-css";
-/*@import "shadcn/tailwind.css";*/
+@import "shadcn/tailwind.css";
 /*@plugin "@tailwindcss/typography";*/
-/*@import "tw-animate-css";*/
 
 /* ==========================================================================
    SYNTAC Software theme
@@ -321,7 +320,6 @@ html {
   background: var(--color-brand-light);
 }
 
-/* app/globals.css  (or your main stylesheet) */
 
 /* Hide vanilla-cookieconsent default UI – we use a custom React UI */
 #cc-main {
