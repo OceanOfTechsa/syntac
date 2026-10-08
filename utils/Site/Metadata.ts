@@ -7,8 +7,9 @@ const SiteDescription: string = AppSettings.SITE_DESCRIPTION;
 const SiteUrl =
   process.env.NEXT_PUBLIC_APP_URL ?? "http://localhost:3000";
 
+// ${CompanyName} |
 const SiteTitle =
-  `${CompanyName} | Custom Software Development & Digital Solutions`;
+  `Custom Software Development & Digital Solutions`;
 
 const OgImage = "/brand/syntac-brand-kit/extras/og-image.png";
 

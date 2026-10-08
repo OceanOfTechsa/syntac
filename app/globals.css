@@ -290,6 +290,13 @@ html {
     background-image: radial-gradient(var(--border) 1.2px, transparent 1.3px);
     background-size: 18px 18px;
   }
+  .bg-dot-grid-less-opacity {
+    background-image: radial-gradient(
+            color-mix(in srgb, var(--border) 45%, transparent) 1.2px,
+            transparent 1.3px
+    );
+    background-size: 18px 18px;
+  }
 }
 
 /* @utility must be top-level — not nested inside @layer utilities */

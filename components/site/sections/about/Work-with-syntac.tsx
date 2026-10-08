@@ -20,16 +20,16 @@ const clientJourney = [
         title: "Plan the Right Solution",
         description:
             "We turn your requirements into a clear direction, defining the right approach, scope, priorities, and technology.",
-        image: "/assets/site/about/work-with-us/image-5.webp",
-        darkImage: "/assets/site/about/work-with-us/image-5-dark.webp",
+        image: "/assets/site/about/work-with-us/image-6.webp",
+        darkImage: "/assets/site/about/work-with-us/image-6-dark.webp",
     },
     {
         number: "03",
         title: "Design & Develop",
         description:
             "We build your solution around your business, combining thoughtful design with clean, maintainable code.",
-        image: "/assets/site/about/work-with-us/image-6.webp",
-        darkImage: "/assets/site/about/work-with-us/image-6-dark.webp",
+        image: "/assets/site/about/work-with-us/image-5.webp",
+        darkImage: "/assets/site/about/work-with-us/image-5-dark.webp",
     },
     {
         number: "04",

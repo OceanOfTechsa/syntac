@@ -159,3 +159,26 @@ export const CookiePolicyPageMetadata: Metadata = {
     CompanyName,
   ],
 };
+
+export const ServicesPageMetadata: Metadata = {
+  title: "Services",
+  description: `Explore ${CompanyName} services, from web development and MVP development to custom software development, legacy system modernisation, and ongoing support and maintenance.`,
+  keywords: [
+    "software development services",
+    "web development",
+    "website development",
+    "web application development",
+    "MVP development",
+    "custom software development",
+    "software solutions",
+    "legacy system modernisation",
+    "software modernisation",
+    "software maintenance",
+    "software support",
+    "digital solutions",
+    "business software",
+    "custom digital solutions",
+    "South Africa software development",
+    CompanyName,
+  ],
+};

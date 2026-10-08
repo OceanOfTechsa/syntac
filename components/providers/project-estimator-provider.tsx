@@ -209,7 +209,7 @@ export function ProjectEstimatorProvider({ children, onSubmitLead }: ProjectEsti
           aria-modal="true"
           aria-label="Project Estimator"
           tabIndex={-1}
-          className="bg-background fixed inset-0 z-[999] overflow-hidden overflow-y-auto outline-none"
+          className="bg-background fixed inset-0 z-[999] overflow-hidden overflow-y outline-none"
         >
           <button
             type="button"
