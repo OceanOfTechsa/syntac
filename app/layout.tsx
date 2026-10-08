@@ -2,6 +2,7 @@ import { JSX } from "react";
 import { cn } from "@/lib/utils";
 import type { Metadata } from "next";
 import { fonts } from "@/utils/Site/Fonts";
+import ButtonEffects from "@/components/site/shared/button-effects";
 
 import "./globals.css";
 
@@ -56,6 +57,7 @@ const RootLayout =  ({children, }: LayoutProps<"/">): JSX.Element => {
                   <SmoothScroll />
                   <ScrollToTop />
                   <CleanHash />
+                  <ButtonEffects />
               </ThemeProvider>
           </body>
       </html>

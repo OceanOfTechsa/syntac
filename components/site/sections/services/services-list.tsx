@@ -4,13 +4,13 @@ import React, { useEffect, useRef } from "react";
 import {
     Globe,
     Rocket,
-    Database,
     RefreshCw,
     LifeBuoy,
     Headphones,
     Workflow, ShieldCheck, Blocks, GitPullRequest, UserCog, CloudCog, PlugZap,
     GitBranch, Activity, Bug, DatabaseZap, ChartNoAxesCombined, Building2, Images, ShoppingCart, Puzzle, PanelsTopLeft,
-    UsersRound, LayoutDashboard, CircleArrowRight,
+    UsersRound, LayoutDashboard, MoveRight,
+    FolderCode,
 } from "lucide-react";
 import { gsap, ScrollTrigger } from "@/lib/gsap";
 
@@ -116,7 +116,7 @@ const SERVICES_LIST: Service[] = [
         label: "Custom Software Development",
         description:
             "Purpose-built software designed around your unique processes, requirements, workflows, and business goals.",
-        icon: Database,
+        icon: FolderCode,
         points: [
             {
                 icon: Workflow,
@@ -324,7 +324,7 @@ const ServicesSection = () => {
                     preTitle="What we do"
                     title="Services Built for Real Business Needs"
                     markedWord="Real Business"
-                    desc={`${AppSettings.COMPANY_NAME} helps businesses design, build and maintain technology that actually supports the way they work — from websites and web applications to custom systems and ongoing support.`}
+                    desc={`${AppSettings.COMPANY_NAME} helps businesses design, build and maintain technology that actually supports the way they work, from websites and web applications to custom systems and ongoing support.`}
                 />
             </div>
 
@@ -342,7 +342,7 @@ const ServicesSection = () => {
                                 cardsRef.current[index] = el;
                             }}
                             draggable={false}
-                            className="absolute inset-x-0 bottom-0 block overflow-hidden bg-white text-inherit no-underline dark:bg-[#0a0a0a] border-y border-dashed will-change-transform"
+                            className="group absolute inset-x-0 bottom-0 block overflow-hidden bg-white text-inherit no-underline dark:bg-[#0a0a0a] border-y border-dashed will-change-transform"
                             style={{ top: peekSpace }}
                         >
                             <div className="card-inner grid h-full md:grid-cols-2">
@@ -369,6 +369,10 @@ const ServicesSection = () => {
                                             </h3>
                                             <p className="text-muted-foreground mt-1.5 max-w-xs text-sm leading-relaxed">
                                                 {service.description}
+                                            </p>
+                                            <p className='text-muted-foreground mt-1.5 max-w-xs text-xs leading-relaxed flex gap-2 items-center'>
+                                                Learn more
+                                                <MoveRight size={18} className='group-hover:translate-x-1 transition-transform duration-500 ease-in-out' />
                                             </p>
                                         </div>
                                     </div>

@@ -4,7 +4,7 @@ import FlipWords from "@/components/gsap/animations/shared/flip-words";
 import {useTextReveal} from "@/lib/gsap/hooks/use-text-reveal";
 import {useRef} from "react";
 import Link from "next/link";
-import {Headset} from "lucide-react";
+import {ArrowUpRight, Headset} from "lucide-react";
 
 const HeroSection = () => {
     const textRef = useRef<HTMLDivElement | null>(null);
@@ -72,28 +72,7 @@ const HeroSection = () => {
                     <div className={'px-3'}>
                         <Link
                             href="/contact"
-                            className="
-                                hover:bg-[#0B9944] dark:hover:bg-[#0B9944]
-                                focus-visible:border-ring focus-visible:ring-ring/50
-                                aria-invalid:border-destructive aria-invalid:ring-destructive/20
-                                dark:aria-invalid:ring-destructive/40
-
-                                inline-flex shrink-0 items-center justify-center
-                                font-medium whitespace-nowrap
-                                transition-all outline-none
-                                focus-visible:ring-[3px]
-                                disabled:pointer-events-none disabled:opacity-50
-
-                                [&_svg]:pointer-events-none
-                                [&_svg]:shrink-0
-                                [&_svg:not([class*='size-'])]:size-4
-
-                                bg-primary text-primary-foreground
-                                hover:text-white
-
-                                h-10 w-auto px-6 gap-2
-                                text-base rounded-md
-                                sm:max-[400px]:flex-1
+                            className="btn-roll cursor-pointer text-base bg-primary text-primary-foreground hover:bg-primary/80 px-[1rem] py-[0.5rem] rounded-sm inline-flex items-center gap-2 transition-all duration-500 ease-in-out
                             "
                         >
                             Start a conversation

@@ -1,24 +1,53 @@
 "use client";
 
-import { useRef } from "react";
+import { useEffect, useRef, useState } from "react";
 import { gsap } from "@/lib/gsap";
 import { useGsap } from "@/lib/gsap/hooks/use-gsap";
+
+/* ---- Controls ---- */
+const GLOW_WIDTH = 10; // % of the line the glow covers. Smaller = shorter glow
+const DURATION = 7; // seconds for one full pass. Higher = slower
 
 const AnimatedTimelineLine = () => {
     const lineRef = useRef<HTMLDivElement>(null);
     const glowRef = useRef<HTMLDivElement>(null);
+    const [lineWidth, setLineWidth] = useState(0);
 
-    useGsap(lineRef, () => {
-        if (!glowRef.current) return;
+    // Measure the line itself (the glow's parent), and re-measure whenever it resizes
+    useEffect(() => {
+        const line = lineRef.current;
+        if (!line) return;
 
-        gsap.to(glowRef.current, {
-            xPercent: 500,
-            duration: 8,
-            ease: "none",
-            repeat: -1,
-            repeatDelay: 1,
+        const observer = new ResizeObserver(([entry]) => {
+            setLineWidth(Math.round(entry.contentRect.width));
         });
+
+        observer.observe(line);
+        return () => observer.disconnect();
     }, []);
+
+    useGsap(
+        lineRef,
+        () => {
+            if (!glowRef.current || !lineWidth) return;
+
+            const glowWidth = lineWidth * (GLOW_WIDTH / 100);
+
+            // Start fully off the left edge, end with the glow's left edge on the line's right
+            // edge (so it is fully off the right), measured in px from the line's real width
+            gsap.fromTo(
+                glowRef.current,
+                { x: -glowWidth },
+                {
+                    x: lineWidth,
+                    duration: DURATION,
+                    ease: "none",
+                    repeat: -1,
+                }
+            );
+        },
+        [lineWidth]
+    );
 
     return (
         <div
@@ -27,7 +56,11 @@ const AnimatedTimelineLine = () => {
         >
             <div
                 ref={glowRef}
-                className="absolute left-0 top-0 h-px w-1/5 -translate-x-full bg-linear-to-r from-transparent via-black to-orange-500 dark:via-white dark:to-orange-400"
+                style={{
+                    width: `${GLOW_WIDTH}%`,
+                    visibility: lineWidth ? "visible" : "hidden", // no flash before the first measurement
+                }}
+                className="absolute left-0 top-0 h-px bg-linear-to-r from-transparent via-black to-orange-500 dark:via-white dark:to-orange-400"
             />
         </div>
     );

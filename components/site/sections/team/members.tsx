@@ -65,7 +65,7 @@ const Members = () => {
                     {AppSettings.HIRING && (
                         <Link
                             href="/careers"
-                            className="border rounded-sm p-2 flex items-center justify-center group h-[405px] group hover:bg-white dark:hover:bg-[#202124] transition-all duration-500 ease-in-out"
+                            className="border rounded-sm p-2 flex items-center justify-center group h-[405px] group hover:bg-muted transition-all duration-500 ease-in-out"
                         >
                             <div className="container mx-auto px-2">
                                 <div className="mx-auto text-center">

@@ -121,7 +121,7 @@ const OurApproach = () => {
                 {/* Approach Statement */}
                 <div className="flex items-center justify-center px-6 py-12 max-md:hidden lg:px-8 bg-dot-grid-less-opacity mask-[radial-gradient(ellipse_at_center,black_40%,transparent_85%)] [-webkit-mask-image:radial-gradient(ellipse_at_center,black_40%,transparent_85%)]">
                     <div className="max-w-md space-y-6">
-                        <div className="flex items-center gap-4">
+                        <div className="flex items-center gap-1">
                             <div className="grid size-10 shrink-0 place-items-center rounded-lg border bg-muted/40">
                                 <span className="text-sm font-semibold text-[#0B9944]">
                                     01
@@ -131,7 +131,7 @@ const OurApproach = () => {
                             <div className="relative flex flex-1 items-center justify-center">
                                 <AnimatedTimelineLine />
 
-                                <span className="absolute bg-background px-2 text-xs font-medium text-muted-foreground">
+                                <span className="absolute rounded-full bg-background px-2 text-xs font-medium text-muted-foreground">
                                     To
                                 </span>
                             </div>

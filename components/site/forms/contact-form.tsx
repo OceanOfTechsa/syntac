@@ -38,6 +38,7 @@ import {
   type Service,
   type Timeline,
 } from "@/components/site/forms/shemas/contact-schema";
+import {DOMAIN_FIXES} from "@/utils/Site/domail-suggestions";
 
 const CONTACT_FORM_STORAGE_KEY = "syntac-contact-form-progress";
 // v2: `projectType` was removed, so older saved progress is discarded.
@@ -61,6 +62,19 @@ const DEFAULT_VALUES: ContactFormValues = {
 
   subject: "",
   message: "",
+};
+
+
+/** Returns a corrected address when the domain is a known typo, else null. */
+const getEmailSuggestion = (email?: string): string | null => {
+  if (!email) return null;
+
+  const value = email.trim();
+  const at = value.lastIndexOf("@");
+  if (at < 1) return null;
+
+  const fixed = DOMAIN_FIXES[value.slice(at + 1).toLowerCase()];
+  return fixed ? `${value.slice(0, at)}@${fixed}` : null;
 };
 
 /**
@@ -372,6 +386,9 @@ const ContactForm = () => {
   const selectTimeline = (value: Timeline) =>
     setValue("timeline", value, { shouldDirty: true, shouldValidate: true });
 
+  const applyEmailSuggestion = (email: string) =>
+      setValue("email", email, { shouldDirty: true, shouldValidate: true });
+
   /* ------------------------------------------------------------------------ */
   /* Navigation                                                               */
   /* ------------------------------------------------------------------------ */
@@ -484,7 +501,7 @@ const ContactForm = () => {
             resetForm();
             setSubmitState("idle");
           }}
-          className="mt-8 flex h-11 w-full cursor-pointer items-center justify-center gap-2 rounded-md bg-primary px-5 text-sm font-medium text-primary-foreground outline-none transition-opacity hover:opacity-90"
+          className="mt-8 flex w-full cursor-pointer items-center justify-center gap-2 rounded-sm px-[1rem] py-[0.5rem] bg-primary text-sm font-medium text-primary-foreground outline-none transition-opacity hover:opacity-90"
         >
           Send another message
         </button>
@@ -742,7 +759,12 @@ const ContactForm = () => {
                 description="Almost there. Let us know who we should contact about your project."
               />
 
-              <ContactDetails register={register} errors={errors} />
+              <ContactDetails
+                  register={register}
+                  errors={errors}
+                  email={formValues.email}
+                  onUseSuggestion={applyEmailSuggestion}
+              />
 
               <Navigation onBack={previousStep} onNext={nextStep} />
             </div>
@@ -756,7 +778,12 @@ const ContactForm = () => {
                 description="Let us know who we should contact about your enquiry."
               />
 
-              <ContactDetails register={register} errors={errors} />
+              <ContactDetails
+                  register={register}
+                  errors={errors}
+                  email={formValues.email}
+                  onUseSuggestion={applyEmailSuggestion}
+              />
 
               <Navigation onBack={previousStep} onNext={nextStep} />
             </div>
@@ -785,39 +812,65 @@ const ContactForm = () => {
 type ContactDetailsProps = {
   register: UseFormRegister<ContactFormValues>;
   errors: FieldErrors<ContactFormValues>;
+  email?: string;
+  onUseSuggestion: (email: string) => void;
 };
 
-const ContactDetails = ({ register, errors }: ContactDetailsProps) => (
-  <div className="space-y-5">
-    <div className="grid gap-5 sm:grid-cols-2">
-      <InputField
-        label="Name"
-        required
-        autoComplete="name"
-        error={errors.name?.message}
-        {...register("name")}
-      />
+const ContactDetails = ({
+                          register,
+                          errors,
+                          email,
+                          onUseSuggestion,
+                        }: ContactDetailsProps) => {
+  const suggestion = getEmailSuggestion(email);
 
-      <InputField
-        label="Email"
-        type="email"
-        required
-        autoComplete="email"
-        error={errors.email?.message}
-        {...register("email")}
-      />
-    </div>
+  return (
+      <div className="space-y-5">
+        <div className="grid gap-5 sm:grid-cols-2">
+          <InputField
+              label="Name"
+              required
+              autoComplete="name"
+              error={errors.name?.message}
+              {...register("name")}
+          />
 
-    <InputField
-      label="Company"
-      optional
-      autoComplete="organization"
-      error={errors.company?.message}
-      {...register("company")}
-    />
-  </div>
-);
+          <div className="space-y-2">
+            <InputField
+                label="Email"
+                type="email"
+                required
+                autoComplete="email"
+                error={errors.email?.message}
+                {...register("email")}
+            />
 
+            {suggestion && (
+                <p role="status" className="text-xs text-muted-foreground">
+                  Did you mean{" "}
+                  <button
+                      type="button"
+                      onClick={() => onUseSuggestion(suggestion)}
+                      className="cursor-pointer font-medium text-primary underline underline-offset-2 outline-none hover:opacity-80 focus-visible:ring-2 focus-visible:ring-primary/30"
+                  >
+                    {suggestion}
+                  </button>
+                  ?
+                </p>
+            )}
+          </div>
+        </div>
+
+        <InputField
+            label="Company"
+            optional
+            autoComplete="organization"
+            error={errors.company?.message}
+            {...register("company")}
+        />
+      </div>
+  );
+};
 /* -------------------------------------------------------------------------- */
 /* Choice Button                                                              */
 /* -------------------------------------------------------------------------- */
@@ -840,7 +893,7 @@ const ChoiceButton = ({
     onClick={onClick}
     aria-pressed={selected}
     className={cn(
-      "group flex w-full cursor-pointer items-center justify-between rounded-md border px-4 py-3.5 text-left text-sm font-medium outline-none transition-all duration-200",
+      "group flex w-full cursor-pointer items-center justify-between rounded-sm border px-4 py-3.5 text-left text-sm font-medium outline-none transition-all duration-200",
       "focus-visible:border-primary focus-visible:ring-2 focus-visible:ring-primary/20",
       selected
         ? "border-primary bg-primary/[0.06]"
@@ -1058,7 +1111,7 @@ const Navigation = ({ onBack, onNext }: NavigationProps) => (
     <button
       type="button"
       onClick={onBack}
-      className="flex h-11 cursor-pointer items-center justify-center gap-2 rounded-md border border-border bg-background px-5 text-sm font-medium transition-colors hover:bg-muted/40"
+      className="flex cursor-pointer items-center justify-center gap-2 rounded-sm px-[1rem] py-[0.5rem] border border-border bg-background text-sm font-medium transition-colors hover:bg-muted/40"
     >
       <ArrowLeft className="size-4" />
       Back
@@ -1081,7 +1134,7 @@ const NavigationButton = ({
   <button
     {...props}
     className={cn(
-      "flex h-11 w-full cursor-pointer items-center justify-center gap-2 rounded-md bg-primary px-5 text-sm font-medium text-primary-foreground outline-none transition-opacity hover:opacity-90",
+      "flex w-full cursor-pointer items-center justify-center gap-2 rounded-sm px-[1rem] py-[0.5rem] bg-primary text-sm font-medium text-primary-foreground outline-none transition-opacity hover:opacity-90",
       "focus-visible:ring-2 focus-visible:ring-primary/30",
       "disabled:cursor-not-allowed disabled:opacity-50",
       className
@@ -1157,7 +1210,7 @@ const ConfirmationStep = ({
           type="button"
           onClick={onBack}
           disabled={isSubmitting}
-          className="flex h-11 cursor-pointer items-center justify-center gap-2 rounded-md border border-border bg-background px-5 text-sm font-medium transition-colors hover:bg-muted/40 disabled:cursor-not-allowed disabled:opacity-50"
+          className="flex cursor-pointer items-center justify-center gap-2 rounded-sm px-[1rem] py-[0.5rem] border border-border bg-background text-sm font-medium transition-colors hover:bg-muted/40 disabled:cursor-not-allowed disabled:opacity-50"
         >
           <ArrowLeft className="size-4" />
           Back
@@ -1166,7 +1219,7 @@ const ConfirmationStep = ({
         <button
           type="submit"
           disabled={isSubmitting}
-          className="flex h-11 flex-1 cursor-pointer items-center justify-center gap-2 rounded-md bg-primary px-5 text-sm font-medium text-primary-foreground outline-none transition-opacity hover:opacity-90 focus-visible:ring-2 focus-visible:ring-primary/30 disabled:cursor-not-allowed disabled:opacity-60"
+          className="flex flex-1 cursor-pointer items-center justify-center gap-2 rounded-sm px-[1rem] py-[0.5rem] bg-primary text-sm font-medium text-primary-foreground outline-none transition-opacity hover:opacity-90 focus-visible:ring-2 focus-visible:ring-primary/30 disabled:cursor-not-allowed disabled:opacity-60"
         >
           {isSubmitting ? (
             <>

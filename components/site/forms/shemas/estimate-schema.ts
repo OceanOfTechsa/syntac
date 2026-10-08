@@ -1,4 +1,5 @@
 import { z } from "zod";
+import {DOMAIN_FIXES} from "@/utils/Site/domail-suggestions";
 
 /* -------------------------------------------------------------------------
  * Types
@@ -497,7 +498,7 @@ export const SERVICES = [
   },
 ] as const satisfies readonly ServiceDefinition[];
 
-export type ServiceId = (typeof SERVICES)[number]["id"];
+// export type ServiceId = (typeof SERVICES)[number]["id"];
 
 export const STEP_LABELS = [
   "Service",
@@ -509,7 +510,7 @@ export const STEP_LABELS = [
   "Contact",
 ] as const;
 
-export const TOTAL_STEPS = STEP_LABELS.length;
+export const TOTAL_STEPS: number = STEP_LABELS.length;
 
 /** The five choice steps, in order. Estimate and Contact follow. */
 export const CHOICE_KEYS = ["service", "involves", "stage", "engagement", "features"] as const;
@@ -657,7 +658,7 @@ export const PersistedProgressSchema = z.object({
   }),
 });
 
-export type PersistedProgress = z.infer<typeof PersistedProgressSchema>;
+// export type PersistedProgress = z.infer<typeof PersistedProgressSchema>;
 
 /* -------------------------------------------------------------------------
  * Step helpers
@@ -715,35 +716,12 @@ export function sanitizeValues(values: Partial<EstimatorFormValues>): Partial<Es
   };
 }
 
-/* -------------------------------------------------------------------------
- * Email typo suggestions
- * ---------------------------------------------------------------------- */
-
-const DOMAIN_FIXES: Record<string, string> = {
-  "gmial.com": "gmail.com",
-  "gmai.com": "gmail.com",
-  "gnail.com": "gmail.com",
-  "gmail.co": "gmail.com",
-  "gmail.con": "gmail.com",
-  "hotmial.com": "hotmail.com",
-  "hotmal.com": "hotmail.com",
-  "hotmail.con": "hotmail.com",
-  "yaho.com": "yahoo.com",
-  "yahooo.com": "yahoo.com",
-  "yahoo.con": "yahoo.com",
-  "outlok.com": "outlook.com",
-  "outloook.com": "outlook.com",
-  "outlook.con": "outlook.com",
-  "iclod.com": "icloud.com",
-  "icloud.con": "icloud.com",
-};
-
 /** Returns a corrected address when the domain looks like a common typo. */
 export function suggestEmailFix(email: string): string | null {
   const parts = email.trim().toLowerCase().split("@");
   if (parts.length !== 2 || !parts[0]) return null;
 
-  const fix = DOMAIN_FIXES[parts[1]];
+  const fix: string = DOMAIN_FIXES[parts[1]];
   return fix ? `${parts[0]}@${fix}` : null;
 }
 

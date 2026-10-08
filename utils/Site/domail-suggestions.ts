@@ -1,0 +1,73 @@
+export const DOMAIN_FIXES: Record<string, string> = {
+    // gmail
+    "gmial.com": "gmail.com",
+    "gmal.com": "gmail.com",
+    "gmai.com": "gmail.com",
+    "gnail.com": "gmail.com",
+    "gmaill.com": "gmail.com",
+    "gmail.co": "gmail.com",
+    "gmail.con": "gmail.com",
+    "gmail.cm": "gmail.com",
+    "gmail.om": "gmail.com",
+    "gmail.vom": "gmail.com",
+    "gmail.comm": "gmail.com",
+    "gmaul.com": "gmail.com",
+    "gamil.com": "gmail.com",
+    "gimail.com": "gmail.com",
+    "gemail.com": "gmail.com",
+    "ggmail.com": "gmail.com",
+    "googlemail.con": "googlemail.com",
+
+    // hotmail
+    "hotmial.com": "hotmail.com",
+    "hotmal.com": "hotmail.com",
+    "hotmai.com": "hotmail.com",
+    "hotmaill.com": "hotmail.com",
+    "hotamil.com": "hotmail.com",
+    "hitmail.com": "hotmail.com",
+    "hotmil.com": "hotmail.com",
+    "hotmail.con": "hotmail.com",
+    "hotmail.cm": "hotmail.com",
+    "hotmail.co": "hotmail.com",
+    "hotmail.om": "hotmail.com",
+
+    // yahoo
+    "yaho.com": "yahoo.com",
+    "yahooo.com": "yahoo.com",
+    "yahou.com": "yahoo.com",
+    "yhoo.com": "yahoo.com",
+    "yagoo.com": "yahoo.com",
+    "yahoo.con": "yahoo.com",
+    "yahoo.cm": "yahoo.com",
+    "yahoo.om": "yahoo.com",
+    "yahoo.co": "yahoo.com",
+
+    // outlook
+    "outlok.com": "outlook.com",
+    "outloook.com": "outlook.com",
+    "outook.com": "outlook.com",
+    "outlool.com": "outlook.com",
+    "outllok.com": "outlook.com",
+    "outlook.con": "outlook.com",
+    "outlook.cm": "outlook.com",
+    "outlook.om": "outlook.com",
+
+    // icloud
+    "iclod.com": "icloud.com",
+    "iclould.com": "icloud.com",
+    "icoud.com": "icloud.com",
+    "icloud.con": "icloud.com",
+    "icloud.cm": "icloud.com",
+    "icloud.om": "icloud.com",
+
+    // live / msn / aol / proton
+    "live.con": "live.com",
+    "live.cm": "live.com",
+    "msn.con": "msn.com",
+    "msn.cm": "msn.com",
+    "aol.con": "aol.com",
+    "aol.cm": "aol.com",
+    "protonmail.con": "protonmail.com",
+    "proton.mw": "proton.me",
+    "proton.nr": "proton.me",
+};

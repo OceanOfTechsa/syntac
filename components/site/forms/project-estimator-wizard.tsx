@@ -290,7 +290,7 @@ function SelectCard({
       onClick={onClick}
       aria-pressed={selected}
       className={cn(
-        "group cursor-pointer flex w-full items-center justify-between rounded-md border px-4 py-3.5 text-left text-sm font-medium transition-all duration-200",
+        "group cursor-pointer flex w-full items-center justify-between rounded-sm border px-4 py-3.5 text-left text-sm font-medium transition-all duration-200",
         selected
           ? "border-primary bg-primary/[0.06]"
           : "border-border bg-background hover:border-foreground/20 hover:bg-muted/40"
@@ -351,7 +351,7 @@ function StepFooter({
         onClick={onNext}
         disabled={nextDisabled}
         className={cn(
-          "rounded-md cursor-pointer px-6 py-2.5 text-sm font-medium transition-all duration-200 flex gap-2 items-center",
+          "cursor-pointer rounded-sm px-[1rem] py-[0.5rem] text-sm font-medium transition-all duration-200 flex gap-2 items-center",
           nextDisabled
             ? "bg-muted text-muted-foreground cursor-not-allowed"
             : "bg-primary text-primary-foreground hover:opacity-90 hover:shadow-md"
@@ -475,7 +475,7 @@ function EstimateInfoDialog({ service, onClose }: { service: ServiceDefinition; 
           <button
             type="button"
             onClick={onClose}
-            className="bg-primary text-primary-foreground ml-auto cursor-pointer rounded-md px-6 py-2.5 text-sm font-medium transition-all duration-200 hover:opacity-90 hover:shadow-md"
+            className="bg-primary text-primary-foreground ml-auto cursor-pointer rounded-sm px-[1rem] py-[0.5rem] text-sm font-medium transition-all duration-200 hover:opacity-90 hover:shadow-md"
           >
             Got it
           </button>
@@ -843,7 +843,7 @@ export function ProjectEstimatorWizard({ className, onSubmitLead }: ProjectEstim
                   <button
                     type="button"
                     onClick={nextStep}
-                    className="cursor-pointer bg-primary text-primary-foreground rounded-md px-6 py-2.5 text-sm font-medium transition-all duration-200 hover:opacity-90 hover:shadow-md"
+                    className="cursor-pointer bg-primary text-primary-foreground rounded-sm px-[1rem] py-[0.5rem] text-sm font-medium transition-all duration-200 hover:opacity-90 hover:shadow-md"
                   >
                     Get in touch
                   </button>
@@ -941,7 +941,7 @@ export function ProjectEstimatorWizard({ className, onSubmitLead }: ProjectEstim
                     type="submit"
                     disabled={!name || !email || leadStatus === "submitting"}
                     className={cn(
-                      "rounded-md cursor-pointer px-6 py-2.5 text-sm font-medium transition-all duration-200 flex items-center gap-1",
+                      "cursor-pointer rounded-sm px-[1rem] py-[0.5rem] text-sm font-medium transition-all duration-200 flex items-center gap-1",
                       !name || !email || leadStatus === "submitting"
                         ? "bg-muted text-muted-foreground cursor-not-allowed"
                         : "bg-primary text-primary-foreground hover:opacity-90 hover:shadow-md"
