@@ -11,6 +11,8 @@ import SectionHeader from "@/components/site/shared/section-header";
 import AppSettings from "@/utils/AppSettings";
 import Link from "next/link";
 import AnimatedTimelineLine from "@/components/site/shared/animated-timeline-line";
+import {FADED_DOTTED_BG} from "@/components/site/shared-classes";
+import {cn} from "@/lib/utils";
 
 const OurApproach = () => {
     return (
@@ -119,7 +121,7 @@ const OurApproach = () => {
                 </div>
 
                 {/* Approach Statement */}
-                <div className="flex items-center justify-center px-6 py-12 max-md:hidden lg:px-8 bg-dot-grid-less-opacity mask-[radial-gradient(ellipse_at_center,black_40%,transparent_85%)] [-webkit-mask-image:radial-gradient(ellipse_at_center,black_40%,transparent_85%)]">
+                <div className={cn("flex items-center justify-center px-6 py-12 max-md:hidden lg:px-8", FADED_DOTTED_BG)}>
                     <div className="max-w-md space-y-6">
                         <div className="flex items-center gap-1">
                             <div className="grid size-10 shrink-0 place-items-center rounded-lg border bg-muted/40">

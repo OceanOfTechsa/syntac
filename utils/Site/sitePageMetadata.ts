@@ -182,3 +182,24 @@ export const ServicesPageMetadata: Metadata = {
     CompanyName,
   ],
 };
+
+export const CasesPageMetadata: Metadata = {
+  title: "Case Studies",
+  description: `Explore ${CompanyName} case studies and completed projects, showcasing our approach to custom software development, web development, and practical digital solutions for businesses.`,
+  keywords: [
+    "our work",
+    "case studies",
+    "software development case studies",
+    "web development projects",
+    "portfolio",
+    "project showcase",
+    "custom software projects",
+    "web application projects",
+    "website development projects",
+    "business software solutions",
+    "digital solutions portfolio",
+    "software project examples",
+    "South Africa software development",
+    CompanyName,
+  ],
+};

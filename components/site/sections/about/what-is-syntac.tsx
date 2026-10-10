@@ -10,6 +10,7 @@ import {
 import SectionHeader from "@/components/site/shared/section-header";
 import SyntacStats from "@/components/site/sections/about/stats";
 import AppSettings from "@/utils/AppSettings";
+import {AboutStats} from "@/utils/Site/stats";
 
 const WhatIsSyntac = () => {
     return (
@@ -169,7 +170,7 @@ const WhatIsSyntac = () => {
             </div>
 
             <h2 className="text-center text-2xl font-semibold sm:text-3xl">{AppSettings.COMPANY_NAME} Software Stats</h2>
-            <SyntacStats />
+            <SyntacStats stats={AboutStats} />
         </section>
     );
 };

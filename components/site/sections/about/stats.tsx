@@ -1,56 +1,11 @@
-import {
-    BriefcaseBusiness,
-    Code2,
-    Layers3,
-    Rocket,
-    UsersRound,
-    type LucideIcon,
-} from "lucide-react";
 import CountUp from "@/components/site/shared/count-up";
+import {IStat} from "@/utils/Site/stats";
 
-interface IStat {
-    icon: LucideIcon
-    label: string
-    start?: number
-    end: number | string
-    duration?: number
-    prefix?: string
-    suffix?: string
+interface IStatsProps {
+    stats: IStat[];
 }
 
-const stats: IStat[] = [
-    {
-        icon: BriefcaseBusiness,
-        end: 4,
-        label: "Years of Experience",
-        suffix: "+",
-    },
-    {
-        icon: Code2,
-        end: 20,
-        label: "Technologies Used",
-        suffix: "+",
-    },
-    {
-        icon: Layers3,
-        end: 10,
-        label: "Projects Delivered",
-        suffix: "+",
-    },
-    {
-        icon: Rocket,
-        end: 100,
-        label: "Built With Purpose",
-        suffix: "%",
-    },
-    {
-        icon: UsersRound,
-        end: "1:1",
-        label: "Client Collaboration",
-    },
-];
-
-const SyntacStats = () => {
+const SyntacStats = ({stats}: IStatsProps) => {
     return (
         <div className="grid grid-cols-1 border-y border-dashed md:grid-cols-6 xl:grid-cols-5" id="stats">
             {stats.map(({ icon: Icon, label, ...countProps }: IStat, index: number) => (

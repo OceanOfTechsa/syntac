@@ -50,8 +50,7 @@ const HeaderLinks: LinkType[] = [
         ],
     },
     { label: "Services", href: "/services" },
-    { label: "Cases", href: "/case-studies" },
-    // { label: "Testimonials", href: "/testimonials" },
+    { label: "Cases", href: "/cases" },
     { label: "How we work", href: "/how-we-work" },
 
     // ───── Resources Dropdown ─────

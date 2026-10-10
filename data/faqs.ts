@@ -249,3 +249,54 @@ export const ServicesFaqs: IFaq[] = [
             "Yes. If a full solution is not required initially, we can help define a focused version with the most important functionality. This allows you to validate the concept, gather feedback, and expand the product over time.",
     },
 ];
+
+export const CasesFaqs: IFaq[] = [
+    {
+        question: "What types of projects are featured in your portfolio?",
+        answer:
+            "Our portfolio showcases selected digital projects, including websites, web applications, and custom software solutions. Each case highlights our approach to solving problems through thoughtful design, practical technology, and solutions built around specific project goals.",
+        key: "1",
+    },
+    {
+        question: "Can I see examples of projects similar to mine?",
+        answer:
+            "Yes. Browse our featured projects to explore the types of solutions we work on. If you have a specific idea or business challenge, contact us to discuss your requirements and whether our experience aligns with your needs.",
+        key: "2",
+    },
+    {
+        question: "What technologies do you use in your projects?",
+        answer:
+            "We select technologies based on each project's requirements, functionality, performance needs, and long-term maintainability. Depending on the solution, our toolkit may include modern web technologies, backend frameworks, databases, APIs, and cloud platforms.",
+        key: "3",
+    },
+    {
+        question: "Do you work on projects from scratch or improve existing systems?",
+        answer:
+            "We can help with new digital products as well as improvements to existing websites, applications, and software systems. The right approach depends on your current setup, business goals, and the changes needed to deliver a useful and maintainable solution.",
+        key: "4",
+    },
+    {
+        question: "How do you approach a project from concept to completion?",
+        answer:
+            "We begin by understanding your goals, requirements, and intended users. From there, we define the scope, plan the solution, design and develop the necessary features, test the result, and prepare it for delivery. The exact process depends on the size and complexity of the project.",
+        key: "5",
+    },
+    {
+        question: "Can you explain the process and decisions behind a featured project?",
+        answer:
+            "Our case studies provide an overview of selected projects and the solutions developed. Where appropriate, we share information about the objectives, approach, technologies, and outcomes while respecting client confidentiality and any applicable agreements.",
+        key: "6",
+    },
+    {
+        question: "Can you build a solution inspired by one of your showcased projects?",
+        answer:
+            "Absolutely. Our showcased work can serve as a starting point for discussing your requirements, but each project is scoped around the client's unique needs. We can adapt relevant ideas and functionality to create a solution that fits your business rather than simply duplicating an existing project.",
+        key: "7",
+    },
+    {
+        question: "How can I start a project with SYNTAC?",
+        answer:
+            "Start by contacting us with a brief description of your idea, business needs, or current technical challenges. We'll discuss your goals, the scope of work, and the next steps toward defining a suitable solution and project estimate.",
+        key: "8",
+    },
+];

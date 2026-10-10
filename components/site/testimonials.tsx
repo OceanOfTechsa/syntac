@@ -256,12 +256,12 @@ const Testimonials = () => {
 
                         <div ref={quoteRef} className='space-y-5'>
                             {/* Rating */}
-                            <div className="flex gap-1 text-yellow-400 mb-3">
-                                {Array.from({length: quoteTestimonial.rating}).map((_, idx) => (
+                            {/*<div className="flex gap-1 text-yellow-400 mb-3">*/}
+                            {/*    {Array.from({length: quoteTestimonial.rating}).map((_, idx) => (*/}
 
-                                    <Star key={idx}/>
-                                ))}
-                            </div>
+                            {/*        <Star key={idx}/>*/}
+                            {/*    ))}*/}
+                            {/*</div>*/}
                             <div>
                                 <p
                                     className={

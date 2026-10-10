@@ -1,5 +1,6 @@
 "use client";
 
+import Link from "next/link";
 import React, { useEffect, useRef } from "react";
 import {
     Globe,
@@ -12,12 +13,12 @@ import {
     UsersRound, LayoutDashboard, MoveRight,
     FolderCode,
 } from "lucide-react";
-import { gsap, ScrollTrigger } from "@/lib/gsap";
 
-import SectionHeader from "@/components/site/shared/section-header";
+import {cn} from "@/lib/utils";
 import AppSettings from "@/utils/AppSettings";
-import Link from "next/link";
-import {cn} from "cn";
+import { gsap, ScrollTrigger } from "@/lib/gsap";
+import {FADED_DOTTED_BG} from "@/components/site/shared-classes";
+import SectionHeader from "@/components/site/shared/section-header";
 
 /* ---- stack tuning ---- */
 const OFFSET_Y = 12;          // px each buried card is lifted so its top edge peeks out
@@ -347,8 +348,7 @@ const ServicesSection = () => {
                         >
                             <div className="card-inner grid h-full md:grid-cols-2">
                                 {/* Left */}
-                                <div className={cn("relative flex items-center justify-center px-6 max-md:hidden lg:px-10 bg-dot-grid-less-opacity",
-                                "mask-[radial-gradient(ellipse_at_center,black_40%,transparent_85%)] [-webkit-mask-image:radial-gradient(ellipse_at_center,black_40%,transparent_85%)]")}>
+                                <div className={cn("relative flex items-center justify-center px-6 max-md:hidden lg:px-10", FADED_DOTTED_BG)}>
                                     {/* isolate keeps the glow behind the content but above the card background */}
                                     <div className="relative isolate flex items-start gap-5">
                                         {/* Glow: sits behind the icon and the start of the text.
