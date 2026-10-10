@@ -171,6 +171,7 @@ const WhatIsSyntac = () => {
 
             <h2 className="text-center text-2xl font-semibold sm:text-3xl">{AppSettings.COMPANY_NAME} Software Stats</h2>
             <SyntacStats stats={AboutStats} />
+            
         </section>
     );
 };

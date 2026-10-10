@@ -13,7 +13,7 @@ type SocialLinkProps = { label: string, color: string, children: ReactNode };
 
 const CompanyLinks: LinkType[] = [
     { label: "Services", href: "/services" },
-    { label: "Projects", href: "/projects"},
+    { label: "Cases", href: "/cases"},
     { label: "About Us", href: "/about"},
     { label: "How we work", href: "/how-we-work"},
     { label: "Careers", href: "/careers"},

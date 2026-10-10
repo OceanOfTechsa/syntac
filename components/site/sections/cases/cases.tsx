@@ -1,7 +1,7 @@
 "use client";
 
-import React, {useEffect, useMemo, useRef, useState} from 'react'
-import {AppWindow, Archive, ArrowUpRight, BadgeCheck, CircleCheck, Clock, FolderCode, Globe, LifeBuoy, RefreshCw, Rocket} from "lucide-react";
+import React, {RefObject, useEffect, useMemo, useRef, useState} from 'react'
+import {ArrowUpRight, BadgeCheck} from "lucide-react";
 import type {LucideIcon} from "lucide-react";
 
 import {Badge} from "@/components/ui/badge";
@@ -21,33 +21,17 @@ import Link from "next/link";
 import Image, {getImageProps} from "next/image";
 import {caseImagePath, imageKitLoader} from "@/lib/imagekit";
 import type {Theme} from "@/lib/imagekit";
+import {useFadeUp} from "@/lib/gsap/hooks/use-fade-up";
+import {
+    ALL_CASE_STUDIES,
+    type CaseStudy,
+    STATUS_ICONS,
+    STATUS_STYLES, TYPE_ICONS,
+    TYPE_STYLES
+} from "@/utils/Site/case-studies";
+import FadedBorder from "@/components/site/shared/faded-border";
 
-/* -------------------------------------------------------------------------- */
-/*  Types                                                                     */
-/* -------------------------------------------------------------------------- */
 
-type CaseType =
-    | "Website"
-    | "Web Application Development"
-    | "Custom Software"
-    | "MVP Development"
-    | "Support and maintenance"
-    | "Legacy System Modernisation";
-
-type CaseStatus = "Active" | "In progress" | "Completed" | "Deprecated";
-
-export interface CaseStudy {
-    id: number;
-    slug: string;
-    clientSlug: string;
-    clientName: string;
-    clientAvatar?: string;
-    clientInitials: string;
-    summary: string;
-    type: CaseType;
-    status: CaseStatus;
-    featured?: boolean;
-}
 
 /* -------------------------------------------------------------------------- */
 /*  Image size - every case study image uses the same dimensions              */
@@ -59,112 +43,16 @@ const IMAGE_HEIGHT = 200;
 const getCaseImage = (study: CaseStudy, theme: Theme) =>
     caseImagePath(study.clientSlug, study.slug, theme);
 
-/* -------------------------------------------------------------------------- */
-/*  Mock data (replace with your API / CMS call later)                        */
-/* -------------------------------------------------------------------------- */
-
-const ALL_CASE_STUDIES: CaseStudy[] = [
-    {
-        id: 1,
-        slug: "ocean-of-tech-website",
-        clientSlug: "ocean-of-tech",
-        clientName: "Ocean of Tech",
-        clientInitials: "OT",
-        summary:
-            "Business website for digital services, web development, and technology solutions.",
-        type: "Website",
-        status: "Active",
-        featured: true,
-        clientAvatar: "/assets/site/clients/logos/ocean-of-tech.png",
-    },
-    {
-        id: 2,
-        slug: "syntac-software",
-        clientSlug: "syntac-software",
-        clientName: "Syntac Software",
-        clientInitials: "SS",
-        summary: "Website redesign and development for for digital services, web development, and technology solutions company.",
-        type: "Website",
-        status: "In progress",
-        clientAvatar: '/brand/syntac-brand-kit/logos/icon/svg/syntac-icon-green-circle.svg'
-    },
-    {
-        id: 3,
-        slug: "field-service-management",
-        clientSlug: "syntac-software",
-        clientName: "Syntac Software",
-        clientInitials: "SS",
-        summary:
-            "Custom field service management platform for managing service jobs and operational workflows.",
-        type: "Custom Software",
-        status: "In progress",
-        clientAvatar:
-            "/brand/syntac-brand-kit/logos/icon/svg/syntac-icon-green-circle.svg",
-        featured: true,
-    },
-];
-
-const MAX_FEATURED = 3;
-// Only the first 3 featured items stay featured and go to the front.
-// Any other "featured" items drop to normal cards, keeping their original order.
 const CASE_STUDIES: CaseStudy[] = (() => {
-    const featured = ALL_CASE_STUDIES.filter((s) => s.featured).slice(0, MAX_FEATURED);
+    const featured = ALL_CASE_STUDIES.filter((s) => s.featured).slice(0, AppSettings.CASE_STUDY_MAX_FEATURED);
     const rest = ALL_CASE_STUDIES
         .filter((s) => !featured.includes(s))
         .map((s) => ({...s, featured: false}));
 
     return [...featured, ...rest];
 })();
-/* -------------------------------------------------------------------------- */
-/*  Badge styling helpers                                                     */
-/* -------------------------------------------------------------------------- */
 
-const TYPE_ICONS: Record<CaseType, LucideIcon> = {
-    "Website": Globe,
-    "Web Application Development": AppWindow,
-    "Custom Software": FolderCode,
-    "MVP Development": Rocket,
-    "Support and maintenance": LifeBuoy,
-    "Legacy System Modernisation": RefreshCw,
-};
 
-const STATUS_ICONS: Record<CaseStatus, LucideIcon> = {
-    "Active": CircleCheck,
-    "In progress": Clock,
-    "Completed": BadgeCheck,
-    "Deprecated": Archive,
-};
-
-const TAG_BASE = 'border-none h-6 rounded-sm focus-visible:outline-none';
-
-const GREEN_TAG = `${TAG_BASE} bg-green-600/10 text-green-600 focus-visible:ring-green-600/20 dark:bg-green-400/10 dark:text-green-400 dark:focus-visible:ring-green-400/40 [a&]:hover:bg-green-600/5 dark:[a&]:hover:bg-green-400/5`;
-const AMBER_TAG = `${TAG_BASE} bg-amber-600/10 text-amber-600 focus-visible:ring-amber-600/20 dark:bg-amber-400/10 dark:text-amber-400 dark:focus-visible:ring-amber-400/40 [a&]:hover:bg-amber-600/5 dark:[a&]:hover:bg-amber-400/5`;
-const BLUE_TAG = `${TAG_BASE} bg-blue-600/10 text-blue-600 focus-visible:ring-blue-600/20 dark:bg-blue-400/10 dark:text-blue-400 dark:focus-visible:ring-blue-400/40 [a&]:hover:bg-blue-600/5 dark:[a&]:hover:bg-blue-400/5`;
-
-const RED_TAG = `${TAG_BASE} bg-red-600/10 text-red-600 focus-visible:ring-red-600/20 dark:bg-red-400/10 dark:text-red-400 dark:focus-visible:ring-red-400/40 [a&]:hover:bg-red-600/5 dark:[a&]:hover:bg-red-400/5`;
-
-const CYAN_TAG = `${TAG_BASE} bg-cyan-600/10 text-cyan-600 focus-visible:ring-cyan-600/20 dark:bg-cyan-400/10 dark:text-cyan-400 dark:focus-visible:ring-cyan-400/40 [a&]:hover:bg-cyan-600/5 dark:[a&]:hover:bg-cyan-400/5`;
-const INDIGO_TAG = `${TAG_BASE} bg-indigo-600/10 text-indigo-600 focus-visible:ring-indigo-600/20 dark:bg-indigo-400/10 dark:text-indigo-400 dark:focus-visible:ring-indigo-400/40 [a&]:hover:bg-indigo-600/5 dark:[a&]:hover:bg-indigo-400/5`;
-const FUCHSIA_TAG = `${TAG_BASE} bg-fuchsia-600/10 text-fuchsia-600 focus-visible:ring-fuchsia-600/20 dark:bg-fuchsia-400/10 dark:text-fuchsia-400 dark:focus-visible:ring-fuchsia-400/40 [a&]:hover:bg-fuchsia-600/5 dark:[a&]:hover:bg-fuchsia-400/5`;
-const ORANGE_TAG = `${TAG_BASE} bg-orange-600/10 text-orange-600 focus-visible:ring-orange-600/20 dark:bg-orange-400/10 dark:text-orange-400 dark:focus-visible:ring-orange-400/40 [a&]:hover:bg-orange-600/5 dark:[a&]:hover:bg-orange-400/5`;
-const TEAL_TAG = `${TAG_BASE} bg-teal-600/10 text-teal-600 focus-visible:ring-teal-600/20 dark:bg-teal-400/10 dark:text-teal-400 dark:focus-visible:ring-teal-400/40 [a&]:hover:bg-teal-600/5 dark:[a&]:hover:bg-teal-400/5`;
-const SLATE_TAG = `${TAG_BASE} bg-slate-600/10 text-slate-600 focus-visible:ring-slate-600/20 dark:bg-slate-400/10 dark:text-slate-400 dark:focus-visible:ring-slate-400/40 [a&]:hover:bg-slate-600/5 dark:[a&]:hover:bg-slate-400/5`;
-
-const TYPE_STYLES: Record<CaseType, string> = {
-    "Website": CYAN_TAG,
-    "Web Application Development": INDIGO_TAG,
-    "Custom Software": FUCHSIA_TAG,
-    "MVP Development": ORANGE_TAG,
-    "Support and maintenance": TEAL_TAG,
-    "Legacy System Modernisation": SLATE_TAG,
-};
-
-const STATUS_STYLES: Record<CaseStatus, string> = {
-    "Active": GREEN_TAG,
-    "In progress": AMBER_TAG,
-    "Completed": BLUE_TAG,
-    "Deprecated": RED_TAG,
-};
 
 /* -------------------------------------------------------------------------- */
 /*  Pagination helper                                                         */
@@ -215,11 +103,14 @@ const prefetchImage = (src: string) => {
 const IMAGE_CLASSES = 'h-full w-full object-fit transition-transform duration-500 ease-in-out group-hover:scale-105 motion-reduce:transition-none motion-reduce:group-hover:scale-100';
 
 const CaseStudyCard = ({study, priority}: {study: CaseStudy; priority: boolean}) => {
-    const TypeIcon = TYPE_ICONS[study.type];
-    const StatusIcon = STATUS_ICONS[study.status];
+    const TypeIcon: LucideIcon = TYPE_ICONS[study.type];
+    const StatusIcon: LucideIcon = STATUS_ICONS[study.status];
+
+    const caseRef: RefObject<HTMLAnchorElement | null> = useFadeUp();
 
     return (
         <Link
+            ref={caseRef}
             href={`/cases/${study.slug}`}
             className={'relative group h-full w-full flex flex-col rounded-sm overflow-hidden border border-dashed border-border'}
         >
@@ -379,7 +270,7 @@ const CasesShowcase = () => {
                 desc={`Explore our projects, from websites and web applications to custom software solutions, built to solve real challenges, improve experiences, and help businesses move forward.`}
             />
 
-            <div className="via-primary/20 mx-auto h-px w-4/5 bg-linear-to-r from-transparent to-transparent"></div>
+            <FadedBorder />
 
             <div className={'grid grid-cols-1 sm:grid-cols-3 gap-4 items-stretch justify-center mx-auto max-w-7xl px-4 sm:px-6 lg:px-8'}>
                 {visibleStudies.map((study, index) => (

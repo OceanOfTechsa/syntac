@@ -4,11 +4,12 @@ import { useEffect, useRef, useState } from "react";
 import { gsap } from "@/lib/gsap";
 import { useGsap } from "@/lib/gsap/hooks/use-gsap";
 
-/* ---- Controls ---- */
-const GLOW_WIDTH = 10; // % of the line the glow covers. Smaller = shorter glow
-const DURATION = 7; // seconds for one full pass. Higher = slower
+interface IAnimatedTimelineLineProps{
+    GLOW_WIDTH?: number // % of the line the glow covers. Smaller = shorter glow
+    DURATION?: number // seconds for one full pass. Higher = slower
+}
 
-const AnimatedTimelineLine = () => {
+const AnimatedTimelineLine = ({GLOW_WIDTH = 10, DURATION = 7}: IAnimatedTimelineLineProps) => {
     const lineRef = useRef<HTMLDivElement>(null);
     const glowRef = useRef<HTMLDivElement>(null);
     const [lineWidth, setLineWidth] = useState(0);

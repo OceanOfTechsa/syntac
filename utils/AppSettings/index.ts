@@ -23,8 +23,9 @@ export default class AppSettings {
     public static readonly FULL_COMPANY_NAME: string = `${AppSettings.COMPANY_NAME} Software`;
     public static readonly SITE_DESCRIPTION: string = `${AppSettings.COMPANY_NAME} is a leading software company in South Africa, offering website design, development, hosting, UI/UX design, SEO, and business email solutions. We create innovative, custom software and web solutions to help businesses in Durban and across South Africa succeed online.`;
     public static readonly HIRING: boolean = true;
-    public static readonly SHOW_BANNER: boolean = true;
+    public static readonly SHOW_BANNER: boolean = false;
     public static CASE_STUDY_ITEMS_PER_PAGE: number = 6;
+    public static CASE_STUDY_MAX_FEATURED: number = 3;
     public static readonly COMPANY_DOMAIN: string = "oceanoftechsa.com";
     public static NODE_ENVS = {
         PRODUCTION: "production",
