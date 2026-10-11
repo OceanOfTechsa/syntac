@@ -2,15 +2,19 @@ import React from 'react'
 import {Metadata} from 'next';
 import {notFound} from "next/navigation";
 
+import {CaseFaqs} from "@/data/faqs";
+import {galleryImagePath} from "@/lib/imagekit";
+import Faq from "@/components/site/sections/home/faq";
 import type {CaseStudy} from "@/utils/Site/case-studies";
 import {ALL_CASE_STUDIES} from "@/utils/Site/case-studies";
 import SectionDivider from "@/components/site/section-devider";
 import HeroSection from "@/components/site/sections/cases/[slug]/hero-section";
-import ChallengeSection from "@/components/site/sections/cases/[slug]/challenge-section";
-import SolutionSection from "@/components/site/sections/cases/[slug]/solution-section";
-import ImpactSection from "@/components/site/sections/cases/[slug]/impact-section";
 import ImageGallery from "@/components/site/sections/cases/[slug]/image-gallery";
-import {galleryImagePath} from "@/lib/imagekit";
+import ImpactSection from "@/components/site/sections/cases/[slug]/impact-section";
+import SolutionSection from "@/components/site/sections/cases/[slug]/solution-section";
+import CaseFlowSection from "@/components/site/sections/cases/[slug]/case-flow-section";
+import ChallengeSection from "@/components/site/sections/cases/[slug]/challenge-section";
+import ClientFeedbackSection from "@/components/site/sections/cases/[slug]/client-feedback-section";
 
 interface Props {
     params: Promise<{ slug: string }>
@@ -53,6 +57,9 @@ const CaseDetailsPage = async ({params}: Props) => {
                 <SolutionSection data-divider />
                 <ImpactSection data-divider />
                 <ImageGallery images={images} data-divider />
+                <CaseFlowSection data-divider />
+                <ClientFeedbackSection data-divider />
+                <Faq faqs={CaseFaqs} data-divider/>
             </SectionDivider>
         </div>
     )

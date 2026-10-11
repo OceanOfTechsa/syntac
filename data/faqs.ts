@@ -300,3 +300,49 @@ export const CasesFaqs: IFaq[] = [
         key: "8",
     },
 ];
+
+
+export const CaseFaqs: IFaq[] = [
+    {
+        question: "What was the goal of this project?",
+        answer:
+            "The goal was to create a solution tailored to the project's specific requirements, with a focus on usability, functionality, and the needs of its intended users. The approach and priorities were shaped by the project's objectives and scope.",
+        key: "1",
+    },
+    {
+        question: "What technologies were used to build this project?",
+        answer:
+            "The technology stack was selected based on the project's requirements, functionality, and long-term maintainability. Refer to the technologies listed in this case study for the specific tools and frameworks used.",
+        key: "2",
+    },
+    {
+        question: "What challenges did the project address?",
+        answer:
+            "The project focused on addressing the needs and requirements identified during planning. The solution was developed with those priorities in mind, balancing practical functionality, usability, and the project's overall objectives.",
+        key: "3",
+    },
+    {
+        question: "Is this project available to use?",
+        answer:
+            "Availability depends on the project and its current status. Some projects are publicly accessible, while others may be in development or subject to client confidentiality. Contact us if you would like more information about this particular solution.",
+        key: "4",
+    },
+    {
+        question: "Can you build a similar solution for my business?",
+        answer:
+            "Yes. We can use the ideas and approaches demonstrated in this project as a starting point for a solution tailored to your business. We'll discuss your requirements, identify the essential features, and recommend an approach suited to your goals.",
+        key: "5",
+    },
+    {
+        question: "Can the features be customised for my requirements?",
+        answer:
+            "Yes. We tailor solutions to the needs of each project. Features, integrations, user workflows, and the technology stack can be considered during planning to ensure the final solution aligns with your business requirements.",
+        key: "6",
+    },
+    {
+        question: "How can I enquire about a similar project?",
+        answer:
+            "Contact SYNTAC with a brief description of your idea, the problem you want to solve, and any requirements you already have. We'll discuss the scope, possible approach, timeline, and estimated cost based on your needs.",
+        key: "7",
+    },
+];

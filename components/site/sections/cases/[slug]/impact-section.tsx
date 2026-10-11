@@ -16,8 +16,8 @@ const ImpactSection = () => {
                     <div className="px-4 py-8 sm:px-6 lg:px-8">
                         <div className="flex items-center gap-2 text-sm font-medium">
                             <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
-                                 fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
-                                 stroke-linejoin="round" className="lucide lucide-user size-4" aria-hidden="true">
+                                 fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round"
+                                 strokeLinejoin="round" className="lucide lucide-user size-4" aria-hidden="true">
                                 <path d="M19 21v-2a4 4 0 0 0-4-4H9a4 4 0 0 0-4 4v2"></path>
                                 <circle cx="12" cy="7" r="4"></circle>
                             </svg>
@@ -46,8 +46,8 @@ const ImpactSection = () => {
                     <div className="px-4 py-8 sm:px-6 lg:px-8">
                         <div className="flex items-center gap-2 text-sm font-medium">
                             <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
-                                 fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
-                                 stroke-linejoin="round" className="lucide lucide-sparkles size-4" aria-hidden="true">
+                                 fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round"
+                                 strokeLinejoin="round" className="lucide lucide-sparkles size-4" aria-hidden="true">
                                 <path
                                     d="M11.017 2.814a1 1 0 0 1 1.966 0l1.051 5.558a2 2 0 0 0 1.594 1.594l5.558 1.051a1 1 0 0 1 0 1.966l-5.558 1.051a2 2 0 0 0-1.594 1.594l-1.051 5.558a1 1 0 0 1-1.966 0l-1.051-5.558a2 2 0 0 0-1.594-1.594l-5.558-1.051a1 1 0 0 1 0-1.966l5.558-1.051a2 2 0 0 0 1.594-1.594z"></path>
                                 <path d="M20 2v4"></path>
