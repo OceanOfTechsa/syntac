@@ -30,3 +30,10 @@ export const imageKitLoader = ({src, width, quality}: ImageLoaderProps) => {
     const transforms = [`w-${width}`, `q-${quality ?? 80}`, "f-auto"].join(",");
     return `${URL_ENDPOINT}${path}?tr=${transforms}`;
 };
+
+export const galleryImagePath = (
+    clientSlug: string,
+    projectSlug: string,
+    index: number,
+    theme: Theme,
+) => `/case-studies/${clientSlug}/${projectSlug}/gallery/${String(index).padStart(2, "0")}-${theme}.png`;

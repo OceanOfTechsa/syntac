@@ -1,13 +1,15 @@
 import React from 'react'
+import SectionHeader from "@/components/site/shared/section-header";
 
 const ImpactSection = () => {
     return (
         <section id="roi" className="space-y-12 py-8 sm:space-y-16 sm:py-16 lg:py-24">
-            <div className="flex flex-col items-center gap-4 text-center mx-auto max-w-7xl px-4 sm:px-6 lg:px-8"><span
-                className="font-kalam font-medium underline underline-offset-6">ROI Calculation</span><h2
-                className="text-2xl font-semibold sm:text-3xl lg:text-4xl">What one license replaces</h2><p
-                className="text-muted-foreground text-lg max-w-4xl">Hand-built or AI-assisted - see what a single $249
-                license buys back either way.</p></div>
+            <SectionHeader
+                preTitle={'Project Impact'}
+                title={'The Difference Our Work Makes'}
+                markedWord={'Difference'}
+                desc={'Explore the outcomes, improvements, and value delivered through this project, and how the solution addresses real business challenges.'}
+            />
             <div className="border-y border-dashed">
                 <div
                     className="mx-auto grid w-full max-w-256 grid-cols-1 divide-dashed max-sm:divide-y min-[1026px]:border-x sm:grid-cols-2 sm:divide-x lg:border-dashed">
@@ -71,49 +73,6 @@ const ImpactSection = () => {
                             className="text-muted-foreground text-xs font-medium tracking-wide uppercase">Return on
                             investment</p><p className="mt-1 text-4xl font-semibold sm:text-5xl">300x</p></div>
                     </div>
-                </div>
-            </div>
-            <div className="border-y border-dashed">
-                <div className="mx-auto max-w-256 px-4 py-8 min-[1026px]:border-x sm:px-6 lg:border-dashed lg:px-8"><p
-                    className="font-medium">Either way, here's what $249 gets you</p>
-                    <ul className="mt-4 grid grid-cols-1 gap-x-8 gap-y-3 sm:grid-cols-2 sm:gap-x-12 lg:gap-x-16">
-                        <li className="flex items-start gap-2 text-sm">
-                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
-                                 fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
-                                 stroke-linejoin="round"
-                                 className="lucide lucide-check mt-0.5 size-4 shrink-0 text-green-600"
-                                 aria-hidden="true">
-                                <path d="M20 6 9 17l-5-5"></path>
-                            </svg>
-                            <span>Pay once ($249), use for a lifetime</span></li>
-                        <li className="flex items-start gap-2 text-sm">
-                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
-                                 fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
-                                 stroke-linejoin="round"
-                                 className="lucide lucide-check mt-0.5 size-4 shrink-0 text-green-600"
-                                 aria-hidden="true">
-                                <path d="M20 6 9 17l-5-5"></path>
-                            </svg>
-                            <span>1000+ blocks, 25+ templates, 1000+ component variants, and more</span></li>
-                        <li className="flex items-start gap-2 text-sm">
-                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
-                                 fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
-                                 stroke-linejoin="round"
-                                 className="lucide lucide-check mt-0.5 size-4 shrink-0 text-green-600"
-                                 aria-hidden="true">
-                                <path d="M20 6 9 17l-5-5"></path>
-                            </svg>
-                            <span>MCP, IDE Extension, Theme Generator, and Builder access</span></li>
-                        <li className="flex items-start gap-2 text-sm">
-                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
-                                 fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
-                                 stroke-linejoin="round"
-                                 className="lucide lucide-check mt-0.5 size-4 shrink-0 text-green-600"
-                                 aria-hidden="true">
-                                <path d="M20 6 9 17l-5-5"></path>
-                            </svg>
-                            <span>New components, blocks, and templates ship every month</span></li>
-                    </ul>
                 </div>
             </div>
         </section>

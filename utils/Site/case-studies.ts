@@ -33,6 +33,7 @@ export interface CaseStudy {
     type: CaseType;
     status: CaseStatus;
     featured?: boolean;
+    galleryCount? : number;
 }
 
 
@@ -77,6 +78,7 @@ export const ALL_CASE_STUDIES: CaseStudy[] = [
         clientAvatar:
             "/brand/syntac-brand-kit/logos/icon/svg/syntac-icon-green-circle.svg",
         featured: true,
+        galleryCount:2
     },
     {
         id: 3,
