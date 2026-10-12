@@ -71,8 +71,13 @@ const HeroSection = ({study}: {study: CaseStudy}) => {
                                 Featured
                             </Badge>
                         )}
-                        {study.status === "Active" && (
-                            <Link href={'/cases#solutions'} className={'text-muted-foreground hover:text-foreground inline-flex items-center gap-2 text-sm transition-colors'}>
+                        {study.liveUrl && study.status !== "Deprecated" && (
+                            <Link
+                                href={study.liveUrl}
+                                target="_blank"
+                                rel="noopener noreferrer"
+                                className={'text-muted-foreground hover:text-foreground inline-flex items-center gap-2 text-sm transition-colors'}
+                            >
                                 View Project
                                 <SquareArrowOutUpRight className={'size-4'} />
                             </Link>

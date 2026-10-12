@@ -49,17 +49,18 @@ const CaseDetailsPage = async ({params}: Props) => {
         alt: `${study.title} screenshot ${i + 1}`,
     }));
 
+    // A section is only rendered when the study has data for it, so no empty gaps or dividers appear
     return (
         <div className={"flex flex-col w-full p-0"}>
             <SectionDivider>
                 <HeroSection study={study} data-divider />
-                <ChallengeSection study={study} data-divider />
-                <SolutionSection data-divider />
-                <ImpactSection data-divider />
-                <ImageGallery images={images} data-divider />
-                <CaseFlowSection data-divider />
-                <ClientFeedbackSection data-divider />
-                <Faq faqs={CaseFaqs} data-divider/>
+                {study.challenge && <ChallengeSection study={study} data-divider />}
+                {study.solution && <SolutionSection study={study} data-divider />}
+                {study.impact && <ImpactSection study={study} data-divider />}
+                {images.length > 0 && <ImageGallery images={images} data-divider />}
+                {study.flow && <CaseFlowSection study={study} data-divider />}
+                {study.feedback && <ClientFeedbackSection study={study} data-divider />}
+                <Faq faqs={study.faqs ?? CaseFaqs} data-divider/>
             </SectionDivider>
         </div>
     )

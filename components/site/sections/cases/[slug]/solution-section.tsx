@@ -1,10 +1,18 @@
 import React from 'react'
+import {Lightbulb} from "lucide-react";
+
 import {cn} from "@/lib/utils";
+import type {CaseStudy} from "@/utils/Site/case-studies";
 import {FADED_DOTTED_BG} from "@/components/site/shared-classes";
-import {Lightbulb, MoveRight} from "lucide-react";
 
+interface ISolutionSectionProps {
+    study: CaseStudy
+}
 
-const SolutionSection = () => {
+const SolutionSection = ({study}: ISolutionSectionProps) => {
+    const {solution} = study;
+    if (!solution) return null;
+
     return (
         <section id={'solution'} className="group  overflow-hidden bg-white text-inherit dark:bg-[#0a0a0a]">
             <div className="card-inner grid h-full md:grid-cols-2">
@@ -25,7 +33,7 @@ const SolutionSection = () => {
                                 The Solution
                             </h3>
                             <p className="text-muted-foreground mt-1.5 max-w-md text-sm leading-relaxed">
-                                We executed a full-stack modernization of the ecosystem, transitioning the core infrastructure to a decoupled, high-availability architecture. We optimized the search algorithms and engineered scalable integration tools.
+                                {solution.summary}
                             </p>
                         </div>
                     </div>
@@ -41,67 +49,28 @@ const SolutionSection = () => {
                                 The Solution
                             </h3>
                             <p className="text-muted-foreground text-sm">
-                                We executed a full-stack modernization of the ecosystem, transitioning the core infrastructure to a decoupled, high-availability architecture. We optimized the search algorithms and engineered scalable integration tools.
+                                {solution.summary}
                             </p>
                         </div>
                     </div>
 
                     {/* Right */}
-                    <div
-                        className="flex flex-1 flex-col justify-center space-y-2 px-4 py-4 sm:px-6 lg:px-8"
-                    >
-                        <div className="flex items-center gap-3">
-                            <div className="bg-muted flex size-9 shrink-0 items-center justify-center rounded-lg">
-                                1
+                    {solution.steps.map((step, i) => (
+                        <div
+                            key={step.title}
+                            className="flex flex-1 flex-col justify-center space-y-2 px-4 py-4 sm:px-6 lg:px-8"
+                        >
+                            <div className="flex items-center gap-3">
+                                <div className="bg-muted flex size-9 shrink-0 items-center justify-center rounded-lg">
+                                    {i + 1}
+                                </div>
+                                <h4 className="text-lg font-medium">{step.title}</h4>
                             </div>
-                            <h4 className="text-lg font-medium">Decoupled Architecture & Migration</h4>
+                            <p className="text-muted-foreground text-sm leading-relaxed">
+                                {step.description}
+                            </p>
                         </div>
-                        <p className="text-muted-foreground text-sm leading-relaxed">
-                            We transitioned the core website to an optimized WordPress CMS and migrated records into a highly secure Amazon RDS instance, giving editors complete publishing control.
-                        </p>
-                    </div>
-
-                    <div
-                        className="flex flex-1 flex-col justify-center space-y-2 px-4 py-4 sm:px-6 lg:px-8"
-                    >
-                        <div className="flex items-center gap-3">
-                            <div className="bg-muted flex size-9 shrink-0 items-center justify-center rounded-lg">
-                                1
-                            </div>
-                            <h4 className="text-lg font-medium">Decoupled Architecture & Migration</h4>
-                        </div>
-                        <p className="text-muted-foreground text-sm leading-relaxed">
-                            We transitioned the core website to an optimized WordPress CMS and migrated records into a highly secure Amazon RDS instance, giving editors complete publishing control.
-                        </p>
-                    </div>
-
-                    <div
-                        className="flex flex-1 flex-col justify-center space-y-2 px-4 py-4 sm:px-6 lg:px-8"
-                    >
-                        <div className="flex items-center gap-3">
-                            <div className="bg-muted flex size-9 shrink-0 items-center justify-center rounded-lg">
-                                1
-                            </div>
-                            <h4 className="text-lg font-medium">Decoupled Architecture & Migration</h4>
-                        </div>
-                        <p className="text-muted-foreground text-sm leading-relaxed">
-                            We transitioned the core website to an optimized WordPress CMS and migrated records into a highly secure Amazon RDS instance, giving editors complete publishing control.
-                        </p>
-                    </div>
-
-                    <div
-                        className="flex flex-1 flex-col justify-center space-y-2 px-4 py-4 sm:px-6 lg:px-8"
-                    >
-                        <div className="flex items-center gap-3">
-                            <div className="bg-muted flex size-9 shrink-0 items-center justify-center rounded-lg">
-                                1
-                            </div>
-                            <h4 className="text-lg font-medium">Decoupled Architecture & Migration</h4>
-                        </div>
-                        <p className="text-muted-foreground text-sm leading-relaxed">
-                            We transitioned the core website to an optimized WordPress CMS and migrated records into a highly secure Amazon RDS instance, giving editors complete publishing control.
-                        </p>
-                    </div>
+                    ))}
                 </div>
             </div>
         </section>

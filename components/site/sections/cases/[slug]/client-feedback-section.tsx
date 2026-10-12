@@ -1,10 +1,17 @@
 import React from 'react'
 
-import AppSettings from "@/utils/AppSettings";
+import type {CaseStudy} from "@/utils/Site/case-studies";
 import UserBanner from "@/components/site/shared/user-banner";
 import SectionHeader from "@/components/site/shared/section-header";
 
-const ClientFeedbackSection = () => {
+interface IClientFeedbackSectionProps {
+    study: CaseStudy
+}
+
+const ClientFeedbackSection = ({study}: IClientFeedbackSectionProps) => {
+    const {feedback} = study;
+    if (!feedback) return null;
+
     return (
         <section id={'feedback'} className={'border-t border-dashed '}>
             <div
@@ -19,14 +26,14 @@ const ClientFeedbackSection = () => {
                 />
 
                 <p className="text-lg">
-                    SIVOXI has successfully migrated the client's site to a new platform and launched their API partnerships with two companies. The team manages the project well by responding promptly to the client's questions and concerns. Moreover, their strong understanding of the client's needs stands out.
+                    {feedback.quote}
                 </p>
                 <div className="flex flex-wrap justify-center gap-4 max-sm:flex-col sm:items-center">
                     <UserBanner
-                        image={'https://ik.imagekit.io/syntac/Syntac%20team/tr:w-400,h-400,fo-face:r-max/me.jpeg'}
-                        fullName={'Sithuliso Zulu'}
-                        linkedInUrl={'https://www.linkedin.com/in/sithuliso-zulu'}
-                        role={'Co-founder & Developer'}
+                        image={feedback.author.image}
+                        fullName={feedback.author.name}
+                        linkedInUrl={feedback.author.linkedInUrl}
+                        role={feedback.author.role}
                     />
                 </div>
             </div>
