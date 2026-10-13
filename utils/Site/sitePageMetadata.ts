@@ -203,3 +203,91 @@ export const CasesPageMetadata: Metadata = {
     CompanyName,
   ],
 };
+
+
+export const ServicesMetadata: Record<string, Metadata> = {
+  "web-development": {
+    title: "Web Development",
+    description: `Discover professional web development services from ${CompanyName}. We build responsive, high-performance websites tailored to your business goals, brand, and customers.`,
+    keywords: [
+      "web development",
+      "website development",
+      "custom website development",
+      "responsive web design",
+      "business websites",
+      "professional website development",
+      "website development South Africa",
+      "SEO-friendly websites",
+      "web development company",
+      CompanyName,
+    ],
+  },
+
+  "mvp-development": {
+    title: "MVP Development",
+    description: `Turn your idea into a working product with ${CompanyName}'s MVP development services. Validate your concept, test core features, and build a foundation for future growth.`,
+    keywords: [
+      "MVP development",
+      "minimum viable product",
+      "MVP software development",
+      "startup product development",
+      "product prototyping",
+      "MVP development company",
+      "rapid application development",
+      "software product development",
+      "startup software development",
+      CompanyName,
+    ],
+  },
+
+  "custom-software-development": {
+    title: "Custom Software Development",
+    description: `Streamline operations and solve business challenges with custom software development from ${CompanyName}. We build tailored software solutions designed around your workflows, requirements, and long-term goals.`,
+    keywords: [
+      "custom software development",
+      "bespoke software development",
+      "business software solutions",
+      "enterprise software development",
+      "custom business applications",
+      "software development company",
+      "workflow automation",
+      "business process automation",
+      "custom software development South Africa",
+      CompanyName,
+    ],
+  },
+
+  "legacy-system-modernisation": {
+    title: "Legacy System Modernisation",
+    description: `Modernise outdated systems with ${CompanyName}. Improve maintainability, integrate modern technologies, enhance performance, and evolve your existing software to meet changing business needs.`,
+    keywords: [
+      "legacy system modernisation",
+      "legacy software modernisation",
+      "application modernisation",
+      "legacy application migration",
+      "software system upgrades",
+      "system integration",
+      "modernise business software",
+      "legacy system migration",
+      "digital transformation",
+      CompanyName,
+    ],
+  },
+
+  "support-maintenance": {
+    title: "Software Support & Maintenance",
+    description: `Keep your digital products reliable, secure, and up to date with software support and maintenance from ${CompanyName}. Get help with troubleshooting, updates, improvements, and ongoing technical support.`,
+    keywords: [
+      "software support",
+      "software maintenance",
+      "application maintenance",
+      "website maintenance",
+      "software troubleshooting",
+      "bug fixes",
+      "software updates",
+      "ongoing technical support",
+      "website support services",
+      CompanyName,
+    ],
+  }
+}
