@@ -90,7 +90,7 @@ function OrbitingLogo({ logo, radius, duration, angle, reverse }: {
                     width={logo.iconSize}
                     height={logo.iconSize}
                     loading="lazy"
-                    className="object-contain rounded-full"
+                    className="object-contain rounded-full brightness-0 dark:brightness-0 dark:invert"
                 />
             </div>
         </div>

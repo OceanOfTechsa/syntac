@@ -54,7 +54,7 @@ const steps: IProcessStep[] = [
 const Approach = () => {
     return (
         <section
-            id="web-development-services"
+            id="our-approach"
             className="space-y-12 py-8 sm:space-y-16 sm:py-16 lg:py-24"
         >
             <SectionHeader

@@ -11,7 +11,7 @@ interface IServicesHeroSectionProps {
     flipWords?: string[];
     useFlipWords?: boolean;
     paragraph: string;
-    children: JSX.Element;
+    children?: JSX.Element;
 }
 
 const HeroSection = ({service = "Services", serviceText= "Technology built around your business.", title, flipWords, useFlipWords, paragraph, children}: IServicesHeroSectionProps) => {
@@ -59,9 +59,7 @@ const HeroSection = ({service = "Services", serviceText= "Technology built aroun
                 <p className="text-muted-foreground z-10 max-w-212 text-lg">
                     {paragraph}
                 </p>
-
-                    {children}
-
+                {children}
             </div>
         </section>
     )

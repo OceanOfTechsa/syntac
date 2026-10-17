@@ -2,6 +2,7 @@ import {Metadata} from "next";
 import { notFound } from "next/navigation";
 
 import {ServicesMetadata} from "@/utils/Site/sitePageMetadata";
+import MvpDevelopmentBase from "@/components/site/sections/services/mvp-development/mvp-development-base";
 import WebDevelopmentBase from "@/components/site/sections/services/web-development/web-development-base";
 
 interface IServicePageProps {
@@ -45,7 +46,7 @@ const ServicePage = async ({ params }: IServicePageProps) => {
             return <WebDevelopmentBase />;
 
         case "mvp-development":
-            return <div>MVP Development</div>;
+            return <MvpDevelopmentBase />;
 
         case "custom-software-development":
             return <div>Custom Software Development</div>;
