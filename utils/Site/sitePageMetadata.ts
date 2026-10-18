@@ -57,15 +57,90 @@ export const OurTeamPageMetadata: Metadata = {
   ],
 };
 
+export const TechnologiesPageMetadata: Metadata = {
+  title: "Our Technologies",
+  description: `Explore the technologies ${CompanyName} uses to build custom software, modern websites, and scalable web applications, from frontend frameworks and backend systems to databases, cloud platforms, and development tools.`,
+  keywords: [
+    "technology stack",
+    "web development technologies",
+    "software development technologies",
+    "frontend technologies",
+    "backend technologies",
+    "web application technologies",
+    "custom software development tools",
+    "JavaScript frameworks",
+    "React and Next.js development",
+    ".NET development",
+    "database technologies",
+    "cloud hosting and deployment",
+    "software testing and monitoring",
+    "modern web technologies",
+    "software development South Africa",
+    CompanyName,
+  ],
+};
+
+export const IndustriesPageMetadata: Metadata = {
+  title: "Industries We Serve",
+  description: `Discover how ${CompanyName} helps businesses across South Africa with tailored websites, custom software, and web applications for professional services, retail, education, logistics, property, healthcare, and more.`,
+  keywords: [
+    "industries we serve",
+    "industry-specific software development",
+    "business software solutions South Africa",
+    "custom software development South Africa",
+    "professional services software",
+    "retail and e-commerce development",
+    "education software development",
+    "construction and property software",
+    "logistics and transport software",
+    "financial and accounting software",
+    "healthcare and wellness websites",
+    "tourism and hospitality websites",
+    "agriculture and agribusiness software",
+    "custom business applications",
+    "business process automation",
+    "industry-specific web applications",
+    "website development for businesses",
+    "digital transformation solutions",
+    "software development company South Africa",
+    CompanyName,
+  ],
+};
+
+export const PartnersPageMetadata: Metadata = {
+  title: "Our Partners",
+  description: `Discover how ${CompanyName} collaborates with technology providers, businesses, and industry professionals to deliver reliable software, modern websites, and tailored digital solutions.`,
+  keywords: [
+    "technology partners",
+    "software development partners",
+    "technology partnerships South Africa",
+    "digital agency partnerships",
+    "software development collaboration",
+    "business technology partners",
+    "web development partnerships",
+    "IT service partnerships",
+    "technology solutions providers",
+    "cloud technology partners",
+    "digital transformation partners",
+    "software integration partners",
+    "business collaboration opportunities",
+    "strategic technology partnerships",
+    "partner with a software development company",
+    "technology partner South Africa",
+    "software development company South Africa",
+    CompanyName,
+  ],
+};
+
 export const OurStoryPageMetadata: Metadata = {
   title: "Our Story",
   description: `Discover the story behind ${CompanyName}, our journey, what drives us, and our vision for building thoughtful technology that creates lasting value for businesses.`,
   keywords: [
-    "our story",
-    "company story",
+    "our timeline",
+    "company timeline",
     "company journey",
     "about our company",
-    "software company story",
+    "software company timeline",
     "technology company",
     "software development company",
     "digital solutions",
@@ -204,7 +279,6 @@ export const CasesPageMetadata: Metadata = {
   ],
 };
 
-
 export const ServicesMetadata: Record<string, Metadata> = {
   "web-development": {
     title: "Web Development",
@@ -291,3 +365,90 @@ export const ServicesMetadata: Record<string, Metadata> = {
     ],
   }
 }
+
+export const WebDevelopmentChildMetadata: Record<string, Metadata> = {
+  "business-websites": {
+    title: "Business Website Development",
+    description: `Establish a professional online presence with business website development from ${CompanyName}. We build responsive, user-friendly websites that communicate your brand, showcase your services, and help turn visitors into customers.`,
+    keywords: [
+      "business website development",
+      "business website design",
+      "professional business websites",
+      "small business website development",
+      "corporate website development",
+      "custom business websites",
+      "responsive business websites",
+      "business website development South Africa",
+      "company website design",
+      CompanyName,
+    ],
+  },
+
+  "web-applications": {
+    title: "Web Application Development",
+    description: `Build powerful digital experiences with custom web application development from ${CompanyName}. We develop interactive, scalable web applications tailored to your workflows, business requirements, and users.`,
+    keywords: [
+      "web application development",
+      "custom web applications",
+      "web app development company",
+      "business web applications",
+      "custom web app development",
+      "scalable web applications",
+      "interactive web applications",
+      "web application development South Africa",
+      "bespoke web applications",
+      CompanyName,
+    ],
+  },
+
+  "ecommerce": {
+    title: "E-commerce Website Development",
+    description: `Launch and grow your online store with e-commerce website development from ${CompanyName}. We create user-friendly shopping experiences that showcase your products, simplify purchasing, and help your business sell online.`,
+    keywords: [
+      "e-commerce website development",
+      "ecommerce website design",
+      "online store development",
+      "custom ecommerce development",
+      "online shop development",
+      "e-commerce solutions",
+      "shopping cart development",
+      "online store development South Africa",
+      "business ecommerce websites",
+      CompanyName,
+    ],
+  },
+
+  "portfolios": {
+    title: "Portfolio & Personal Website Development",
+    description: `Showcase your work, skills, and personal brand with portfolio and personal website development from ${CompanyName}. We build distinctive, responsive websites that present your experience, highlight your projects, and help you make a lasting impression.`,
+    keywords: [
+      "portfolio website development",
+      "personal website development",
+      "professional portfolio website",
+      "online portfolio design",
+      "freelancer portfolio website",
+      "creative portfolio development",
+      "personal branding website",
+      "portfolio website development South Africa",
+      "custom portfolio websites",
+      CompanyName,
+    ],
+  },
+
+  "blogs-and-content": {
+    title: "Blog & Content Platform Development",
+    description: `Share your expertise and grow your audience with blog and content platform development from ${CompanyName}. We build content-focused websites that make publishing easier, organize information effectively, and support discoverability through search engines.`,
+    keywords: [
+      "blog website development",
+      "content platform development",
+      "custom blog development",
+      "blog design services",
+      "content management website",
+      "CMS website development",
+      "publishing platform development",
+      "SEO-friendly blog websites",
+      "blog development South Africa",
+      CompanyName,
+    ],
+  },
+};

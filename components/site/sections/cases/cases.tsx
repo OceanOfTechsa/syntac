@@ -31,8 +31,6 @@ import {
 } from "@/utils/Site/case-studies";
 import FadedBorder from "@/components/site/shared/faded-border";
 
-
-
 /* -------------------------------------------------------------------------- */
 /*  Image size - every case study image uses the same dimensions              */
 /* -------------------------------------------------------------------------- */

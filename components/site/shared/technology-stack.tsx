@@ -31,6 +31,7 @@ export interface TechnologyStackProps {
     /** Max columns on large screens. Defaults to 2. */
     columns?: 1 | 2 | 3 | 4;
     className?: string;
+    showTechName?: boolean;
 }
 
 const columnClasses: Record<NonNullable<TechnologyStackProps["columns"]>, string> = {
@@ -76,6 +77,7 @@ export function TechnologyStack({
                                     categories = technologyCatalog,
                                     columns = 2,
                                     className,
+                                    showTechName = false
                                 }: TechnologyStackProps) {
     const visible = resolveSelection(categories, show);
 
@@ -101,6 +103,7 @@ export function TechnologyStack({
                             <TechnologyBadge
                                 key={tech.id}
                                 tech={tech}
+                                showTechName={showTechName}
                                 panelId={`${category.id}-${tech.id}-panel`}
                             />
                         ))}
@@ -144,13 +147,7 @@ function TechnologyLogo({ tech }: { tech: TechnologyItem }) {
     );
 }
 
-function TechnologyBadge({
-                             tech,
-                             panelId,
-                         }: {
-    tech: TechnologyItem;
-    panelId: string;
-}) {
+function TechnologyBadge({ tech, panelId, showTechName}: { tech: TechnologyItem; panelId: string; showTechName?: boolean }) {
     return (
         <li
             tabIndex={0}
@@ -170,16 +167,20 @@ function TechnologyBadge({
                 <TechnologyLogo tech={tech} />
             </div>
 
-            {/*<span className="text-center text-sm font-semibold leading-tight">*/}
-            {/*    {tech.name}*/}
-            {/*</span>*/}
+            {
+                showTechName &&
+                <span className="text-center text-sm font-semibold leading-tight">
+                    {tech.name}
+                </span>
+            }
+
 
             {/* slide-down panel */}
             <div
                 id={panelId}
                 role="tooltip"
                 className={cn(
-                    "pointer-events-none absolute left-1/2 top-full z-30 mt-2 w-60 -translate-x-1/2 -translate-y-2 rounded-md border bg-popover p-3 text-left text-popover-foreground",
+                    "pointer-events-none absolute left-1/2 top-full  mt-2 w-60 -translate-x-1/2 z-[60] -translate-y-2 rounded-md border bg-popover p-3 text-left text-popover-foreground",
                     "opacity-0 [clip-path:inset(0_0_100%_0)]",
                     "transition-[opacity,transform,clip-path] duration-500 ease-in-out motion-reduce:transition-none",
                     "group-hover/tech:translate-y-0 group-hover/tech:opacity-100 group-hover/tech:[clip-path:inset(0)]",

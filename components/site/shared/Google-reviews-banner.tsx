@@ -14,9 +14,9 @@ const GoogleReviewsBanner = () => {
                 </svg>
             </div>
             <div className="mt-2">
-                <h6 className="font-semibold text-[#606261] dark:text-[#c4c5c7] group-hover:text-[#0B9944] dark:group-hover:text-[#09b850] transition-colors ease-in-out duration-500">
+                <span className="font-semibold text-[#606261] dark:text-[#c4c5c7] group-hover:text-[#0B9944] dark:group-hover:text-[#09b850] transition-colors ease-in-out duration-500">
                     10+ Google reviews
-                </h6>
+                </span>
                 <div className="flex items-center gap-2">
                     <span className="text-xs mb-3 text-[#606261] dark:text-[#c4c5c7]">
                         5/5

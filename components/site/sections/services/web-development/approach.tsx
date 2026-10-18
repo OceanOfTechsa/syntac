@@ -1,4 +1,4 @@
-import {Braces, ClipboardList, Ear, Headset, Rocket, Users} from "lucide-react";
+import {Braces, ClipboardList, Code2, Ear, Headset, Palette, Rocket, ShieldCheck, Users} from "lucide-react";
 
 import AppSettings from "@/utils/AppSettings";
 import SectionHeader from "@/components/site/shared/section-header";
@@ -8,44 +8,51 @@ import ApproachProcess, {IProcessStep} from "@/components/site/sections/about/ou
 const steps: IProcessStep[] = [
     {
         id: 1,
-        title: "Listen first",
+        title: "Discovery & Strategy",
         description:
-            "Understand your business, goals, audience, and the challenges you want to solve.",
+            "We learn about your business, audience, goals, brand, and requirements to establish a clear direction for your website.",
         Icon: Ear,
     },
     {
         id: 2,
-        title: "Plan carefully",
+        title: "Planning & Structure",
         description:
-            "Define the requirements, features, priorities, and project timeline before development begins.",
+            "We map out your pages, content, and navigation to create an intuitive structure that helps visitors find what they need.",
         Icon: ClipboardList,
     },
     {
         id: 3,
-        title: "Build thoughtfully",
+        title: "Wireframing & Design",
         description:
-            "Develop, test, and refine a reliable solution tailored to your business needs.",
-        Icon: Braces,
+            "We shape the layout and user experience, then craft a distinctive interface that reflects your brand and works across devices.",
+        Icon: Palette,
     },
     {
         id: 4,
-        title: "Keep people involved",
+        title: "Content & Development",
         description:
-            "Share progress, gather feedback, and keep you informed from start to delivery.",
-        Icon: Users,
+            "We bring your approved designs to life with hand-crafted code, responsive layouts, and search-friendly foundations.",
+        Icon: Code2,
     },
     {
         id: 5,
-        title: "Launch with confidence",
+        title: "Testing & Refinement",
         description:
-            "We can deploy your solution to the agreed hosting environment and help you get it ready for use.",
-        Icon: Rocket,
+            "We test functionality, responsiveness, accessibility, and performance, refining the details before your website goes live.",
+        Icon: ShieldCheck,
     },
     {
         id: 6,
-        title: "Stay supported",
+        title: "Launch & Handover",
         description:
-            "Choose ongoing maintenance with us for updates, bug fixes, monitoring, and continued improvements.",
+            "We prepare your website for launch and hand over the completed solution with guidance to help you get started.",
+        Icon: Rocket,
+    },
+    {
+        id: 7,
+        title: "Ongoing Support",
+        description:
+            "If you choose to work with us beyond launch, we can handle deployment, maintenance, updates, and ongoing improvements.",
         Icon: Headset,
     },
 ];

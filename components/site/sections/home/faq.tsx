@@ -30,11 +30,11 @@ const Faq = ({ faqs }: IFaqProps) => {
                                 value={faq.key}
                                 key={faq.key}
                             >
-                                <AccordionTrigger>
+                                <AccordionTrigger className={'text-lg'}>
                                     {faq.question}
                                 </AccordionTrigger>
 
-                                <AccordionContent>
+                                <AccordionContent className={'[&_p:not(:last-child)]:mb-4 text-muted-foreground text-base'}>
                                     {faq.answer}
                                 </AccordionContent>
                             </AccordionItem>

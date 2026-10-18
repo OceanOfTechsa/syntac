@@ -49,11 +49,4 @@ export const teamMembers: TeamMember[] = [
     img: "https://ik.imagekit.io/syntac/Syntac%20team/sthembiso.jpeg",
     fallbackImg: "/assets/site/team/sthembiso.jpeg",
   },
-  {
-    name: "Respect",
-    surname: "Mashego",
-    role: "Software Developer",
-    img: "https://ik.imagekit.io/syntac/Syntac%20team/respect.jpeg",
-    fallbackImg: "/assets/site/team/respect.jpeg",
-  },
 ];

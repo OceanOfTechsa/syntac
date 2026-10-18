@@ -9,12 +9,16 @@ export interface OrbitLogo {
     alt: string
     size: number      // outer circle size in px
     iconSize: number  // inner image size in px
+    /** Show this logo in its original colours. Overrides `colorLogos` for this logo. */
+    keepColor?: boolean
 }
 
 export interface OrbitRing {
     radius: number
     duration: number
     reverse?: boolean
+    /** Rotate the whole ring by this many degrees (e.g. 45 keeps logos off the centre text). */
+    startAngle?: number
     logos: OrbitLogo[]
 }
 
@@ -34,6 +38,14 @@ interface OrbitingLogosProps {
     ringColor?: string
     /** Stroke width for the ring circles. Defaults to 1. */
     ringStrokeWidth?: number
+    /** Dash pattern for the rings. Defaults to "10". Pass null for solid lines. */
+    ringDash?: string | null
+    /** Fade the rings and logos out towards the top and bottom edges. Defaults to false. */
+    fadeEdges?: boolean
+    /** Orbit the logos. Pass false for a static layout. Defaults to true. */
+    animate?: boolean
+    /** Show all logos in their original colours instead of black / white. A logo's own `keepColor` wins. Defaults to false. */
+    colorLogos?: boolean
 }
 
 // Extend CSSProperties locally so custom properties are typed, not cast
@@ -43,7 +55,17 @@ type OrbitStyle = CSSProperties & {
     "--angle": number
 }
 
-function RingCircle({ radius, color, strokeWidth }: { radius: number; color: string; strokeWidth: number }) {
+function RingCircle({
+                        radius,
+                        color,
+                        strokeWidth,
+                        dash,
+                    }: {
+    radius: number
+    color: string
+    strokeWidth: number
+    dash: string | null
+}) {
     return (
         <svg xmlns="http://www.w3.org/2000/svg" className="pointer-events-none absolute inset-0 size-full">
             <circle
@@ -51,7 +73,7 @@ function RingCircle({ radius, color, strokeWidth }: { radius: number; color: str
                 cy="50%"
                 r={radius}
                 fill="none"
-                strokeDasharray="10"
+                strokeDasharray={dash ?? undefined}
                 stroke={color}
                 strokeWidth={strokeWidth}
             />
@@ -59,30 +81,44 @@ function RingCircle({ radius, color, strokeWidth }: { radius: number; color: str
     )
 }
 
-function OrbitingLogo({ logo, radius, duration, angle, reverse }: {
+function OrbitingLogo({ logo, radius, duration, angle, reverse, animate, colorLogos }: {
     logo: OrbitLogo
     radius: number
     duration: number
     angle: number
     reverse?: boolean
+    animate: boolean
+    colorLogos: boolean
 }) {
+    const showColor = logo.keepColor ?? colorLogos
+
     const style: OrbitStyle = {
         "--duration": duration,
         "--radius": radius,
         "--angle": angle,
+        // static layout: same transform the orbit animation starts from
+        ...(animate
+            ? {}
+            : { transform: `rotate(${angle}deg) translateY(${radius}px) rotate(${-angle}deg)` }),
     }
 
     return (
         <div
             style={style}
             className={cn(
-                "animate-orbit absolute flex transform-gpu items-center justify-center rounded-full",
-                reverse && "[animation-direction:reverse]"
+                "absolute flex transform-gpu items-center justify-center rounded-full",
+                animate && "animate-orbit",
+                animate && reverse && "[animation-direction:reverse]"
             )}
         >
             <div
                 style={{ width: logo.size, height: logo.size }}
-                className="flex items-center justify-center rounded-full border bg-white dark:bg-neutral-700"
+                className={cn(
+                    "flex items-center justify-center rounded-full border",
+                    showColor
+                        ? "bg-white shadow-sm"
+                        : "bg-white dark:bg-neutral-700"
+                )}
             >
                 <Image
                     src={logo.src}
@@ -90,7 +126,10 @@ function OrbitingLogo({ logo, radius, duration, angle, reverse }: {
                     width={logo.iconSize}
                     height={logo.iconSize}
                     loading="lazy"
-                    className="object-contain rounded-full brightness-0 dark:brightness-0 dark:invert"
+                    className={cn(
+                        "object-contain rounded-full",
+                        !showColor && "brightness-0 dark:brightness-0 dark:invert"
+                    )}
                 />
             </div>
         </div>
@@ -169,31 +208,53 @@ const OrbitingLogos = ({
                            centerContent,
                            ringColor = "var(--border)",
                            ringStrokeWidth = 1,
+                           ringDash = "10",
+                           fadeEdges = false,
+                           animate = true,
+                           colorLogos = false,
                        }: OrbitingLogosProps) => {
     return (
         <div className={cn(height, className)} data-cursor-hide>
             <div className={cn("group relative flex shrink-0 flex-col items-center justify-center", size, stageClassName)}>
-                {rings.map((ring, ringIndex) => {
-                    const step = 360 / ring.logos.length
-                    return (
-                        <div key={ringIndex} className="contents">
-                            <RingCircle radius={ring.radius} color={ringColor} strokeWidth={ringStrokeWidth} />
-                            {ring.logos.map((logo, i) => (
-                                <OrbitingLogo
-                                    key={logo.alt}
-                                    logo={logo}
+                {/* rings + logos (this layer carries the edge fade) */}
+                <div
+                    className={cn(
+                        "absolute inset-0 flex items-center justify-center",
+                        fadeEdges &&
+                        "[mask-image:linear-gradient(to_bottom,transparent,black_22%,black_78%,transparent)]"
+                    )}
+                >
+                    {rings.map((ring, ringIndex) => {
+                        const step = 360 / ring.logos.length
+                        return (
+                            <div key={ringIndex} className="contents">
+                                <RingCircle
                                     radius={ring.radius}
-                                    duration={ring.duration}
-                                    angle={i * step}
-                                    reverse={ring.reverse}
+                                    color={ringColor}
+                                    strokeWidth={ringStrokeWidth}
+                                    dash={ringDash}
                                 />
-                            ))}
-                        </div>
-                    )
-                })}
+                                {ring.logos.map((logo, i) => (
+                                    <OrbitingLogo
+                                        key={`${logo.alt}-${i}`}
+                                        logo={logo}
+                                        radius={ring.radius}
+                                        duration={ring.duration}
+                                        angle={i * step + (ring.startAngle ?? 0)}
+                                        reverse={ring.reverse}
+                                        animate={animate}
+                                        colorLogos={colorLogos}
+                                    />
+                                ))}
+                            </div>
+                        )
+                    })}
+                </div>
 
-                {/* Center content */}
-                {centerContent ?? <DefaultCenterIcon />}
+                {/* Center content, kept above the rings */}
+                <div className="relative z-10">
+                    {centerContent ?? <DefaultCenterIcon />}
+                </div>
             </div>
         </div>
     )

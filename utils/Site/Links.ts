@@ -35,11 +35,11 @@ const HeaderLinks: LinkType[] = [
             {
                 label: "About Us",
                 href: "/about",
-                description: "Learn about SYNTAC, our story, values, and approach.",
+                description: "Learn about SYNTAC, our timeline, values, and approach.",
             },
             {
-                label: "Our Story",
-                href: "/about/story",
+                label: "Company Timeline",
+                href: "/about/timeline",
                 description: "Follow our journey from Ocean of Tech to SYNTAC.",
             },
             {

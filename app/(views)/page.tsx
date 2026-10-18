@@ -14,7 +14,7 @@ import WhyWeStarted from "@/components/site/sections/home/why-we-started";
 import {faqs} from "@/data/faqs"
 
 export const metadata: Metadata = {
-    title: "Syntac Software",
+    title: "Home",
 };
 
 const HomePage = (): JSX.Element => {

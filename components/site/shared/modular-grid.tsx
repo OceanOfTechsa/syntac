@@ -108,7 +108,9 @@ export function ModularGrid({
                 {positions.map((pos, i) => (
                     <line
                         key={i}
-                        ref={(el) => (lineRefs.current[i] = el)}
+                        ref={(el) => {
+                            lineRefs.current[i] = el;
+                        }}
                         x1={center}
                         y1={center}
                         x2={pos.x}
@@ -141,7 +143,10 @@ export function ModularGrid({
             {satelliteLabels.map((label, i) => (
                 <div
                     key={label}
-                    ref={(el) => (satelliteRefs.current[i] = el)}
+                    // ref={(el) => (satelliteRefs.current[i] = el)}
+                    ref={(el) => {
+                        satelliteRefs.current[i] = el;
+                    }}
                     className="bg-background absolute flex items-center justify-center rounded-full border px-1 text-center text-xs font-medium"
                     style={{
                         left: positions[i].x,

@@ -4,6 +4,7 @@ import { notFound } from "next/navigation";
 import {ServicesMetadata} from "@/utils/Site/sitePageMetadata";
 import MvpDevelopmentBase from "@/components/site/sections/services/mvp-development/mvp-development-base";
 import WebDevelopmentBase from "@/components/site/sections/services/web-development/web-development-base";
+import NotFound from "@/components/site/shared/not-found";
 
 interface IServicePageProps {
     params: Promise<{ service: string }>;
@@ -38,7 +39,7 @@ const ServicePage = async ({ params }: IServicePageProps) => {
     );
 
     if (!currentService) {
-        notFound();
+       return <NotFound />
     }
 
     switch (currentService.service) {
@@ -58,7 +59,7 @@ const ServicePage = async ({ params }: IServicePageProps) => {
             return <div>Support and Maintenance</div>;
 
         default:
-            notFound();
+            return <NotFound />;
     }
 };
 

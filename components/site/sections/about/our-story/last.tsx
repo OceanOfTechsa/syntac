@@ -20,7 +20,7 @@ function Last() {
                     </div>
 
                     {/*<img*/}
-                    {/*    src="/assets/site/about/our-story/today.webp"*/}
+                    {/*    src="/assets/site/about/our-timeline/today.webp"*/}
                     {/*    alt="SYNTAC today"*/}
                     {/*    className="w-full rounded-lg border object-cover"*/}
                     {/*/>*/}
@@ -39,6 +39,7 @@ function Last() {
 
 
                     <Link href="/contact"
+                          data-roll
                         className={ButtonLikeLink}
                     >
                         Start a conversation

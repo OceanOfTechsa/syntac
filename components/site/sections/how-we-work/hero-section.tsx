@@ -72,6 +72,7 @@ const HeroSection = () => {
                     <div className={'px-3'}>
                         <Link
                             href="/contact"
+                            data-roll
                             className="btn-roll cursor-pointer text-base bg-primary text-primary-foreground hover:bg-primary/80 px-[1rem] py-[0.5rem] rounded-sm inline-flex items-center gap-2 transition-all duration-500 ease-in-out
                             "
                         >

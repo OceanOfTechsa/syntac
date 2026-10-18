@@ -28,7 +28,7 @@ const HeroSection = ({service = "Services", serviceText= "Technology built aroun
                    data-variant="outline"
                    className="focus-visible:border-ring focus-visible:ring-ring/50 aria-invalid:border-destructive aria-invalid:ring-destructive/20 dark:aria-invalid:ring-destructive/40 relative z-10 inline-flex w-fit shrink-0 items-center justify-center gap-1 overflow-hidden rounded-full border border-border bg-background px-2 py-0.5 text-xs font-medium whitespace-nowrap text-foreground transition-[color,box-shadow] focus-visible:ring-[3px] [&>svg]:pointer-events-none [&>svg]:size-3 [a&]:hover:bg-accent [a&]:hover:text-accent-foreground"
                >
-                    <span className="rounded-full bg-primary px-1.5 text-primary-foreground">
+                    <span className="rounded-full bg-primary px-1.5 text-primary-foreground hidden sm:inline-flex">
                         {service}
                     </span>
                     <span className="text-sm font-normal text-wrap" data-line>

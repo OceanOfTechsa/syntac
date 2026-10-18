@@ -290,170 +290,170 @@ export const ALL_CASE_STUDIES: CaseStudy[] = [
             ),
         },
     },
-    // {
-    //     id: 2,
-    //     title: "Website Design & Development",
-    //     slug: "syntac-software",
-    //     clientSlug: "syntac-software",
-    //     clientName: "Syntac Software",
-    //     clientInitials: "SS",
-    //     summary: "Website redesign and development for for digital services, web development, and technology solutions company.",
-    //     type: "Website",
-    //     status: "In progress",
-    //     clientAvatar: '/brand/syntac-brand-kit/logos/icon/svg/syntac-icon-green-circle.svg',
-    //
-    //     flow: {
-    //         direction: "horizontal",
-    //         preTitle: "System Map",
-    //         title: "How the Platform Fits Together",
-    //         markedWord: "Fits",
-    //         root: chain(
-    //             [{label: "Start", variant: "start"}, {label: "Home", variant: "gate"}],
-    //             [
-    //                 {
-    //                     label: "About us",
-    //                     variant: "gate",
-    //                     children: [
-    //                         {label: "About", variant: "page"},
-    //                         {label: "Our Story", variant: "page"},
-    //                         {label: "Our Team", variant: "page"},
-    //                     ],
-    //                 },
-    //                 {
-    //                     label: "Services",
-    //                     variant: "page",
-    //                     children: [{label: "Service Details", variant: "detail"}],
-    //                 },
-    //                 {
-    //                     label: "Cases",
-    //                     variant: "page",
-    //                     children: [{label: "Case Study Details", variant: "detail"}],
-    //                 },
-    //                 {label: "How we work", variant: "page"},
-    //                 {
-    //                     label: "Legal",
-    //                     variant: "gate",
-    //                     children: [
-    //                         {label: "Public Offer Agreement", variant: "page"},
-    //                         {label: "Privacy Policy", variant: "page"},
-    //                         {label: "Use of AI", variant: "page"},
-    //                     ],
-    //                 },
-    //                 {
-    //                     label: "Resources",
-    //                     variant: "gate",
-    //                     children: [
-    //                         {
-    //                             label: "Blog",
-    //                             variant: "page",
-    //                             children: [{label: "Blog Details", variant: "detail"}],
-    //                         },
-    //                         {label: "Change Log", variant: "page"},
-    //                         {label: "FAQ", variant: "page"},
-    //                     ],
-    //                 },
-    //                 {label: "Estimate project", variant: "cta"},
-    //             ]
-    //         ),
-    //     },
-    //
-    //     challenge: {
-    //         headline:
-    //             "The client needed to completely digitize their massive logistics network to eliminate operational liabilities and support rapid industrial growth.",
-    //         paragraphs: [
-    //             "Managing an extensive fleet of over 700 specialized commercial vehicles and hundreds of cross-border drivers requires handling massive amounts of highly sensitive operational data. The client was restricted by traditional backend structures where decentralized records across country borders caused severe information delays, and manual verification loops created significant operational liabilities.",
-    //             "Furthermore, unlinked asset tracking led to critical visibility gaps, while disconnected subcontractor data flows resulted in invoicing delays and inefficient empty-leg transit routes. To sustain growth and align with enterprise resource planning (ERP) systems, they required a major custom web application overhaul to digitize their entire operational backbone.",
-    //         ],
-    //         bottlenecks: [
-    //             "Decentralized records across country borders causing massive information delays.",
-    //             "Manual verification loops creating severe operational liabilities and risks.",
-    //             "Unlinked asset tracking telemetries causing major operational visibility gaps.",
-    //             "Disconnected subcontractor data flows resulting in severe invoicing delays.",
-    //             "Traditional backend structures restricting integration with enterprise resource systems.",
-    //         ],
-    //     },
-    //
-    //     // TODO: the hard-coded section repeated this one step four times. Add this project's real steps.
-    //     solution: {
-    //         summary:
-    //             "We executed a full-stack modernization of the ecosystem, transitioning the core infrastructure to a decoupled, high-availability architecture. We optimized the search algorithms and engineered scalable integration tools.",
-    //         steps: [
-    //             {
-    //                 title: "Decoupled Architecture & Migration",
-    //                 description:
-    //                     "We transitioned the core website to an optimized WordPress CMS and migrated records into a highly secure Amazon RDS instance, giving editors complete publishing control.",
-    //             },
-    //         ],
-    //     },
-    // },
-    // {
-    //     id: 3,
-    //     title: "Custom Field Service Management (FSM)",
-    //     slug: "field-service-management",
-    //     clientSlug: "syntac-software",
-    //     clientName: "Syntac Software",
-    //     clientInitials: "SS",
-    //     summary:
-    //         "Custom field service management platform for managing service jobs and operational workflows.",
-    //     type: "Custom Software",
-    //     status: "In progress",
-    //     clientAvatar:
-    //         "/brand/syntac-brand-kit/logos/icon/svg/syntac-icon-green-circle.svg",
-    //     featured: true,
-    //     galleryCount: 2,
-    //
-    //     details: {
-    //         headquarters: "Kloof, Durban",
-    //         industry: "Logistics & Supply Chain",
-    //         timeline: "6 Months",
-    //     },
-    //
-    //     // TODO: this copy was moved over from the hard-coded sections. Replace it with this project's real story.
-    //     challenge: {
-    //         headline:
-    //             "The client needed to completely digitize their massive logistics network to eliminate operational liabilities and support rapid industrial growth.",
-    //         paragraphs: [
-    //             "Managing an extensive fleet of over 700 specialized commercial vehicles and hundreds of cross-border drivers requires handling massive amounts of highly sensitive operational data. The client was restricted by traditional backend structures where decentralized records across country borders caused severe information delays, and manual verification loops created significant operational liabilities.",
-    //             "Furthermore, unlinked asset tracking led to critical visibility gaps, while disconnected subcontractor data flows resulted in invoicing delays and inefficient empty-leg transit routes. To sustain growth and align with enterprise resource planning (ERP) systems, they required a major custom web application overhaul to digitize their entire operational backbone.",
-    //         ],
-    //         bottlenecks: [
-    //             "Decentralized records across country borders causing massive information delays.",
-    //             "Manual verification loops creating severe operational liabilities and risks.",
-    //             "Unlinked asset tracking telemetries causing major operational visibility gaps.",
-    //             "Disconnected subcontractor data flows resulting in severe invoicing delays.",
-    //             "Traditional backend structures restricting integration with enterprise resource systems.",
-    //         ],
-    //     },
-    //
-    //     // TODO: the hard-coded section repeated this one step four times. Add this project's real steps.
-    //     solution: {
-    //         summary:
-    //             "We executed a full-stack modernization of the ecosystem, transitioning the core infrastructure to a decoupled, high-availability architecture. We optimized the search algorithms and engineered scalable integration tools.",
-    //         steps: [
-    //             {
-    //                 title: "Decoupled Architecture & Migration",
-    //                 description:
-    //                     "We transitioned the core website to an optimized WordPress CMS and migrated records into a highly secure Amazon RDS instance, giving editors complete publishing control.",
-    //             },
-    //         ],
-    //     },
-    //
-    //     // impact:   add real, verifiable numbers for this project (the section stays hidden until then)
-    //     // feedback: add a real client quote, with their permission (the section stays hidden until then)
-    // },
-    // {
-    //     id: 4, // was a second id: 3, which clashes with the FSM entry
-    //     title: "Website Development",
-    //     slug: "phanitime",
-    //     clientSlug: "phanitime",
-    //     clientName: "Phanitime",
-    //     clientInitials: "PT",
-    //     summary:
-    //         "Custom field service management platform for managing service jobs and operational workflows.",
-    //     type: "Web Application Development",
-    //     status: "Active",
-    //     liveUrl: "https://www.phanitime.co.za/"
-    // },
+    {
+        id: 2,
+        title: "Website Design & Development",
+        slug: "syntac-software",
+        clientSlug: "syntac-software",
+        clientName: "Syntac Software",
+        clientInitials: "SS",
+        summary: "Website redesign and development for for digital services, web development, and technology solutions company.",
+        type: "Website",
+        status: "In progress",
+        clientAvatar: '/brand/syntac-brand-kit/logos/icon/svg/syntac-icon-green-circle.svg',
+
+        flow: {
+            direction: "horizontal",
+            preTitle: "System Map",
+            title: "How the Platform Fits Together",
+            markedWord: "Fits",
+            root: chain(
+                [{label: "Start", variant: "start"}, {label: "Home", variant: "gate"}],
+                [
+                    {
+                        label: "About us",
+                        variant: "gate",
+                        children: [
+                            {label: "About", variant: "page"},
+                            {label: "Our Story", variant: "page"},
+                            {label: "Our Team", variant: "page"},
+                        ],
+                    },
+                    {
+                        label: "Services",
+                        variant: "page",
+                        children: [{label: "Service Details", variant: "detail"}],
+                    },
+                    {
+                        label: "Cases",
+                        variant: "page",
+                        children: [{label: "Case Study Details", variant: "detail"}],
+                    },
+                    {label: "How we work", variant: "page"},
+                    {
+                        label: "Legal",
+                        variant: "gate",
+                        children: [
+                            {label: "Public Offer Agreement", variant: "page"},
+                            {label: "Privacy Policy", variant: "page"},
+                            {label: "Use of AI", variant: "page"},
+                        ],
+                    },
+                    {
+                        label: "Resources",
+                        variant: "gate",
+                        children: [
+                            {
+                                label: "Blog",
+                                variant: "page",
+                                children: [{label: "Blog Details", variant: "detail"}],
+                            },
+                            {label: "Change Log", variant: "page"},
+                            {label: "FAQ", variant: "page"},
+                        ],
+                    },
+                    {label: "Estimate project", variant: "cta"},
+                ]
+            ),
+        },
+
+        challenge: {
+            headline:
+                "The client needed to completely digitize their massive logistics network to eliminate operational liabilities and support rapid industrial growth.",
+            paragraphs: [
+                "Managing an extensive fleet of over 700 specialized commercial vehicles and hundreds of cross-border drivers requires handling massive amounts of highly sensitive operational data. The client was restricted by traditional backend structures where decentralized records across country borders caused severe information delays, and manual verification loops created significant operational liabilities.",
+                "Furthermore, unlinked asset tracking led to critical visibility gaps, while disconnected subcontractor data flows resulted in invoicing delays and inefficient empty-leg transit routes. To sustain growth and align with enterprise resource planning (ERP) systems, they required a major custom web application overhaul to digitize their entire operational backbone.",
+            ],
+            bottlenecks: [
+                "Decentralized records across country borders causing massive information delays.",
+                "Manual verification loops creating severe operational liabilities and risks.",
+                "Unlinked asset tracking telemetries causing major operational visibility gaps.",
+                "Disconnected subcontractor data flows resulting in severe invoicing delays.",
+                "Traditional backend structures restricting integration with enterprise resource systems.",
+            ],
+        },
+
+        // TODO: the hard-coded section repeated this one step four times. Add this project's real steps.
+        solution: {
+            summary:
+                "We executed a full-stack modernization of the ecosystem, transitioning the core infrastructure to a decoupled, high-availability architecture. We optimized the search algorithms and engineered scalable integration tools.",
+            steps: [
+                {
+                    title: "Decoupled Architecture & Migration",
+                    description:
+                        "We transitioned the core website to an optimized WordPress CMS and migrated records into a highly secure Amazon RDS instance, giving editors complete publishing control.",
+                },
+            ],
+        },
+    },
+    {
+        id: 3,
+        title: "Custom Field Service Management (FSM)",
+        slug: "field-service-management",
+        clientSlug: "syntac-software",
+        clientName: "Syntac Software",
+        clientInitials: "SS",
+        summary:
+            "Custom field service management platform for managing service jobs and operational workflows.",
+        type: "Custom Software",
+        status: "In progress",
+        clientAvatar:
+            "/brand/syntac-brand-kit/logos/icon/svg/syntac-icon-green-circle.svg",
+        featured: true,
+        galleryCount: 2,
+
+        details: {
+            headquarters: "Kloof, Durban",
+            industry: "Logistics & Supply Chain",
+            timeline: "6 Months",
+        },
+
+        // TODO: this copy was moved over from the hard-coded sections. Replace it with this project's real timeline.
+        challenge: {
+            headline:
+                "The client needed to completely digitize their massive logistics network to eliminate operational liabilities and support rapid industrial growth.",
+            paragraphs: [
+                "Managing an extensive fleet of over 700 specialized commercial vehicles and hundreds of cross-border drivers requires handling massive amounts of highly sensitive operational data. The client was restricted by traditional backend structures where decentralized records across country borders caused severe information delays, and manual verification loops created significant operational liabilities.",
+                "Furthermore, unlinked asset tracking led to critical visibility gaps, while disconnected subcontractor data flows resulted in invoicing delays and inefficient empty-leg transit routes. To sustain growth and align with enterprise resource planning (ERP) systems, they required a major custom web application overhaul to digitize their entire operational backbone.",
+            ],
+            bottlenecks: [
+                "Decentralized records across country borders causing massive information delays.",
+                "Manual verification loops creating severe operational liabilities and risks.",
+                "Unlinked asset tracking telemetries causing major operational visibility gaps.",
+                "Disconnected subcontractor data flows resulting in severe invoicing delays.",
+                "Traditional backend structures restricting integration with enterprise resource systems.",
+            ],
+        },
+
+        // TODO: the hard-coded section repeated this one step four times. Add this project's real steps.
+        solution: {
+            summary:
+                "We executed a full-stack modernization of the ecosystem, transitioning the core infrastructure to a decoupled, high-availability architecture. We optimized the search algorithms and engineered scalable integration tools.",
+            steps: [
+                {
+                    title: "Decoupled Architecture & Migration",
+                    description:
+                        "We transitioned the core website to an optimized WordPress CMS and migrated records into a highly secure Amazon RDS instance, giving editors complete publishing control.",
+                },
+            ],
+        },
+
+        // impact:   add real, verifiable numbers for this project (the section stays hidden until then)
+        // feedback: add a real client quote, with their permission (the section stays hidden until then)
+    },
+    {
+        id: 4, // was a second id: 3, which clashes with the FSM entry
+        title: "Website Development",
+        slug: "phanitime",
+        clientSlug: "phanitime",
+        clientName: "Phanitime",
+        clientInitials: "PT",
+        summary:
+            "Custom field service management platform for managing service jobs and operational workflows.",
+        type: "Web Application Development",
+        status: "Active",
+        liveUrl: "https://www.phanitime.co.za/"
+    },
 ];
 
 /* -------------------------------------------------------------------------- */

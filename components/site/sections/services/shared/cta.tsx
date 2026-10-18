@@ -4,8 +4,7 @@ import {EstimateProjectButton} from "@/components/providers/project-estimator-pr
 
 const Cta = () => {
     return (
-        <div className="flex w-full items-center justify-center divide-x divide-dashed gap-6">
-
+        <div className="flex w-full flex-col items-center justify-center divide-y divide-dashed sm:flex-row sm:divide-x sm:divide-y-0 gap-6">
               <div className={'px-3'}>
                   <GoogleReviewsBanner />
               </div>

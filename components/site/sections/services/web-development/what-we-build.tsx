@@ -6,13 +6,14 @@ import {
     AppWindow,
     ShoppingBag,
     BookOpen,
-    BriefcaseBusiness,
+    BriefcaseBusiness, MoveRight,
 } from "lucide-react";
 
 import SectionHeader from "@/components/site/shared/section-header";
 import AppSettings from "@/utils/AppSettings";
 import SyntacStats from "@/components/site/sections/about/stats";
 import {AboutStats} from "@/utils/Site/stats";
+import Link from "next/link";
 
 const WebDevelopmentServices = () => {
     return (
@@ -50,7 +51,7 @@ const WebDevelopmentServices = () => {
                     {/* Web Development Services */}
                     <div className="flex flex-col divide-y divide-dashed border-dashed md:border-l">
                         {/* Business Websites */}
-                        <div className="flex-1 space-y-3.5 px-4 py-6 transition-colors duration-200 hover:bg-muted/40 sm:px-6 lg:px-8">
+                        <Link href={'/services/web-development/business-websites'} className="group flex-1 space-y-3.5 px-4 py-6 transition-colors duration-200 hover:bg-muted/40 sm:px-6 lg:px-8">
                             <div className="flex items-center gap-2">
                                 <Globe
                                     size={22}
@@ -69,10 +70,12 @@ const WebDevelopmentServices = () => {
                                 brand, showcase your services, and help
                                 potential customers discover your business.
                             </p>
-                        </div>
+
+                            <span className={'text-muted-foreground text-sm flex items-center gap-2'}>Learn more <MoveRight size={18} className={'group-hover:translate-x-2 duration-500 ease-in-out transition-all'} /></span>
+                        </Link>
 
                         {/* Web Applications */}
-                        <div className="flex-1 space-y-3.5 px-4 py-6 transition-colors duration-200 hover:bg-muted/40 sm:px-6 lg:px-8">
+                        <Link href={'/services/web-development/web-applications'}  className="group flex-1 space-y-3.5 px-4 py-6 transition-colors duration-200 hover:bg-muted/40 sm:px-6 lg:px-8">
                             <div className="flex items-center gap-2">
                                 <AppWindow
                                     size={22}
@@ -91,10 +94,12 @@ const WebDevelopmentServices = () => {
                                 platforms, client portals, booking systems,
                                 and business process solutions.
                             </p>
-                        </div>
+
+                            <span className={'text-muted-foreground text-sm flex items-center gap-2'}>Learn more <MoveRight size={18} className={'group-hover:translate-x-2 duration-500 ease-in-out transition-all'} /></span>
+                        </Link>
 
                         {/* E-commerce */}
-                        <div className="flex-1 space-y-3.5 px-4 py-6 transition-colors duration-200 hover:bg-muted/40 sm:px-6 lg:px-8">
+                        <Link href={'/services/web-development/ecommerce'}  className="group flex-1 space-y-3.5 px-4 py-6 transition-colors duration-200 hover:bg-muted/40 sm:px-6 lg:px-8">
                             <div className="flex items-center gap-2">
                                 <ShoppingBag
                                     size={22}
@@ -113,10 +118,12 @@ const WebDevelopmentServices = () => {
                                 shopping, and support checkout and payment
                                 integrations.
                             </p>
-                        </div>
+
+                            <span className={'text-muted-foreground text-sm flex items-center gap-2'}>Learn more <MoveRight size={18} className={'group-hover:translate-x-2 duration-500 ease-in-out transition-all'} /></span>
+                        </Link>
 
                         {/* Portfolios */}
-                        <div className="flex-1 space-y-3.5 px-4 py-6 transition-colors duration-200 hover:bg-muted/40 sm:px-6 lg:px-8">
+                        <Link href={'/services/web-development/portfolios'}  className="group flex-1 space-y-3.5 px-4 py-6 transition-colors duration-200 hover:bg-muted/40 sm:px-6 lg:px-8">
                             <div className="flex items-center gap-2">
                                 <BriefcaseBusiness
                                     size={22}
@@ -135,10 +142,12 @@ const WebDevelopmentServices = () => {
                                 or personal website designed to make a
                                 lasting impression.
                             </p>
-                        </div>
+
+                            <span className={'text-muted-foreground text-sm flex items-center gap-2'}>Learn more <MoveRight size={18} className={'group-hover:translate-x-2 duration-500 ease-in-out transition-all'} /></span>
+                        </Link>
 
                         {/* Blogs and Content */}
-                        <div className="flex-1 space-y-3.5 px-4 py-6 transition-colors duration-200 hover:bg-muted/40 sm:px-6 lg:px-8">
+                        <Link href={'/services/web-development/blogs-and-content'}  className="group flex-1 space-y-3.5 px-4 py-6 transition-colors duration-200 hover:bg-muted/40 sm:px-6 lg:px-8">
                             <div className="flex items-center gap-2">
                                 <BookOpen
                                     size={22}
@@ -157,7 +166,9 @@ const WebDevelopmentServices = () => {
                                 platforms built to organise information
                                 and keep your audience engaged.
                             </p>
-                        </div>
+
+                            <span className={'text-muted-foreground text-sm flex items-center gap-2'}>Learn more <MoveRight size={18} className={'group-hover:translate-x-2 duration-500 ease-in-out transition-all'} /></span>
+                        </Link>
                     </div>
                 </div>
 

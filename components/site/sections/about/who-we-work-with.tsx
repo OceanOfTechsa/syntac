@@ -92,22 +92,8 @@ const WhoWeWorkWith = () => {
                 <div className="z-10 flex flex-wrap justify-center gap-4 px-4 sm:px-6 lg:px-8">
                     <Link
                         href="/contact"
-                        className="
-                            hover:bg-[#0B9944] dark:hover:bg-[#0B9944]
-                            focus-visible:border-ring focus-visible:ring-ring/50
-                            inline-flex shrink-0 items-center justify-center
-                            gap-2 font-medium whitespace-nowrap
-                            transition-all outline-none
-                            focus-visible:ring-[3px]
-                            disabled:pointer-events-none disabled:opacity-50
-                            [&_svg]:pointer-events-none
-                            [&_svg]:shrink-0
-                            [&_svg:not([class*='size-'])]:size-4
-                            bg-primary text-primary-foreground
-                            hover:text-white
-                            h-10 px-6 rounded-lg text-base
-                            shadow-sm max-[400px]:flex-1
-                        "
+                        data-roll
+                        className="inline-flex h-10 shrink-0 cursor-pointer items-center justify-center gap-2 rounded-sm bg-primary px-6 text-base font-medium whitespace-nowrap text-primary-foreground outline-none transition-all hover:bg-primary/80 focus-visible:ring-[3px] focus-visible:ring-ring/50 disabled:pointer-events-none disabled:opacity-50 [&_svg]:pointer-events-none [&_svg]:shrink-0 [&_svg:not([class*='size-'])]:size-4"
                     >
                         Start a conversation
                         <ArrowRight size={16} />

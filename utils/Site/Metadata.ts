@@ -2,14 +2,17 @@ import type { Metadata } from "next";
 import AppSettings from "@/utils/AppSettings";
 
 const CompanyName: string = AppSettings.COMPANY_NAME;
+const FullCompanyName: string = AppSettings.FULL_COMPANY_NAME;
 const SiteDescription: string = AppSettings.SITE_DESCRIPTION;
 
 const SiteUrl =
   process.env.NEXT_PUBLIC_APP_URL ?? "http://localhost:3000";
 
 // ${CompanyName} |
-const SiteTitle =
-  `Custom Software Development & Digital Solutions`;
+// const SiteTitle =
+//   `Custom Software Development & Digital Solutions`;
+
+const SiteTitle: string = FullCompanyName
 
 const OgImage = "/brand/syntac-brand-kit/extras/og-image.png";
 

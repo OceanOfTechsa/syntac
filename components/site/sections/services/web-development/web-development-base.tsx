@@ -30,10 +30,10 @@ const WebDevelopmentBase = () => {
                 />
                 <WhySyntac data-divider />
                 <WebDevelopmentServices data-divider />
-                <Approach data-divider />
+                {/*<Approach data-divider />*/}
                 <Technologies data-divider />
-                {/*<CasesSection data-divider />*/}
-                {/*<TestimonialsSection data-divider/>*/}
+                <CasesSection data-divider />
+                <TestimonialsSection data-divider/>
             </SectionDivider>
         </div>
     )

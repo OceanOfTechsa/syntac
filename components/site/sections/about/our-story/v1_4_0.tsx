@@ -60,6 +60,7 @@ function V1_4_0() {
 
           <Link
             href="/cases"
+            data-roll
             className={ButtonLikeLink}
           >
             View Projects <ExternalLink />
