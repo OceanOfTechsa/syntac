@@ -137,13 +137,13 @@ const FlipWords = ({
     return (
         <span
             className={cn(
-                "relative inline-flex flex-col items-start",
+                "relative flex-col items-start inline-block font-extrabold",
                 className // ← inherits text size from parent
             )}
         >
               <span
                   ref={wordRef}
-                  className="relative z-10 inline-block text-inherit"
+                  className="relative z-10 inline-block text-3xl font-bold sm:text-4xl lg:text-5xl lg:leading-[1.29167]"
               >
                 {currentWord.split("").map((letter, i) => (
                     <span

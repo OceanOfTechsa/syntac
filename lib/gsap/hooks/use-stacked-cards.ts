@@ -5,13 +5,9 @@ import { gsap } from "@/lib/gsap";
 import { useGsap } from "@/lib/gsap/hooks/use-gsap";
 
 interface UseStackedCardsOptions {
-    /** Duration of the transition (seconds) */
     duration?: number;
-    /** How long the front card stays (seconds) */
     hold?: number;
-    /** Vertical distance between card tops (px) — keep small for subtlety */
     offsetY?: number;
-    /** Scale reduction per depth level — keep small for subtlety */
     scaleStep?: number;
 }
 
@@ -20,10 +16,10 @@ export function useStackedCards(
     options: UseStackedCardsOptions = {}
 ) {
     const {
-        duration = 1.1,
-        hold = 2.8,
-        offsetY = 10,
-        scaleStep = 0.035,
+        duration = 1.35,
+        hold = 3.2,
+        offsetY = 14,
+        scaleStep = 0.045,
     } = options;
 
     useGsap(
@@ -38,17 +34,24 @@ export function useStackedCards(
             const VISIBLE = 3;
             const total = cards.length;
 
-            const positionProps = (position: number) => ({
-                zIndex: total - position,
-                y: position * offsetY,
-                scale: 1 - position * scaleStep,
-                opacity: position < VISIBLE ? 1 : 0,
-                transformOrigin: "center top",
-            });
+            const positionProps = (position: number) => {
+                const scales = [1, 0.94, 0.88];
+                const scale = scales[position] ?? 1 - position * scaleStep;
 
-            // Initial setup
+                return {
+                    zIndex: total - position,
+                    y: position * offsetY,
+                    scale,
+                    opacity: position < VISIBLE ? 1 : 0,
+                    transformOrigin: "center top",
+                };
+            };
+
             cards.forEach((card, i) => {
-                gsap.set(card, positionProps(i));
+                gsap.set(card, {
+                    ...positionProps(i),
+                    force3D: true,
+                });
             });
 
             const cycle = () => {
@@ -58,13 +61,18 @@ export function useStackedCards(
                 const next = cards[3];
 
                 const tl = gsap.timeline({
-                    defaults: { ease: "power2.out" },
+                    defaults: {
+                        ease: "power3.inOut",
+                        force3D: true,
+                    },
                     onComplete: () => {
                         cards.push(cards.shift()!);
                         container.appendChild(front);
 
-                        gsap.set(front, positionProps(total - 1));
-                        gsap.set(front, { opacity: 0 });
+                        gsap.set(front, {
+                            ...positionProps(total - 1),
+                            opacity: 0,
+                        });
 
                         cards.forEach((card, i) => {
                             gsap.set(card, { zIndex: total - i });
@@ -72,57 +80,49 @@ export function useStackedCards(
                     },
                 });
 
-                // 1. Front card quietly disappears — no upward motion, just a soft fade + tiny scale-down
                 tl.to(
                     front,
                     {
                         opacity: 0,
-                        scale: 1 - scaleStep * 0.6,
-                        duration: duration * 0.55,
-                        ease: "power1.inOut",
+                        scale: 0.96,
+                        y: offsetY * 0.4,
+                        duration: duration * 0.7,
+                        ease: "power2.inOut",
                     },
                     0
                 );
 
-                // 2. Middle card advances to front — subtle, smooth
                 if (middle) {
                     tl.to(
                         middle,
-                        {
-                            ...positionProps(0),
-                            duration,
-                        },
-                        duration * 0.15
+                        { ...positionProps(0), duration },
+                        duration * 0.12
                     );
                 }
 
-                // 3. Back card advances to middle — subtle, smooth
                 if (back) {
                     tl.to(
                         back,
-                        {
-                            ...positionProps(1),
-                            duration,
-                        },
-                        duration * 0.15
+                        { ...positionProps(1), duration: duration * 0.95 },
+                        duration * 0.18
                     );
                 }
 
-                // 4. Next card fades in at the back, settling into position
                 if (next) {
                     gsap.set(next, {
                         ...positionProps(VISIBLE),
                         opacity: 0,
+                        scale: 0.82,
                     });
 
                     tl.to(
                         next,
                         {
                             ...positionProps(2),
-                            duration,
-                            ease: "power1.out",
+                            duration: duration * 0.9,
+                            ease: "power2.out",
                         },
-                        duration * 0.3
+                        duration * 0.25
                     );
                 }
             };
@@ -130,7 +130,16 @@ export function useStackedCards(
             const master = gsap.timeline({ repeat: -1 });
             master.call(cycle).to({}, { duration: hold + duration });
 
+            // Pause / resume on hover
+            const pause = () => master.pause();
+            const resume = () => master.resume();
+
+            container.addEventListener("mouseenter", pause);
+            container.addEventListener("mouseleave", resume);
+
             return () => {
+                container.removeEventListener("mouseenter", pause);
+                container.removeEventListener("mouseleave", resume);
                 master.kill();
             };
         },

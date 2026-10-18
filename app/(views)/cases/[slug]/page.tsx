@@ -1,0 +1,68 @@
+import React from 'react'
+import {Metadata} from 'next';
+import {notFound} from "next/navigation";
+
+import {CaseFaqs} from "@/data/faqs";
+import {galleryImagePath} from "@/lib/imagekit";
+import Faq from "@/components/site/sections/home/faq";
+import type {CaseStudy} from "@/utils/Site/case-studies";
+import {ALL_CASE_STUDIES} from "@/utils/Site/case-studies";
+import SectionDivider from "@/components/site/section-devider";
+import HeroSection from "@/components/site/sections/cases/[slug]/hero-section";
+import ImageGallery from "@/components/site/sections/cases/[slug]/image-gallery";
+import ImpactSection from "@/components/site/sections/cases/[slug]/impact-section";
+import SolutionSection from "@/components/site/sections/cases/[slug]/solution-section";
+import CaseFlowSection from "@/components/site/sections/cases/[slug]/case-flow-section";
+import ChallengeSection from "@/components/site/sections/cases/[slug]/challenge-section";
+import ClientFeedbackSection from "@/components/site/sections/cases/[slug]/client-feedback-section";
+
+interface Props {
+    params: Promise<{ slug: string }>
+}
+
+const getStudy = (slug: string): CaseStudy | undefined =>
+    ALL_CASE_STUDIES.find((c) => c.slug === slug);
+
+export function generateStaticParams() {
+    return ALL_CASE_STUDIES.map((c) => ({slug: c.slug}));
+}
+
+export async function generateMetadata({params}: Props): Promise<Metadata> {
+    const {slug} = await params;
+    const study = getStudy(slug);
+    if (!study) notFound();
+
+    return {
+        title: study.title ?? study.clientName,
+        description: study.summary,
+    }
+}
+
+const CaseDetailsPage = async ({params}: Props) => {
+    const {slug} = await params;
+    const study = getStudy(slug);
+    if (!study) notFound();
+
+    const images = Array.from({length: study.galleryCount ?? 0}, (_, i) => ({
+        light: galleryImagePath(study.clientSlug, study.slug, i + 1, "light"),
+        dark: galleryImagePath(study.clientSlug, study.slug, i + 1, "dark"),
+        alt: `${study.title} screenshot ${i + 1}`,
+    }));
+
+    // A section is only rendered when the study has data for it, so no empty gaps or dividers appear
+    return (
+        <div className={"flex flex-col w-full p-0"}>
+            <SectionDivider>
+                <HeroSection study={study} data-divider />
+                {study.challenge && <ChallengeSection study={study} data-divider />}
+                {study.solution && <SolutionSection study={study} data-divider />}
+                {study.impact && <ImpactSection study={study} data-divider />}
+                {images.length > 0 && <ImageGallery images={images} data-divider />}
+                {study.flow && <CaseFlowSection study={study} data-divider />}
+                {study.feedback && <ClientFeedbackSection study={study} data-divider />}
+                <Faq faqs={study.faqs ?? CaseFaqs} data-divider/>
+            </SectionDivider>
+        </div>
+    )
+}
+export default CaseDetailsPage

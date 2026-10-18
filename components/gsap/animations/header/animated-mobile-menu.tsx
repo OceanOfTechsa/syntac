@@ -3,7 +3,7 @@
 import { useLayoutEffect, useRef } from "react";
 import gsap from "gsap";
 import {cn} from "@/lib/utils";
-import AppSettings from "@/utils/AppSettings/AppSettings";
+import AppSettings from "@/utils/AppSettings";
 
 interface AnimatedMobileMenuProps {
     open: boolean;

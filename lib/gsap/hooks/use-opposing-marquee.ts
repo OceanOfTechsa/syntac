@@ -5,16 +5,17 @@ import { gsap } from "@/lib/gsap";
 import { useGsap } from "@/lib/gsap/hooks/use-gsap";
 
 interface UseOpposingMarqueeOptions {
-    speed?: number; // px per second
+    speed?: number;
+    repeat?: number;
 }
 
 export function useOpposingMarquee(
     topRef: RefObject<HTMLDivElement | null>,
     bottomRef: RefObject<HTMLDivElement | null>,
     options: UseOpposingMarqueeOptions = {},
-    deps: unknown[] = []
+    deps: unknown[] = [],
 ) {
-    const { speed = 20 } = options;
+    const { speed = 40, repeat = 3 } = options;
 
     useGsap(
         topRef,
@@ -23,50 +24,49 @@ export function useOpposingMarquee(
             const bottom = bottomRef.current;
             if (!top || !bottom) return;
 
-            const setupRow = (row: HTMLDivElement, direction: "left" | "right") => {
-                Array.from(row.children).forEach((el) => {
-                    if ((el as HTMLElement).dataset.clone) el.remove();
-                });
+            // Keep the current tweens in variables that the handlers can always reach
+            let topTween: gsap.core.Tween | null = null;
+            let bottomTween: gsap.core.Tween | null = null;
 
-                const originals = Array.from(row.children) as HTMLElement[];
-                if (originals.length === 0) return null;
-
-                originals.forEach((child) => {
-                    const clone = child.cloneNode(true) as HTMLElement;
-                    clone.dataset.clone = "true";
-                    clone.setAttribute("aria-hidden", "true");
-                    clone.style.pointerEvents = "none";
-                    row.appendChild(clone);
-                });
-
-                void row.offsetWidth; // force reflow
-
-                const totalWidth = row.scrollWidth / 2;
-                if (totalWidth === 0) return null;
-
+            const setup = (row: HTMLDivElement, direction: "left" | "right") => {
                 gsap.killTweensOf(row);
+                void row.offsetWidth;
+
+                const oneSetWidth = row.scrollWidth / repeat;
+                if (oneSetWidth < 10) return null;
 
                 if (direction === "left") {
                     gsap.set(row, { x: 0 });
+                    return gsap.to(row, {
+                        x: -oneSetWidth,
+                        duration: oneSetWidth / speed,
+                        ease: "none",
+                        repeat: -1,
+                        force3D: true,
+                        modifiers: {
+                            x: gsap.utils.unitize(gsap.utils.wrap(-oneSetWidth, 0)),
+                        },
+                    });
                 } else {
-                    gsap.set(row, { x: -totalWidth });
+                    gsap.set(row, { x: -oneSetWidth });
+                    return gsap.to(row, {
+                        x: 0,
+                        duration: oneSetWidth / speed,
+                        ease: "none",
+                        repeat: -1,
+                        force3D: true,
+                        modifiers: {
+                            x: gsap.utils.unitize(gsap.utils.wrap(-oneSetWidth, 0)),
+                        },
+                    });
                 }
-
-                return gsap.to(row, {
-                    x: direction === "left" ? -totalWidth : 0,
-                    duration: totalWidth / speed,
-                    ease: "none",
-                    repeat: -1,
-                    force3D: true,
-                    modifiers: {
-                        x: gsap.utils.unitize(gsap.utils.wrap(-totalWidth, 0)),
-                    },
-                });
             };
 
-            const topTween = setupRow(top, "left");
-            const bottomTween = setupRow(bottom, "right");
+            // Initial setup
+            topTween = setup(top, "left");
+            bottomTween = setup(bottom, "right");
 
+            // These handlers always use the latest tween references
             const pauseTop = () => topTween?.pause();
             const resumeTop = () => topTween?.play();
             const pauseBottom = () => bottomTween?.pause();
@@ -77,15 +77,24 @@ export function useOpposingMarquee(
             bottom.addEventListener("mouseenter", pauseBottom);
             bottom.addEventListener("mouseleave", resumeBottom);
 
+            // Re-setup on size changes, but keep the same handler functions
+            const ro = new ResizeObserver(() => {
+                topTween = setup(top, "left");
+                bottomTween = setup(bottom, "right");
+            });
+            ro.observe(top);
+            ro.observe(bottom);
+
             return () => {
                 top.removeEventListener("mouseenter", pauseTop);
                 top.removeEventListener("mouseleave", resumeTop);
                 bottom.removeEventListener("mouseenter", pauseBottom);
                 bottom.removeEventListener("mouseleave", resumeBottom);
+                ro.disconnect();
                 topTween?.kill();
                 bottomTween?.kill();
             };
         },
-        [speed, ...deps]
+        [speed, repeat, ...deps],
     );
 }

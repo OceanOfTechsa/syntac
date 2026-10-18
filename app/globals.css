@@ -2,7 +2,6 @@
 @import "tw-animate-css";
 @import "shadcn/tailwind.css";
 /*@plugin "@tailwindcss/typography";*/
-/*@import "tw-animate-css";*/
 
 /* ==========================================================================
    SYNTAC Software theme
@@ -70,6 +69,7 @@
   --font-mono: var(--font-mono);
   --font-serif: var(--font-serif);
   --font-kalam: var(--font-kalam);
+  --font-Signature: var(--font-signature);
   --font-brand: var(--font-brand);
 
   --radius-sm: calc(var(--radius) - 4px);
@@ -99,7 +99,7 @@
   --radius-4xl: calc(var(--radius) * 2.6);
 
   --header-z-index: 30;
-  --header-height: 45px;
+  --header-height: 55px;
 }
 
 html {
@@ -247,6 +247,10 @@ html {
     font-family: var(--font-brand), cursive;
   }
 
+  .font-signature {
+    font-family: var(--font-Signature), cursive;
+  }
+
   @keyframes slide-logos {
     to {
       transform: translateX(calc(-50% - 2rem));
@@ -286,6 +290,13 @@ html {
     background-image: radial-gradient(var(--border) 1.2px, transparent 1.3px);
     background-size: 18px 18px;
   }
+  .bg-dot-grid-less-opacity {
+    background-image: radial-gradient(
+            color-mix(in srgb, var(--border) 45%, transparent) 1.2px,
+            transparent 1.3px
+    );
+    background-size: 18px 18px;
+  }
 }
 
 /* @utility must be top-level — not nested inside @layer utilities */
@@ -314,4 +325,14 @@ html {
 
 ::-webkit-scrollbar-thumb:hover {
   background: var(--color-brand-light);
+}
+
+
+/* Hide vanilla-cookieconsent default UI – we use a custom React UI */
+#cc-main {
+  display: none !important;
+  visibility: hidden !important;
+  pointer-events: none !important;
+  height: 0 !important;
+  overflow: hidden !important;
 }

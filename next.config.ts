@@ -21,7 +21,11 @@ const nextConfig: NextConfig = {
         remotePatterns: [
             {
                 protocol: "https",
-                hostname: "lh3.googleusercontent.com",
+                hostname: "ik.imagekit.io",
+            },
+            {
+                protocol: "https",
+                hostname: "picsum.photos",
             },
             {
                 protocol: "https",
