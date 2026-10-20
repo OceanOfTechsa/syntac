@@ -5,6 +5,9 @@ const withBundleAnalyzer = require("@next/bundle-analyzer")({
 });
 
 const nextConfig: NextConfig = {
+
+    reactCompiler: true,
+    
     webpack: (config, { isServer }) => {
         if (!isServer) {
             config.resolve.fallback = {
@@ -15,6 +18,10 @@ const nextConfig: NextConfig = {
             };
         }
         return config;
+    },
+
+    experimental: {
+       turbopackFileSystemCacheForDev: true
     },
 
     images: {

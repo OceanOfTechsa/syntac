@@ -63,16 +63,6 @@ const HeaderLinks: LinkType[] = [
                 description: "Insights, tutorials and company news",
             },
             {
-                label: "Changelog",
-                href: "/changelog",
-                description: "See what we've shipped recently",
-            },
-            {
-                label: "Documentation",
-                href: "/docs",
-                description: "Guides and API references",
-            },
-            {
                 label: "FAQs",
                 href: "/faqs",
                 description: "Answers to common questions",

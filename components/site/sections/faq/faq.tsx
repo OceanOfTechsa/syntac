@@ -31,8 +31,7 @@ interface FaqListProps {
     indexForSearch?: boolean;
 }
 
-const pillBase =
-    "rounded-md px-3.5 py-1.5 text-sm font-medium transition-colors duration-200 outline-none focus-visible:ring-[3px] focus-visible:ring-ring/50";
+const pillBase = "inline-block rounded bg-muted px-3 py-1 text-sm text-muted-foreground capitalize transition-colors hover:cursor-pointer hover:bg-accent/20";
 
 /** "How long does it take?" -> "how-long-does-it-take". Used as the #anchor for each question. */
 export const faqAnchor = (question: string) =>
@@ -77,10 +76,7 @@ const FaqList: React.FC<FaqListProps> = ({
     }, [faqs]);
 
     return (
-        <div
-            {...(indexForSearch
-                ? { "data-pagefind-body": "" }
-                : { "data-pagefind-ignore": "" })}
+        <div {...(indexForSearch ? { "data-pagefind-body": "" } : { "data-pagefind-ignore": "" })}
             className="mt-32 max-w-5xl mx-auto xl:py-20 pb-0 sm:mt-0 px-6 md:px-0 w-full"
         >
             <SectionHeader

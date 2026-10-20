@@ -18,7 +18,7 @@ const WebTechnologies = () => {
             <TechnologyStack
                 columns={3}
                 show={[
-                    { category: "frontend", technologies: ["react", "ts", "tailwind", "nextjs"], title: "Frontend" },
+                    { category: "frontend", technologies: ["react", "ts", "tailwind", "nextjs", "astro"], title: "Frontend" },
                     {category: "design"},
                     {category: 'monitoring', technologies: ["sentry", "uptimerobot", "google-analytics"] },
                 ]}

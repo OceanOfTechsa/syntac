@@ -8,7 +8,7 @@ import {
   type Resolver,
 } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
-import {Check, Info, Loader2, MoveLeft, MoveRight, X} from "lucide-react";
+import {Check, Info, Loader2, MoveLeft, MoveRight, ThumbsUp, X} from "lucide-react";
 import { cn } from "@/lib/utils";
 import { gsap } from "@/lib/gsap";
 import AppSettings from "@/utils/AppSettings";
@@ -475,9 +475,10 @@ function EstimateInfoDialog({ service, onClose }: { service: ServiceDefinition; 
           <button
             type="button"
             onClick={onClose}
-            className="bg-primary text-primary-foreground ml-auto cursor-pointer rounded-sm px-[1rem] py-[0.5rem] text-sm font-medium transition-all duration-200 hover:opacity-90 hover:shadow-md"
+            className="flex items-start gap-2 bg-primary text-primary-foreground ml-auto cursor-pointer rounded-sm px-[1rem] py-[0.5rem] text-sm font-medium transition-all duration-200 hover:opacity-90 hover:shadow-md"
           >
             Got it
+            <ThumbsUp size={17} />
           </button>
         </div>
       </div>

@@ -16,6 +16,7 @@ export function proxy(request: NextRequest) {
         "/_next",        // next.js assets
         "/favicon.ico",
         "/robots.txt",
+        "/contact" //TODO Create a suitable route for notify me
     ];
 
     const isAllowedPath = allowedPaths.some((path) =>

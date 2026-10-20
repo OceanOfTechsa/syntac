@@ -210,7 +210,7 @@ const PagefindSearch = ({
                     autoComplete="off"
                     enterKeyHint="search"
                     aria-label="Search"
-                    className="bg-background focus-visible:ring-ring/10 h-12 w-full rounded-lg border pr-24 pl-12 text-base outline-none focus-visible:ring-[3px]"
+                    className="bg-background h-12 w-full rounded-md border pr-24 pl-12 text-base outline-none focus:border-primary transition-colors duration-500 ease-in-out"
                 />
                 {query && (
                     <button

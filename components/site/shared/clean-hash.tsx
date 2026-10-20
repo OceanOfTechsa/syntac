@@ -1,21 +1,26 @@
 "use client"
 
 import { useEffect } from "react"
-import { usePathname } from "next/navigation"
+import { usePathname, useSearchParams } from "next/navigation"
 
 export function CleanHash() {
     const pathname = usePathname()
+    const searchParams = useSearchParams()
 
     useEffect(() => {
-        // If there is any hash, remove it (keeps path + query)
+        if (typeof window === "undefined") return
+
+        // If there is any hash, remove it
         if (window.location.hash) {
-            window.history.replaceState(
-                null,
-                "",
-                window.location.pathname + window.location.search,
-            )
+            // Build the clean URL (path + query, no hash)
+            const cleanUrl =
+                pathname +
+                (searchParams.toString() ? `?${searchParams.toString()}` : "")
+
+            // This updates the URL bar immediately
+            window.history.replaceState(null, "", cleanUrl)
         }
-    }, [pathname])
+    }, [pathname, searchParams])
 
     return null
 }

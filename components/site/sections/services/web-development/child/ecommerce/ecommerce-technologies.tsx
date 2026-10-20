@@ -32,7 +32,7 @@ const ECommerceTechnologies = () => {
                         category: "design",
                     },
                     {
-                        category: "backend",
+                        category: "ecommerce",
                     },
                     {
                         category: "notifications",

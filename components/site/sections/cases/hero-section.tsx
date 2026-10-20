@@ -11,6 +11,7 @@ import FlipWords from "@/components/gsap/animations/shared/flip-words";
 import GoogleReviewsBanner from "@/components/site/shared/Google-reviews-banner";
 import Link from "next/link";
 import {Headset} from "lucide-react";
+import {ButtonLikeLink} from "@/components/site/shared-classes";
 
 const HeroSection = () => {
     const textRef = useRef<HTMLDivElement | null>(null);
@@ -18,10 +19,7 @@ const HeroSection = () => {
     useTextReveal(textRef);
 
     return (
-        <section
-            className={cn("relative space-y-8 py-8 sm:space-y-16 sm:py-16 lg:py-24")}
-            id="hero"
-        >
+        <section className={cn("relative space-y-8 py-8 sm:space-y-16 sm:py-16 lg:py-24")} id="hero">
             <div className="mx-auto flex max-w-7xl flex-col items-center gap-7 overflow-hidden px-4 text-center sm:px-6 lg:px-8">
                 <span
                     ref={textRef}
@@ -74,32 +72,7 @@ const HeroSection = () => {
                     <GoogleReviewsBanner />
                 </div>
                 <div className={'px-3'}>
-                    <Link
-                        href="/contact"
-                        className="
-                                hover:bg-[#0B9944] dark:hover:bg-[#0B9944]
-                                focus-visible:border-ring focus-visible:ring-ring/50
-                                aria-invalid:border-destructive aria-invalid:ring-destructive/20
-                                dark:aria-invalid:ring-destructive/40
-
-                                inline-flex shrink-0 items-center justify-center
-                                font-medium whitespace-nowrap
-                                transition-all outline-none
-                                focus-visible:ring-[3px]
-                                disabled:pointer-events-none disabled:opacity-50
-
-                                [&_svg]:pointer-events-none
-                                [&_svg]:shrink-0
-                                [&_svg:not([class*='size-'])]:size-4
-
-                                bg-primary text-primary-foreground
-                                hover:text-white
-
-                                h-10 w-auto px-6 gap-2
-                                text-base rounded-md
-                                sm:max-[400px]:flex-1
-                            "
-                    >
+                    <Link href="/contact" data-roll className={ButtonLikeLink}>
                         Start a conversation
                         <Headset size={16} />
                     </Link>

@@ -118,6 +118,13 @@ export const technologyCatalog: TechnologyCategory[] = [
                     "A React framework for building websites and web applications with flexible rendering, routing, server-side functionality, and search-friendly pages.",
             },
             {
+                id: "astro",
+                name: "Astro.js",
+                src: technologyPath("astro"),
+                description:
+                    "The web framework for content-driven websites, Astro powers the world's fastest marketing sites, blogs, e-commerce websites, and more.",
+            },
+            {
                 id: "ts",
                 name: "TypeScript",
                 src: technologyPath("ts"),
@@ -211,6 +218,13 @@ export const technologyCatalog: TechnologyCategory[] = [
                 src: technologyPath("resend"),
                 description:
                     "An email delivery platform for transactional messages such as account verification, password resets, order confirmations, and application notifications.",
+            },
+            {
+                id: "react-email",
+                name: "React Email",
+                src: technologyPath("react-email"),
+                description:
+                    "A next-generation collection of unstyled components for creating beautiful emails using React, Tailwind, and TypeScript.",
             },
         ],
     },
@@ -352,6 +366,13 @@ export const technologyCatalog: TechnologyCategory[] = [
                 src: technologyPath("cypress"),
                 description:
                     "A testing framework for running automated browser tests and validating application behaviour through realistic user interactions.",
+            },
+            {
+                id: "playwright",
+                name: "Playwright",
+                src: technologyPath("playwright"),
+                description:
+                    "Playwright enables reliable web automation for testing, scripting, and AI agents.",
             },
         ],
     },

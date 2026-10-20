@@ -164,10 +164,10 @@ const LogoOrbitSection = ({
                         <p className="text-muted-foreground">{description}</p>
                         <Link
                             href={ctaHref}
-                            className="text-primary inline-flex items-center gap-1.5 text-sm font-medium hover:underline"
+                            className="group/link text-primary inline-flex items-center gap-1.5 text-sm font-medium hover:underline transition-all duration 500 ease-in-out"
                         >
                             {ctaLabel}
-                            <ArrowRight size={14} aria-hidden="true" />
+                            <ArrowRight size={14} aria-hidden="true" className={'group-hover/link:translate-x-1 transition-all duration-500 ease-in-out'} />
                         </Link>
                     </div>
                 }

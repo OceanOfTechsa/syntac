@@ -1,30 +1,30 @@
-
+import {JSX} from "react";
 import type { Metadata } from "next";
-import { notFound } from "next/navigation";
 
+import { notFound } from "next/navigation";
 import FaqList from "@/components/site/sections/faq/faq";
-import { faqCategories, getFaqCategory } from "@/data/faq-categories";
+import {faqCategories, getFaqCategory, type ICategory, type IFaqCategory} from "@/data/faq-categories";
 
 type Props = {
     params: Promise<{ category: string }>;
 };
 
-export function generateStaticParams() {
-    return faqCategories.map((category) => ({ category: category.slug }));
+export function generateStaticParams(): ICategory[] {
+    return faqCategories.map((category: IFaqCategory): ICategory => ({ category: category.slug }));
 }
 
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
     const { category } = await params;
-    const current = getFaqCategory(category);
+    const current: IFaqCategory |undefined = getFaqCategory(category);
 
     return {
         title: current ? `${current.label} FAQs` : "FAQs",
     };
 }
 
-export default async function FaqCategoryPage({ params }: Props) {
+const FAQsCategoryPage = async ({ params }: Props): Promise<JSX.Element> => {
     const { category } = await params;
-    const current = getFaqCategory(category);
+    const current: IFaqCategory | undefined = getFaqCategory(category);
 
     if (!current) notFound();
 
@@ -36,3 +36,5 @@ export default async function FaqCategoryPage({ params }: Props) {
         />
     );
 }
+
+export default FAQsCategoryPage;

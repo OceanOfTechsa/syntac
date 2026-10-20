@@ -1,0 +1,128 @@
+import { Link, Text } from 'react-email';
+import AppSettings from '@/utils/AppSettings';
+import { EmailLayout } from '@/app/emails/EmailLayout';
+import {
+    type EstimatorAnswers,
+    type Estimate,
+    describeAnswers,
+    getService,
+} from '@/components/site/forms/shemas/estimate-schema';
+import {formatList} from "@/lib/emails/list-format";
+
+interface TextOnlyEmailProps {
+    answers: EstimatorAnswers;
+    estimate: Estimate;
+    clientName: string;
+    url?: string;
+}
+
+
+
+export const TextOnlyEmail = ({
+                                  answers,
+                                  estimate,
+                                  clientName,
+                                  url,
+                              }: TextOnlyEmailProps) => {
+    const summary = describeAnswers(answers);
+    const service = getService(answers.service);
+    const copy = service?.copy;
+
+    const involvesList = formatList([
+        ...summary.involves,
+        ...(summary.involvesOther ? [summary.involvesOther] : []),
+    ]);
+
+    const featuresList = formatList([
+        ...summary.features,
+        ...(summary.featuresOther ? [summary.featuresOther] : []),
+    ]);
+
+    const rangeText =
+        estimate.low === estimate.high
+            ? `~${estimate.low}`
+            : `~${estimate.low} – ${estimate.high}`;
+
+    const unit = copy?.unit ?? 'development days';
+    const estimateLabel = copy?.estimateLabel ?? 'Estimated development time';
+
+    return (
+        <EmailLayout
+            preview={`Your project estimate from ${AppSettings.COMPANY_NAME}`}
+            title={`Your project estimate from ${AppSettings.COMPANY_NAME}`}
+        >
+            <Text className="font-14 text-fg-2 mt-0 mb-4 text-left">
+                Hi {clientName},
+            </Text>
+
+            <Text className="font-14 text-fg-2 mt-0 mb-4 text-left">
+                Thank you for sharing your project details with us. Based on the
+                information you provided, here is a summary of your requirements.
+                You’re looking for a <strong>{summary.service}</strong>
+                {involvesList ? (
+                    <>
+                        {' '}
+                        with <strong>{involvesList}</strong>
+                    </>
+                ) : null}
+                .
+            </Text>
+
+            <Text className="font-14 text-fg-2 mt-0 mb-4 text-left">
+                Your project is currently at the <strong>{summary.stage}</strong>{' '}
+                stage, and you’re looking for <strong>{summary.engagement}</strong>{' '}
+                support from us
+                {featuresList ? (
+                    <>
+                        , including <strong>{featuresList}</strong>
+                    </>
+                ) : null}
+                .
+            </Text>
+
+            <Text className="font-14 text-fg-2 mt-0 mb-4 text-left">
+                {estimateLabel}{' '}
+                <strong className="text-fg">{rangeText}</strong> {unit}.
+            </Text>
+
+            <Text
+                className="font-11 text-fg-3 mt-6 mb-0 text-left italic"
+                style={{ fontStyle: 'italic' }}
+            >
+                Please note: This estimate is an initial indication based on the
+                information you’ve provided and is intended to help you plan your
+                project. The final timeline will depend on the confirmed scope,
+                detailed requirements, integrations, design decisions, review cycles,
+                and any changes agreed upon during development. Once we’ve discussed
+                your requirements in more detail, we can provide a more accurate
+                assessment tailored to your project.
+            </Text>
+        </EmailLayout>
+    );
+};
+
+TextOnlyEmail.PreviewProps = {
+    clientName: 'Thabo Molefe',
+    url: 'https://syntac.co.za/estimate',
+    answers: {
+        service: 'custom-software',
+        involves: ['sales', 'orders', 'finance', 'documents', 'portal'],
+        involvesOther:
+            'Need basic multi-warehouse stock levels and a simple delivery schedule view for the warehouse team',
+        stage: 'requirements',
+        engagement: 'design-dev',
+        features: [
+            'rbac',
+            'workflows',
+            'reporting',
+            'integrations',
+            'notifications',
+            'migration',
+        ],
+        featuresOther:
+            'Integration with our existing Sage accounting package and WhatsApp order notifications for customers',
+    },
+    estimate: { low: 210, high: 285 },
+} satisfies TextOnlyEmailProps;
+
+export default TextOnlyEmail;
