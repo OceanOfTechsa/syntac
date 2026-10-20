@@ -2,9 +2,8 @@
 
 import Link from "next/link";
 import { cn } from "@/lib/utils";
-import { Headset } from "lucide-react";
-import React, { useEffect, useState } from "react";
 import { usePathname } from "next/navigation";
+import React, { useEffect, useState } from "react";
 
 import AppSettings from "@/utils/AppSettings";
 import ThemeSwitcher from "@/components/site/ModeToggle";

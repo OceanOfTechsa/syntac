@@ -17,6 +17,9 @@ export interface IFaqCategory {
     label: string;
     faqs: IFaq[];
 }
+export interface ICategory {
+    category: string;
+}
 
 export const faqCategories: IFaqCategory[] = [
     { slug: "general", label: "General", faqs },
@@ -29,10 +32,10 @@ export const faqCategories: IFaqCategory[] = [
     { slug: "cases", label: "Case Studies", faqs: CasesFaqs },
 ];
 
-export const getFaqCategory = (slug: string) =>
-    faqCategories.find((category) => category.slug === slug);
+export const getFaqCategory: (slug: string) => IFaqCategory | undefined = (slug: string): IFaqCategory | undefined =>
+    faqCategories.find((category: IFaqCategory): boolean => category.slug === slug);
 
 /** Every FAQ for the "All" view. Keys are prefixed because "1", "2"... repeat across categories. */
-export const allFaqs: IFaq[] = faqCategories.flatMap((category) =>
-    category.faqs.map((faq) => ({ ...faq, key: `${category.slug}-${faq.key}` })),
+export const allFaqs: IFaq[] = faqCategories.flatMap((category: IFaqCategory) =>
+    category.faqs.map((faq: IFaq) => ({ ...faq, key: `${category.slug}-${faq.key}` })),
 );

@@ -1,14 +1,12 @@
-import React from "react";
+import {JSX} from "react";
+import {Metadata} from "next";
 
 import SectionDivider from "@/components/site/section-devider";
 import PagefindSearch from "@/components/site/sections/faq/pagefind-search";
 
+export const metadata:  Metadata = { title: 'Search FAQs' };
 
-interface PageProps {
-    searchParams: Promise<{ q?: string }>;
-}
-
-const Page = async ({ searchParams }: PageProps) => {
+const FAQsSearchPage = async ({ searchParams }: {searchParams: Promise<{ q?: string }>}): Promise<JSX.Element> => {
     const { q } = await searchParams;
 
     return (
@@ -47,4 +45,4 @@ const Page = async ({ searchParams }: PageProps) => {
     );
 };
 
-export default Page;
+export default FAQsSearchPage;

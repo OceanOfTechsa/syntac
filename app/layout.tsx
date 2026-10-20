@@ -8,17 +8,17 @@ import "./globals.css";
 
 import SiteMetadata from "@/utils/Site/Metadata";
 import { TooltipProvider } from "@/components/ui/tooltip";
+import ScrollToTop from "@/components/site/shared/scroll-to-top";
 import CursorTrailer from "@/components/site/shared/cursor-trailer";
 import { ThemeProvider } from "@/components/providers/theme-provider";
-import SmoothScroll from "@/components/providers/smooth-scroll-provider";
-import ScrollToTop from "@/components/site/shared/scroll-to-top";
-import { CleanHash } from "@/components/site/shared/clean-hash";
 import {CookieConsentProvider} from "@/components/site/cookie-consent";
+import SmoothScroll from "@/components/providers/smooth-scroll-provider";
+import CleanHashWrapper from "@/components/site/shared/clean-hash-wrapper";
 import {ConsentGuard} from "@/components/site/cookie-consent/consent-guard";
 
 export const metadata: Metadata = SiteMetadata;
 
-const RootLayout =  ({children, }: LayoutProps<"/">): JSX.Element => {
+const RootLayout: ({ children, }: LayoutProps<"/">) => JSX.Element =  ({children, }: LayoutProps<"/">): JSX.Element => {
   return (
       <html
           lang="en"
@@ -56,7 +56,7 @@ const RootLayout =  ({children, }: LayoutProps<"/">): JSX.Element => {
                   <CursorTrailer />
                   <SmoothScroll />
                   <ScrollToTop />
-                  <CleanHash />
+                  <CleanHashWrapper />
                   <ButtonEffects />
               </ThemeProvider>
           </body>
