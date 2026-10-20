@@ -5,7 +5,7 @@
   "scripts": {
     "dev": "next dev -p 44300 --turbopack ",
     "build": "next build --turbopack",
-    "postbuild": "pagefind --site .next/server/app --output-path public/pagefind",
+    "postbuild": "node scripts/build-search-index.mjs",
     "start": "next start",
     "email": "email dev  --dir app/emails --port 44400",
     "lint": "eslint"
