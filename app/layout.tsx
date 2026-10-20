@@ -15,6 +15,7 @@ import {CookieConsentProvider} from "@/components/site/cookie-consent";
 import SmoothScroll from "@/components/providers/smooth-scroll-provider";
 import CleanHashWrapper from "@/components/site/shared/clean-hash-wrapper";
 import {ConsentGuard} from "@/components/site/cookie-consent/consent-guard";
+import { SpeedInsights } from '@vercel/speed-insights/next';
 
 export const metadata: Metadata = SiteMetadata;
 
@@ -58,6 +59,7 @@ const RootLayout: ({ children, }: LayoutProps<"/">) => JSX.Element =  ({children
                   <ScrollToTop />
                   <CleanHashWrapper />
                   <ButtonEffects />
+                  <SpeedInsights />
               </ThemeProvider>
           </body>
       </html>
