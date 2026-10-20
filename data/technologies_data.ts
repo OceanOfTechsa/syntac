@@ -25,81 +25,6 @@ export interface TechnologyCategory {
 
 export const technologyCatalog: TechnologyCategory[] = [
     {
-        id: "database",
-        title: "Databases",
-        technologies: [
-            {
-                id: "sqlserver",
-                name: "SQL Server",
-                src: technologyPath("sqlserver"),
-                description:
-                    "A relational database management system for storing structured business data, managing transactions, and maintaining data integrity.",
-            },
-            {
-                id: "postgresql",
-                name: "PostgreSQL",
-                src: technologyPath("postgresql"),
-                description:
-                    "An open-source relational database known for reliability, advanced querying, and support for complex application data.",
-            },
-            {
-                id: "redis",
-                name: "Redis",
-                src: technologyPath("redis"),
-                description:
-                    "An in-memory data store used for caching, session management, queues, and other use cases that benefit from fast data access.",
-            },
-            {
-                id: "supabase",
-                name: "Supabase",
-                src: technologyPath("supabase"),
-                description:
-                    "A development platform built around PostgreSQL that provides database services, authentication, file storage, and real-time capabilities.",
-            },
-            {
-                id: "mongodb",
-                name: "MongoDB",
-                src: technologyPath("mongodb"),
-                description:
-                    "A document-oriented database that stores data in flexible document structures, making it useful for applications with evolving data requirements.",
-            },
-        ],
-    },
-    {
-        id: "backend",
-        title: "Backend Development",
-        technologies: [
-            {
-                id: "netcore",
-                name: ".NET Core",
-                src: technologyPath("netcore"),
-                description:
-                    "A cross-platform development platform for building web applications, APIs, enterprise systems, and backend services.",
-            },
-            {
-                id: "csharp",
-                name: "C#",
-                src: technologyPath("csharp"),
-                description:
-                    "A modern, strongly typed programming language used to implement application logic, business rules, APIs, and backend services.",
-            },
-            {
-                id: "efcore",
-                name: "Entity Framework Core",
-                src: technologyPath("efcore"),
-                description:
-                    "An object-relational mapper for .NET that simplifies database queries, entity management, and schema changes through code-first or database-first workflows.",
-            },
-            {
-                id: "nodejs",
-                name: "Node.js",
-                src: technologyPath("nodejs"),
-                description:
-                    "A JavaScript runtime for building server-side applications, APIs, real-time services, and backend functionality using JavaScript or TypeScript.",
-            },
-        ],
-    },
-    {
         id: "frontend",
         title: "Frontend Development",
         technologies: [
@@ -137,6 +62,81 @@ export const technologyCatalog: TechnologyCategory[] = [
                 src: technologyPath("tailwind"),
                 description:
                     "A utility-first CSS framework for creating responsive, consistent interfaces directly within component markup.",
+            },
+        ],
+    },
+    {
+        id: "backend",
+        title: "Backend Development",
+        technologies: [
+            {
+                id: "netcore",
+                name: ".NET Core",
+                src: technologyPath("netcore"),
+                description:
+                    "A cross-platform development platform for building web applications, APIs, enterprise systems, and backend services.",
+            },
+            {
+                id: "csharp",
+                name: "C#",
+                src: technologyPath("csharp"),
+                description:
+                    "A modern, strongly typed programming language used to implement application logic, business rules, APIs, and backend services.",
+            },
+            {
+                id: "efcore",
+                name: "Entity Framework Core",
+                src: technologyPath("efcore"),
+                description:
+                    "An object-relational mapper for .NET that simplifies database queries, entity management, and schema changes through code-first or database-first workflows.",
+            },
+            {
+                id: "nodejs",
+                name: "Node.js",
+                src: technologyPath("nodejs"),
+                description:
+                    "A JavaScript runtime for building server-side applications, APIs, real-time services, and backend functionality using JavaScript or TypeScript.",
+            }
+        ],
+    },
+    {
+        id: "database",
+        title: "Databases",
+        technologies: [
+            {
+                id: "sqlserver",
+                name: "SQL Server",
+                src: technologyPath("sqlserver"),
+                description:
+                    "A relational database management system for storing structured business data, managing transactions, and maintaining data integrity.",
+            },
+            {
+                id: "postgresql",
+                name: "PostgreSQL",
+                src: technologyPath("postgresql"),
+                description:
+                    "An open-source relational database known for reliability, advanced querying, and support for complex application data.",
+            },
+            {
+                id: "redis",
+                name: "Redis",
+                src: technologyPath("redis"),
+                description:
+                    "An in-memory data store used for caching, session management, queues, and other use cases that benefit from fast data access.",
+            },
+            {
+                id: "supabase",
+                name: "Supabase",
+                src: technologyPath("supabase"),
+                description:
+                    "A development platform built around PostgreSQL that provides database services, authentication, file storage, and real-time capabilities.",
+            },
+            {
+                id: "mongodb",
+                name: "MongoDB",
+                src: technologyPath("mongodb"),
+                description:
+                    "A document-oriented database that stores data in flexible document structures, making it useful for applications with evolving data requirements.",
             },
         ],
     },
@@ -205,6 +205,13 @@ export const technologyCatalog: TechnologyCategory[] = [
                 src: technologyPath("google-search-console"),
                 description:
                     "A tool for monitoring a website's presence in Google Search, including indexing, search performance, and technical search visibility issues.",
+            },
+            {
+                id: "posthog",
+                name: "Posthog",
+                src: technologyPath("posthog"),
+                description:
+                    "An open-source product analytics platform for tracking user behaviour, funnels, feature flags, session replay, and product experiments.",
             },
         ],
     },
@@ -285,6 +292,13 @@ export const technologyCatalog: TechnologyCategory[] = [
                 src: technologyPath("axios"),
                 description:
                     "An HTTP client for making API requests, handling responses, and communicating with backend services from JavaScript and TypeScript applications.",
+            },
+            {
+                id: "postman",
+                name: "Postman",
+                src: technologyPath("postman"),
+                description:
+                    "An API platform for designing, testing, documenting, and collaborating on HTTP requests and collections used during development and debugging.",
             },
         ],
     },
