@@ -1,13 +1,8 @@
-import { Link, Text } from 'react-email';
+import { Text } from 'react-email';
 import AppSettings from '@/utils/AppSettings';
-import { EmailLayout } from '@/app/emails/EmailLayout';
-import {
-    type EstimatorAnswers,
-    type Estimate,
-    describeAnswers,
-    getService,
-} from '@/components/site/forms/shemas/estimate-schema';
 import {formatList} from "@/lib/emails/list-format";
+import { EmailLayout } from '@/app/emails/EmailLayout';
+import { type EstimatorAnswers, type Estimate, type AnswerSummary, type ServiceDefinition, type ServiceCopy, describeAnswers, getService} from '@/components/site/forms/shemas/estimate-schema';
 
 interface TextOnlyEmailProps {
     answers: EstimatorAnswers;
@@ -16,35 +11,28 @@ interface TextOnlyEmailProps {
     url?: string;
 }
 
+export const TextOnlyEmail = ({ answers, estimate, clientName }: TextOnlyEmailProps) => {
+    const summary: AnswerSummary = describeAnswers(answers);
+    const service: ServiceDefinition | undefined = getService(answers.service);
+    const copy: ServiceCopy | undefined = service?.copy;
 
-
-export const TextOnlyEmail = ({
-                                  answers,
-                                  estimate,
-                                  clientName,
-                                  url,
-                              }: TextOnlyEmailProps) => {
-    const summary = describeAnswers(answers);
-    const service = getService(answers.service);
-    const copy = service?.copy;
-
-    const involvesList = formatList([
+    const involvesList: string = formatList([
         ...summary.involves,
         ...(summary.involvesOther ? [summary.involvesOther] : []),
     ]);
 
-    const featuresList = formatList([
+    const featuresList: string = formatList([
         ...summary.features,
         ...(summary.featuresOther ? [summary.featuresOther] : []),
     ]);
 
-    const rangeText =
+    const rangeText: string =
         estimate.low === estimate.high
             ? `~${estimate.low}`
             : `~${estimate.low} – ${estimate.high}`;
 
-    const unit = copy?.unit ?? 'development days';
-    const estimateLabel = copy?.estimateLabel ?? 'Estimated development time';
+    const unit: string = copy?.unit ?? 'Development days';
+    const estimateLabel: string = copy?.estimateLabel ?? 'Estimated development time';
 
     return (
         <EmailLayout
@@ -102,7 +90,7 @@ export const TextOnlyEmail = ({
 };
 
 TextOnlyEmail.PreviewProps = {
-    clientName: 'Thabo Molefe',
+    clientName: 'Unathi Zulu',
     url: 'https://syntac.co.za/estimate',
     answers: {
         service: 'custom-software',
