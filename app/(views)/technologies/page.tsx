@@ -8,6 +8,7 @@ import {TechnologiesPageMetadata} from "@/utils/Site/sitePageMetadata";
 import TestimonialsSection from "@/components/site/sections/home/testimonials";
 import OurStrongSides from "@/components/site/sections/technologies/our-strong-sides";
 import LogoOrbitSection from "@/components/site/sections/technologies/logo-orbit-section";
+import TechnologySpotlight from "@/components/site/sections/technologies/technology-spotlight";
 
 export const metadata: Metadata = TechnologiesPageMetadata;
 
@@ -24,6 +25,7 @@ const TechnologiesPage = () => {
                     data-divider
                 />
                 <Stack data-divider />
+                <TechnologySpotlight data-divider/>
                 <OurStrongSides data-divider />
                 <TestimonialsSection data-divider/>
                 <Faq faqs={TechnologiesFaqs} data-divider/>

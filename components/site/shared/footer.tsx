@@ -53,7 +53,7 @@ const Footer = (): JSX.Element => {
 
                 </div>
 
-                <div className="relative z-30 mt-[90px] sm:mt-[220px] flex flex-col justify-end px-4 sm:px-6 lg:px-8">
+                <div className="relative z-20 mt-[90px] sm:mt-[220px] flex flex-col justify-end px-4 sm:px-6 lg:px-8">
                     <div className="grid grid-cols-1 gap-10 pt-6 md:grid-cols-[1.55fr_0.7fr_0.7fr_1.45fr] md:gap-x-8 md:gap-y-12 lg:gap-x-12">
                         {/* Brand + description + socials */}
                         <section className="w-full sm:max-w-[320px]">
@@ -74,10 +74,8 @@ const Footer = (): JSX.Element => {
                               {AppSettings.COMPANY_NAME}
                             </span>
                             </Link>
-                            <p className="w-full sm:max-w-[320px] text-[14.5px] leading-[1.55] text-neutral-500 dark:text-white/55">
-                                Shadcn studio is an open-source Tailwind CSS components library
-                                with UI examples, blocks, templates, plugins, and a Figma design
-                                system.
+                            <p className="w-full sm:max-w-[320px] text-[14.5px] leading-[1.55] text-neutral-500 dark:text-white/55 -z-10">
+                                {AppSettings.SITE_DESCRIPTION}
                             </p>
                             <div className="mt-6 flex items-center gap-4">
                                 {/* Facebook */}
@@ -281,7 +279,7 @@ const Footer = (): JSX.Element => {
                 </div>
 
                 <div
-                    className={'mt-5 mb-0 border-t border-dashed pt-3 pb-5 px-4 sm:px-6 lg:px-8 w-full flex flex-col sm:flex-row justify-between align-center text-neutral-500 dark:text-white/40'}>
+                    className={'mt-5 mb-0 border-t border-dashed pt-3 pb-5 px-4 sm:px-6 lg:px-8 w-full flex flex-col sm:flex-row justify-between align-center text-muted-foreground'}>
                     <div className={'flex flex-col gap-2'}>
                         <p className="text-[12.5px] leading-[1.55] mb-0">
                             © {new Date().getFullYear()} {AppSettings.FULL_COMPANY_NAME} — Software development company.
