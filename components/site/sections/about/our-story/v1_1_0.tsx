@@ -1,4 +1,5 @@
 import TimelineItem from "@/components/site/shared/time-line-item";
+import Image from "next/image";
 
 function V1_1_0() {
     return (
@@ -17,15 +18,21 @@ function V1_1_0() {
                         </p>
                     </div>
 
-                    <img
+                    <Image
                         src="/assets/site/about/work-with-us/image-4.webp"
                         alt="The beginning of the idea behind SYNTAC"
+                        width={272}
+                        height={180}
                         className="dark:hidden w-68 rounded-lg border object-cover"
+                        style={{ width: "auto", height: "auto" }}
                     />
-                    <img
+                    <Image
                         src="/assets/site/about/work-with-us/image-4-dark.webp"
                         alt="The beginning of the idea behind SYNTAC"
+                        width={272}
+                        height={180}
                         className="w-68 rounded-lg border object-cover hidden dark:block"
+                        style={{ width: "auto", height: "auto" }}
                     />
 
                     <p className="text-muted-foreground">

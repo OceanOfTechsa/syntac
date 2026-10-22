@@ -2,6 +2,7 @@ import SectionHeader from "@/components/site/shared/section-header";
 import React from "react";
 import AppSettings from "@/utils/AppSettings";
 import UserBanner from "@/components/site/shared/user-banner";
+import Link from "next/link";
 
 const OurStory = () => {
     return (
@@ -34,7 +35,7 @@ const OurStory = () => {
                     establish and improve their presence online. It was a
                     relatively small beginning, but it gave us the opportunity
                     to learn what it really meant to build technology for
-                    someone else's business.
+                    someone else&lsquos business.
                 </p>
 
                 <p className="text-lg">
@@ -95,10 +96,10 @@ const OurStory = () => {
                 <p className="text-lg">
                     Today, {AppSettings.COMPANY_NAME} brings together everything we have learned
                     along the way. We provide{" "}
-                    <a href="/services" className="underline">
+                    <Link href="/services" className="underline">
                         web development, custom software development, and
                         ongoing maintenance
-                    </a>
+                    </Link>
                     , creating tailored digital solutions for businesses,
                     brands, organisations, and teams of different sizes.
                     While the scale of the vision has changed, the original

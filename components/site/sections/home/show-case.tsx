@@ -66,17 +66,16 @@ const OpposingCards = ({
                            cards,
                            speed = 40,
                            className,
-                           repeat = 3, // 3× is usually enough for a long continuous belt
+                           repeat = 3,
                        }: OpposingCardsProps) => {
     const topRef = useRef<HTMLDivElement>(null);
     const bottomRef = useRef<HTMLDivElement>(null);
 
+    useOpposingMarquee(topRef, bottomRef, { speed, repeat }, [cards, repeat]);
+
     if (cards.length === 0) return null;
 
-    // Create one long belt by repeating the full list
     const belt = Array.from({ length: repeat }, () => cards).flat();
-
-    useOpposingMarquee(topRef, bottomRef, { speed, repeat }, [cards, repeat]);
 
     return (
         <section
@@ -84,16 +83,9 @@ const OpposingCards = ({
                 "relative w-full overflow-hidden pb-26 ",
                 className,
             )}
-
-            id={'show-case'}
+            id="show-case"
         >
-            {/* Edge fades */}
-            {/*<div className="pointer-events-none absolute inset-y-0 left-0 z-20 w-16 sm:w-28 md:w-40 bg-gradient-to-r from-neutral-50 dark:from-neutral-950 to-transparent" />*/}
-            {/*<div className="pointer-events-none absolute inset-y-0 right-0 z-20 w-16 sm:w-28 md:w-40 bg-gradient-to-l from-neutral-50 dark:from-neutral-950 to-transparent" />*/}
-            <div className="from-background absolute inset-y-0 left-0 w-16 sm:w-28 md:w-40 z-20 bg-linear-to-r to-transparent"></div>
-            <div className="from-background absolute inset-y-0 right-0 w-16 sm:w-28 md:w-40 z-20 bg-linear-to-l to-transparent"></div>
-
-            {/* TOP belt → moves left */}
+            {/* ... rest of the JSX stays the same ... */}
             <div
                 ref={topRef}
                 className="mb-6 flex gap-6 will-change-transform sm:mb-7 sm:gap-7"
@@ -104,7 +96,6 @@ const OpposingCards = ({
                 ))}
             </div>
 
-            {/* BOTTOM belt → moves right */}
             <div
                 ref={bottomRef}
                 className="flex gap-6 will-change-transform sm:gap-7"
