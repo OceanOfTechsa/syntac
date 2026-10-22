@@ -1,7 +1,7 @@
 "use client";
 
-import { useEffect, useRef } from "react";
-import gsap from "gsap";
+// import { useEffect, useRef } from "react";
+// import gsap from "gsap";
 import {LoaderCircle} from "lucide-react";
 
 // const Loading = () => {

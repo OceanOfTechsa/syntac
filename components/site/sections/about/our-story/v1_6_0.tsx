@@ -29,7 +29,7 @@ function V1_6_0() {
                     <p className="text-muted-foreground">
                         This helped shape the approach we still follow today:
                         listen first, plan carefully, build thoughtfully, and
-                        keep the people we're building for involved along the
+                        keep the people we&lsquore building for involved along the
                         way.
                     </p>
                 </div>
