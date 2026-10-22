@@ -1,0 +1,35 @@
+version: 2
+
+updates:
+  # npm packages
+  - package-ecosystem: npm
+    directory: /
+    target-branch: uat # Updates land on uat first, then get promoted to master
+    schedule:
+      interval: weekly
+    open-pull-requests-limit: 5
+    # Conventional Commit messages ("chore(deps): ...") so commitlint passes and
+    # semantic-release does not treat dependency bumps as releases
+    commit-message:
+      prefix: chore
+      prefix-development: chore
+      include: scope
+    groups:
+      minor-and-patch:
+        update-types:
+          - minor
+          - patch
+
+  # Versions of the actions used in .github/workflows (checkout, setup-node, ...)
+  - package-ecosystem: github-actions
+    directory: /
+    target-branch: uat # Updates land on uat first, then get promoted to master
+    schedule:
+      interval: weekly
+    commit-message:
+      prefix: ci
+      include: scope
+    groups:
+      actions:
+        patterns:
+          - "*"
