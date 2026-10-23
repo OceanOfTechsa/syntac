@@ -2,6 +2,7 @@ import TimelineItem from "@/components/site/shared/time-line-item";
 import BadgeAccordion from "@/components/site/shared/badge-accordion";
 import {accordionDataV1_4_0} from "@/data/changelog-data";
 import {technologyPath} from "@/data/technologies";
+import Image from "next/image";
 
 function V1_5_0() {
     return (
@@ -23,10 +24,14 @@ function V1_5_0() {
                     <div className="flex flex-wrap items-center gap-2">
                         {/* .NET Core */}
                         <div className="flex items-center gap-1.5 rounded-md bg-[#512BD4]/10 px-3 py-1.5 text-[#512BD4] dark:bg-[#512BD4]/15">
-                            <img
+                            <Image
                                 src={technologyPath("netcore")}
                                 alt=".NET Core"
+                                width={50}
+                                height={50}
+                                quality={100}
                                 className="h-4.5 w-auto"
+                                style={{ height: "1.125rem", width: "auto" }}
                             />
                             <span className="text-xs font-medium">
                                 .NET Core
@@ -35,10 +40,14 @@ function V1_5_0() {
 
                         {/* C# */}
                         <div className="flex items-center gap-1.5 rounded-md bg-[#68217A]/10 px-3 py-1.5 text-[#68217A] dark:bg-[#68217A]/15">
-                            <img
+                            <Image
                                 src={technologyPath("csharp")}
                                 alt="C#"
+                                width={50}
+                                height={50}
+                                quality={100}
                                 className="h-4.5 w-auto"
+                                style={{ height: "1.125rem", width: "auto" }}
                             />
                             <span className="text-xs font-medium">
                                 C#
@@ -47,10 +56,14 @@ function V1_5_0() {
 
                         {/* React */}
                         <div className="flex items-center gap-1.5 rounded-md bg-[#61DAFB]/10 px-3 py-1.5 text-[#087EA4] dark:bg-[#61DAFB]/15 dark:text-[#61DAFB]">
-                            <img
+                            <Image
                                 src={technologyPath("react")}
                                 alt="React"
+                                width={50}
+                                height={50}
+                                quality={100}
                                 className="h-4.5 w-auto"
+                                style={{ height: "1.125rem", width: "auto" }}
                             />
                             <span className="text-xs font-medium">
                                 React
@@ -59,10 +72,14 @@ function V1_5_0() {
 
                         {/* TypeScript */}
                         <div className="flex items-center gap-1.5 rounded-md bg-[#3178C6]/10 px-3 py-1.5 text-[#3178C6] dark:bg-[#3178C6]/15">
-                            <img
+                            <Image
                                 src={technologyPath("typescript")}
                                 alt="TypeScript"
+                                width={50}
+                                height={50}
+                                quality={100}
                                 className="h-4.5 w-auto"
+                                style={{ height: "1.125rem", width: "auto" }}
                             />
                             <span className="text-xs font-medium">
                                 TypeScript
@@ -71,10 +88,14 @@ function V1_5_0() {
 
                         {/* Next.js */}
                         <div className="flex items-center gap-1.5 rounded-md bg-black/5 px-3 py-1.5 text-black dark:bg-white/10 dark:text-white">
-                            <img
+                            <Image
                                 src={technologyPath("nextjs")}
                                 alt="Next.js"
+                                width={50}
+                                height={50}
+                                quality={100}
                                 className="h-4.5 w-auto"
+                                style={{ height: "1.125rem", width: "auto" }}
                             />
                             <span className="text-xs font-medium">
                                 Next.js

@@ -2,6 +2,7 @@
 
 import Link from "next/link";
 import { cn } from "@/lib/utils";
+import Image from "next/image";
 
 interface CookieBannerProps {
     open: boolean;
@@ -27,8 +28,24 @@ const CookieBanner = ({ open, onAcceptAll, onRejectOptional, onOpenSettings }: C
         >
             <div className="mx-auto flex w-full max-w-350 flex-col gap-4 px-4 py-2 sm:px-6 lg:flex-row lg:items-center lg:justify-between lg:gap-8 lg:px-8 min-[1800px]:max-w-384">
                 <div className={'flex gap-2 items-start'}>
-                    <img src={'/assets/cookies.svg'} alt="cookis" className={'object-cover rounded-full h-8 w-8 dark:hidden'}/>
-                    <img src={'/assets/cookies-dark.svg'} alt="cookis" className={'object-cover rounded-full h-8 w-8 hidden dark:block'}/>
+                    <Image
+                        src="/assets/cookies.svg"
+                        alt="cookies"
+                        width={50}
+                        height={50}
+                        quality={75}
+                        className="object-cover rounded-full h-8 w-8 dark:hidden"
+                        style={{ width: "45px", height: "45px" }}
+                    />
+                    <Image
+                        src="/assets/cookies-dark.svg"
+                        alt="cookies"
+                        width={50}
+                        height={50}
+                        quality={75}
+                        className="object-cover rounded-full h-8 w-8 hidden dark:block"
+                        style={{ width: "45px", height: "45px" }}
+                    />
                     {/* Text */}
                     <div className="min-w-0 flex-1">
                         <h2 id="cookie-banner-title" className="font-semibold tracking-tight">

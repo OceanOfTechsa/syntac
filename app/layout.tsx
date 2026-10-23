@@ -22,6 +22,7 @@ export const metadata: Metadata = SiteMetadata;
 const RootLayout: ({ children, }: LayoutProps<"/">) => JSX.Element =  ({children, }: LayoutProps<"/">): JSX.Element => {
   return (
       <html
+          data-scroll-behavior="smooth"
           lang="en"
           suppressHydrationWarning
           className={cn(
