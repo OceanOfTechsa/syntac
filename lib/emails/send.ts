@@ -11,7 +11,8 @@ type SendArgs = {
 };
 
 export async function SendEmail({ to, subject, html, replyTo }: SendArgs) {
-    const from = process.env.FROM_EMAIL || `${AppSettings.COMPANY_NAME} <${AppSettings.CompanyContacts.Email}>`;
+    // const from = process.env.FROM_EMAIL || `${AppSettings.COMPANY_NAME} <${AppSettings.CompanyContacts.Email}>`;
+    const from = "delivered@resend.dev";
 
     const { data, error } = await resend.emails.send({
         from,

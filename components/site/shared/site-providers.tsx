@@ -5,7 +5,7 @@ import { ProjectEstimatorProvider } from "@/components/providers/project-estimat
 import type { EstimateLead } from "@/components/site/forms/project-estimator-wizard";
 
 async function submitEstimatorLead(lead: EstimateLead) {
-  const response = await fetch("/api/estimator", {
+  const response = await fetch("/api/v1/email/estimate", {
     method: "POST",
     headers: { "Content-Type": "application/json" },
     body: JSON.stringify(lead),
