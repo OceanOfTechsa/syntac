@@ -22,6 +22,7 @@ const TeamMemberImage = ({
     <Image
       src={imageSrc}
       alt={alt}
+      loading={'eager'}
       fill
       sizes="(max-width: 639px) 100vw, (max-width: 767px) 275px, (max-width: 1279px) 275px, 275px"
       quality={100}

@@ -10,10 +10,7 @@ const HeroSection = () => {
     useTextReveal(textRef);
 
     return (
-        <section
-            className={'relative space-y-8 py-8 sm:space-y-16 sm:py-16 lg:py-24'}
-            id={'hero'}
-        >
+        <section className={'relative space-y-8 py-8 sm:space-y-16 sm:py-16 lg:py-24'} id={'hero'}>
             <div
                 className={
                     'mx-auto flex max-w-7xl flex-col items-center gap-7 px-4 text-center sm:px-6 lg:px-8 overflow-hidden'
@@ -29,10 +26,7 @@ const HeroSection = () => {
                         Our Team
                     </span>
 
-                    <span
-                        className="text-sm font-normal text-wrap"
-                        data-line
-                    >
+                    <span className="text-sm font-normal text-wrap" data-line>
                         The people behind the ideas, technology, and solutions.
                     </span>
 

@@ -1,12 +1,10 @@
-
-import React, {JSX} from 'react'
-import Image from "next/image";
-import AppSettings from "@/utils/AppSettings";
 import Link from "next/link";
-import SectionHeader from "@/components/site/shared/section-header";
-import {type TeamMember, teamMembers} from "@/data/team";
-import TeamMemberImage from "@/components/site/sections/about/team/team-member-image";
+import React, {JSX} from 'react'
 
+import AppSettings from "@/utils/AppSettings";
+import {type TeamMember, teamMembers} from "@/data/team";
+import SectionHeader from "@/components/site/shared/section-header";
+import TeamMemberImage from "@/components/site/sections/about/team/team-member-image";
 
 const Members = () => {
     return (
@@ -49,9 +47,9 @@ const Members = () => {
 
                               {/* Member Details */}
                               <div className="absolute inset-x-0 bottom-0 z-10 p-5">
-                                <h6 className="text-[1.2rem] font-semibold leading-tight text-white transition-colors duration-500 ease-in-out">
+                                <h4 className="text-[1.2rem] font-semibold leading-tight text-white transition-colors duration-500 ease-in-out">
                                   {member.name} {member.surname}
-                                </h6>
+                                </h4>
 
                                 <div className=" text-sm font-normal text-white/75">
                                   {member.role}
