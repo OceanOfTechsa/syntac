@@ -30,13 +30,7 @@ const getSnoozeDuration = (count: number) => {
     return 24 * HOUR;
 };
 
-export const AnnouncementBanner = ({text = "🚀 New: Syntac UI Kit is now open source — Explore the components",
-                                       linkLabel = "Visit changelog",
-                                       linkHref = "/changelog?tab=pro-changelog",
-                                       storageKey = "banner_dismiss",
-                                       className,
-                                   }: AnnouncementBannerProps) => {
-    // Start hidden, decide after reading storage (avoids SSR mismatch)
+export const AnnouncementBanner = ({text, linkLabel, linkHref, storageKey = "banner_dismiss", className,}: AnnouncementBannerProps) => {
     const [visible, setVisible] = useState(false);
 
     useEffect(() => {
@@ -86,12 +80,12 @@ export const AnnouncementBanner = ({text = "🚀 New: Syntac UI Kit is now open 
                         {text}
                     </p>
 
-                    <Button variant="secondary" className="h-7 shrink-0 gap-1.5 px-2 py-1 text-xs rounded-sm">
-                        <Link href={linkHref} className={'flex items-center gap-2'}>
+                    { linkHref && linkLabel &&
+                        <Link href={linkHref} className={'group flex items-center bg-secondary text-secondary-foreground hover:bg-[color-mix(in_oklch,var(--secondary),var(--foreground)_5%)] aria-expanded:bg-secondary aria-expanded:text-secondary-foreground h-7 shrink-0 gap-1 px-2 py-1 text-xs rounded-sm'}>
                             {linkLabel}
-                            <ChevronRight aria-hidden="true" />
+                            <ChevronRight aria-hidden="true" size={18} className={'group-hover:translate-x-1 duration-500 ease-in-out'}/>
                         </Link>
-                    </Button>
+                    }
                 </div>
 
                 <Button
@@ -99,7 +93,7 @@ export const AnnouncementBanner = ({text = "🚀 New: Syntac UI Kit is now open 
                     variant="ghost"
                     size="icon"
                     onClick={handleClose}
-                    className="size-7 cursor-pointer text-primary-foreground hover:bg-primary-foreground/10 hover:text-primary-foreground"
+                    className="size-7 cursor-pointer text-primary-foreground hover:bg-primary-foreground/10 hover:text-primary-foreground rounded-full"
                 >
                     <X aria-hidden="true" />
                     <span className="sr-only">Close notification</span>

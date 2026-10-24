@@ -8,7 +8,7 @@ import {
   type Resolver,
 } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
-import {Check, Info, Loader2, MoveLeft, MoveRight, ThumbsUp, X} from "lucide-react";
+import {Check, Info, Loader2, LucideMailWarning, MoveLeft, MoveRight, ThumbsUp, X} from "lucide-react";
 import { cn } from "@/lib/utils";
 import { gsap } from "@/lib/gsap";
 import AppSettings from "@/utils/AppSettings";
@@ -924,8 +924,8 @@ export function ProjectEstimatorWizard({ className, onSubmitLead }: ProjectEstim
                 </div>
 
                 {leadStatus === "error" && (
-                  <p role="alert" className="text-destructive mt-6 text-sm">
-                    We couldn&apos;t send your details. Please try again.
+                  <p role="alert" className="text-destructive mt-6 text-sm flex itesm-cenetr gap-2">
+                    <LucideMailWarning size={17} />  We couldn&apos;t send your details. Please try again.
                   </p>
                 )}
 
@@ -956,9 +956,9 @@ export function ProjectEstimatorWizard({ className, onSubmitLead }: ProjectEstim
 
             {step === STEP_CONTACT && leadStatus === "submitted" && submitted && (
               <div className="py-8">
-                                <span className="border-primary text-primary mb-5 flex size-11 items-center justify-center rounded-full border">
-                                    <Check className="size-5" />
-                                </span>
+                <span className="border-primary text-primary mb-5 flex size-11 items-center justify-center rounded-full border">
+                    <Check className="size-5" />
+                </span>
                 <h3 className="text-3xl font-semibold tracking-tight">Thanks, {submitted.name.split(" ")[0]}.</h3>
                 <p className="text-muted-foreground mt-2 max-w-md text-sm leading-relaxed">
                   We&apos;ve got your project details and your indicative estimate of{" "}
