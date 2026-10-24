@@ -30,13 +30,7 @@ const getSnoozeDuration = (count: number) => {
     return 24 * HOUR;
 };
 
-export const AnnouncementBanner = ({text = "🚀 New: Syntac UI Kit is now open source — Explore the components",
-                                       linkLabel = "Visit changelog",
-                                       linkHref = "/changelog?tab=pro-changelog",
-                                       storageKey = "banner_dismiss",
-                                       className,
-                                   }: AnnouncementBannerProps) => {
-    // Start hidden, decide after reading storage (avoids SSR mismatch)
+export const AnnouncementBanner = ({text, linkLabel, linkHref, storageKey = "banner_dismiss", className,}: AnnouncementBannerProps) => {
     const [visible, setVisible] = useState(false);
 
     useEffect(() => {
@@ -86,10 +80,12 @@ export const AnnouncementBanner = ({text = "🚀 New: Syntac UI Kit is now open 
                         {text}
                     </p>
 
-                    <Link href={linkHref} className={'group flex items-center bg-secondary text-secondary-foreground hover:bg-[color-mix(in_oklch,var(--secondary),var(--foreground)_5%)] aria-expanded:bg-secondary aria-expanded:text-secondary-foreground h-7 shrink-0 gap-1 px-2 py-1 text-xs rounded-sm'}>
-                        {linkLabel}
-                        <ChevronRight aria-hidden="true" size={18} className={'group-hover:translate-x-1 duration-500 ease-in-out'}/>
-                    </Link>
+                    { linkHref && linkLabel &&
+                        <Link href={linkHref} className={'group flex items-center bg-secondary text-secondary-foreground hover:bg-[color-mix(in_oklch,var(--secondary),var(--foreground)_5%)] aria-expanded:bg-secondary aria-expanded:text-secondary-foreground h-7 shrink-0 gap-1 px-2 py-1 text-xs rounded-sm'}>
+                            {linkLabel}
+                            <ChevronRight aria-hidden="true" size={18} className={'group-hover:translate-x-1 duration-500 ease-in-out'}/>
+                        </Link>
+                    }
                 </div>
 
                 <Button

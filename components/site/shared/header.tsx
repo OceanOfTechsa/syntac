@@ -16,14 +16,18 @@ import AnimatedMobileMenu from "@/components/gsap/animations/header/animated-mob
 import { EstimateProjectButton } from "@/components/providers/project-estimator-provider";
 
 interface HeaderProps {
-    showBanner?: boolean;
+    showAnnouncementBanner?: boolean;
     bannerText?: string;
+    bannerUrl?: string;
+    bannerButtonText?: string;
     threshold?: number;
 }
 
 const Header = ({
-                    showBanner = true,
+                    showAnnouncementBanner = false,
                     bannerText,
+                    bannerUrl,
+                    bannerButtonText,
                     threshold = 24,
                 }: HeaderProps) => {
     const pathname = usePathname();
@@ -114,7 +118,14 @@ const Header = ({
 
     return (
         <>
-            {showBanner && <AnnouncementBanner text={bannerText} />}
+            {showAnnouncementBanner && (
+                <AnnouncementBanner
+                    text={bannerText}
+                    linkHref={bannerUrl}
+                    linkLabel={bannerButtonText}
+                    storageKey={`banner_dismiss:${bannerText ?? "default"}`}
+                />
+            )}
 
             <header
                 onMouseEnter={cancelClose}
