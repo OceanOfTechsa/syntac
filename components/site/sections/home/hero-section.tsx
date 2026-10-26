@@ -124,7 +124,7 @@ const HeroSection = () => {
                     />
                 </div>
 
-                <div className={'w-full flex justify-center items-center gap-2 mt-4'}>
+                <div className={'w-full flex flex-col sm:flex-row justify-center items-center gap-2 mt-4'}>
                     <Link
                         href="/contact"
                         data-roll

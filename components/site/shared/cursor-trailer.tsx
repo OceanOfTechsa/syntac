@@ -13,6 +13,10 @@ export default function CursorTrailer() {
         const dot = dotRef.current
         if (!dot) return
 
+        // Skip entirely on touch-only devices (no hover, coarse pointer)
+        const finePointer = window.matchMedia('(hover: hover) and (pointer: fine)')
+        if (!finePointer.matches) return
+
         const onMouseMove = (e: MouseEvent) => {
             mouse.current.x = e.clientX
             mouse.current.y = e.clientY
@@ -32,7 +36,6 @@ export default function CursorTrailer() {
             pos.current.x += (mouse.current.x - pos.current.x) * speed
             pos.current.y += (mouse.current.y - pos.current.y) * speed
 
-            // Hide when hovering interactive elements
             if (isHoveringInteractive.current) {
                 dot.style.opacity = '0'
                 dot.style.transform = `translate3d(${pos.current.x}px, ${pos.current.y}px, 0) scale(0.4)`
@@ -59,7 +62,8 @@ export default function CursorTrailer() {
     return (
         <div
             ref={dotRef}
-            className="pointer-events-none fixed top-0 left-0 z-[9999] h-3 w-3 -translate-x-1/2 -translate-y-1/2 rounded-full bg-[#0B9944]  transition-opacity duration-200"
+            aria-hidden="true"
+            className="pointer-events-none fixed top-0 left-0 z-[9999] hidden h-3 w-3 -translate-x-1/2 -translate-y-1/2 rounded-full bg-[#0B9944] transition-opacity duration-200 [@media(hover:hover)_and_(pointer:fine)]:block"
             style={{ willChange: 'transform, opacity' }}
         />
     )

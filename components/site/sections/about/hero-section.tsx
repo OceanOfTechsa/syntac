@@ -17,7 +17,7 @@ const HeroSection = () => {
            <div className={'mx-auto flex max-w-7xl flex-col items-center gap-7 px-4 text-center sm:px-6 lg:px-8 overflow-hidden'}>
                 <span ref={textRef} data-slot="badge" data-variant="outline" className="focus-visible:border-ring focus-visible:ring-ring/50 aria-invalid:border-destructive aria-invalid:ring-destructive/20 dark:aria-invalid:ring-destructive/40 inline-flex w-fit shrink-0 items-center justify-center gap-1 overflow-hidden rounded-full border px-2 py-0.5 text-xs font-medium whitespace-nowrap transition-[color,box-shadow] focus-visible:ring-[3px] [&amp;&gt;svg]:pointer-events-none [&amp;&gt;svg]:size-3 border-border text-foreground [a&amp;]:hover:bg-accent [a&amp;]:hover:text-accent-foreground bg-background relative z-10">
                     <span className="bg-primary text-primary-foreground rounded-full px-1.5">About Us</span>
-                    <span className="text-sm font-normal text-wrap"  data-line>Building thoughtful digital solutions around your business.</span>
+                    <span className="text-sm font-normal text-wrap"  data-line>Digital solutions that grow with you.</span>
                     <div className="pointer-events-none absolute inset-0 rounded-[inherit] border-(length:--border-beam-width) border-transparent mask-[linear-gradient(transparent,transparent),linear-gradient(#000,#000)] mask-intersect [mask-clip:padding-box,border-box]">
                         <div className="absolute aspect-square rounded-full bg-linear-to-l from-[var(--color-from)] via-[var(--color-to)] to-transparent"></div>
                     </div>
@@ -40,7 +40,7 @@ const HeroSection = () => {
                    drives the digital evolution of modern enterprises.
                </p>
 
-               <div className={'flex gap-2 divide-x divide-dashed items-center w-full justify-center'}>
+               <div className="flex w-full flex-col items-center justify-center divide-y divide-dashed gap-3 sm:flex-row sm:divide-x sm:divide-y-0 sm:gap-2">
                    <div className={'px-3'}>
                        <GoogleReviewsBanner />
                    </div>
