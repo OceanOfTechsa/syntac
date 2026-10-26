@@ -20,19 +20,19 @@ jobs:
     timeout-minutes: 10
 
     steps:
-      - name: Checkout (full history)
-        uses: actions/checkout@v7
+      - name: Checkout full history
+        uses: actions/checkout@v4
         with:
           fetch-depth: 0
 
       - name: Set up Node.js
-        uses: actions/setup-node@v7
+        uses: actions/setup-node@v4
         with:
           node-version: 20
           cache: npm
 
       - name: Install dependencies
-        run: npm install
+        run: npm ci
 
       - name: Validate PR commit messages
         run: |
@@ -40,10 +40,3 @@ jobs:
             --from "${{ github.event.pull_request.base.sha }}" \
             --to "${{ github.event.pull_request.head.sha }}" \
             --verbose
-      # Checks every commit in the pull request against the Conventional Commits rules
-      - name: Lint commit messages
-        run: >
-          npx commitlint
-          --from ${{ github.event.pull_request.base.sha }}
-          --to ${{ github.event.pull_request.head.sha }}
-          --verbose
