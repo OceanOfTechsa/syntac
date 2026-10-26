@@ -1,3 +1,10 @@
+## [1.0.1](https://github.com/OceanOfTechsa/syntac/compare/v1.0.0...v1.0.1) (2026-10-26)
+
+
+### Bug Fixes
+
+* **ci:** correct commitlint workflow and configuration ([952357a](https://github.com/OceanOfTechsa/syntac/commit/952357a5ed9805813b078affc4718fd03aafeaa5))
+
 # 1.0.0 (2026-10-24)
 
 
